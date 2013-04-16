@@ -3,5 +3,5 @@ class Profile < ActiveRecord::Base
 
   belongs_to :profilable, :polymorphic => true
 
-  validates :profilable_id, :presence => true
+  validates :profilable_id, :profilabe_type, :presence => true
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130416184139) do
+ActiveRecord::Schema.define(:version => 20130416191827) do
 
   create_table "customers", :force => true do |t|
     t.string   "name",       :null => false
@@ -48,8 +48,10 @@ ActiveRecord::Schema.define(:version => 20130416184139) do
   create_table "profiles", :force => true do |t|
     t.text     "description"
     t.string   "phone"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+    t.integer  "profilable_id",   :null => false
+    t.string   "profilable_type", :null => false
   end
 
   create_table "users", :force => true do |t|
