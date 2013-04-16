@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   has_one :profile, :as => :profilable
   has_many :orders, :as => :orderable
   # this should be has_many_and_belongs_to or whatever...
-  belongs_to :group
+  belongs_to :userable, :polymorphic => true
 
   validates :email, :name, :group_id, :presence => true
   validates :email, :uniqueness => true
