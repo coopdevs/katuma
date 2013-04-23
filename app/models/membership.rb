@@ -1,5 +1,5 @@
 class Membership < ActiveRecord::Base
-  attr_accessible :memberable_id, :memberable_type, :user_id
+  attr_accessible :memberable, :user
 
   belongs_to :user
   belongs_to :memberable, :polymorphic => true
