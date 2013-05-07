@@ -1,5 +1,5 @@
 class Order < ActiveRecord::Base
-  # attr_accessible :title, :body
+  attr_accessible :orderable
 
   has_many :order_lines
   belongs_to :orderable, :polymorphic => true
