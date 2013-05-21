@@ -7,5 +7,18 @@ FactoryGirl.define do
     name "My UF"
     email
   end
+
+  factory :supplier do
+    name "Supplier"
+  end
+
+  factory :customer do
+    name "Customer"
+  end
+
+  factory :membership do
+    user
+    association :memberable, :factory => :customer
+  end
 end
 
