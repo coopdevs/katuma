@@ -5,4 +5,12 @@ class Supplier < ActiveRecord::Base
   has_many :memberships, :as => :memberable
 
   validates :name, :presence => true
+
+  def members
+    members = []
+    self.memberships.each do |membership|
+      members << membership.user
+    end
+    members
+  end
 end
