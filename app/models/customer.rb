@@ -3,7 +3,7 @@ class Customer < ActiveRecord::Base
 
   has_one :profile, :as => :profilable
   has_many :memberships, :as => :memberable
-  has_many :orders, :as => :orderable
+  has_many :orders
 
   validates :name, :presence => true
 
