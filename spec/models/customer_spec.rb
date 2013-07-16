@@ -13,20 +13,21 @@ describe Customer do
   describe "Associations" do
     it { should have_one(:profile) }
     it { should have_many(:orders) }
-    it { should have_many(:memberships) }
+    it { should have_many(:members) }
+    it { should have_many(:memberables) }
   end
 
-  describe "members" do
+  describe "member_list" do
     before :each do
       @user = FactoryGirl.create(:user)
       @customer = FactoryGirl.create(:customer)
       FactoryGirl.create(:membership,
-                         :user => @user,
+                         :member => @user,
                          :memberable => @customer)
     end
 
     it "returns array of members" do
-      expect(@customer.members).to eq([@user])
+      expect(@customer.member_list).to eq([@user])
     end
   end
 end

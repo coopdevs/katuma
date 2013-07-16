@@ -12,7 +12,7 @@ describe Supplier do
 
   describe "Associations" do
     it { should have_one(:profile) }
-    it { should have_many(:memberships) }
+    it { should have_many(:members) }
   end
 
   describe "members" do
@@ -20,12 +20,12 @@ describe Supplier do
       @user = FactoryGirl.create(:user)
       @supplier = FactoryGirl.create(:supplier)
       FactoryGirl.create(:membership,
-                         :user => @user,
+                         :member => @user,
                          :memberable => @supplier)
     end
 
     it "returns array of members" do
-      expect(@supplier.members).to eq([@user])
+      expect(@supplier.member_list).to eq([@user])
     end
   end
 end

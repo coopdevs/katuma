@@ -17,7 +17,7 @@ FactoryGirl.define do
   end
 
   factory :membership do
-    user
+    association :member, :factory => :user
     association :memberable, :factory => :customer
   end
 end

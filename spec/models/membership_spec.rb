@@ -9,11 +9,12 @@ describe Membership do
     end
     it { should validate_presence_of(:memberable_id) }
     it { should validate_presence_of(:memberable_type) }
-    it { should validate_presence_of(:user_id) }
+    it { should validate_presence_of(:member_id) }
+    it { should validate_presence_of(:member_type) }
   end
 
   describe "Associations" do
-    it { should belong_to(:user) }
+    it { should belong_to(:member) }
     it { should belong_to(:memberable) }
   end
 
