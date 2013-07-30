@@ -1,5 +1,5 @@
 class OrderLine < ActiveRecord::Base
-  attr_accessible :price, :quantity
+  attr_accessible :price, :quantity, :product, :order
 
   has_many :child_order_lines, :class_name => "OrderLine"
   belongs_to :order
