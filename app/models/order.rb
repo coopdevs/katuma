@@ -6,18 +6,32 @@ class Order < ActiveRecord::Base
   belongs_to :target, :class_name => "Customer"
 
   validates :customer_id, :presence => true
-  validate :target_is_not_customer
-  validate :customer_is_member_of_target
+  with_options :if => :target_id do |order|
+    order.validate :target_is_not_customer,
+                   :customer_is_member_of_target,
+                   :customer_is_member_of_target_another_way
+  end
 
   def target_is_not_customer
-    if target_id && target_id == customer_id
+    if target_id == customer_id
       errors.add(:target, "can't be the same as Customer")
     end
   end
 
   def customer_is_member_of_target
-    if target_id # to be continued
-      errors.add(:customer, "has to be a member of Customer")
+    customer = Customer.find(customer_id)
+    target = Customer.find(target_id)
+    if !target.member_list.include? customer
+      errors.add(:customer, "has to be a member of Target")
+    end
+  end
+
+  def customer_is_member_of_target_another_way
+    if Membership.where(memberable_id: target_id,
+                        memberable_type: 'Customer',
+                        member_id: customer_id,
+                        member_type: 'Customer').empty?
+      errors.add(:customer, "has to be a member of Target")
     end
   end
 end
