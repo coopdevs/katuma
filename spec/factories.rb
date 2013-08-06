@@ -20,5 +20,10 @@ FactoryGirl.define do
     association :member, :factory => :user
     association :memberable, :factory => :customer
   end
+
+  factory :order do
+    customer
+    association :provider, :factory => :supplier
+  end
 end
 

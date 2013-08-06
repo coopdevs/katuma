@@ -13,9 +13,10 @@ describe Supplier do
   describe "Associations" do
     it { should have_one(:profile) }
     it { should have_many(:members) }
+    xit { should have_many(:petitions) }
   end
 
-  describe "members" do
+  describe "member_list" do
     before :each do
       @user = FactoryGirl.create(:user)
       @supplier = FactoryGirl.create(:supplier)

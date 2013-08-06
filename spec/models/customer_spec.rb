@@ -15,6 +15,7 @@ describe Customer do
     it { should have_many(:orders) }
     it { should have_many(:members) }
     it { should have_many(:memberables) }
+    xit { should have_many(:petitions) }
   end
 
   describe "member_list" do

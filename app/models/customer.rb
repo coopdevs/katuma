@@ -5,6 +5,7 @@ class Customer < ActiveRecord::Base
   has_many :members, :as => :memberable, :class_name => 'Membership'
   has_many :memberables, :as => :member, :class_name => 'Membership'
   has_many :orders
+  has_many :petitions, :as => :provider, :class_name => 'Order'
 
   validates :name, :presence => true
 
