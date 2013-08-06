@@ -8,8 +8,7 @@ class Order < ActiveRecord::Base
   validates :customer_id, :presence => true
   with_options :if => :target_id do |order|
     order.validate :target_is_not_customer,
-                   :customer_is_member_of_target,
-                   :customer_is_member_of_target_another_way
+                   :customer_is_member_of_target
   end
 
   def target_is_not_customer
@@ -19,14 +18,6 @@ class Order < ActiveRecord::Base
   end
 
   def customer_is_member_of_target
-    customer = Customer.find(customer_id)
-    target = Customer.find(target_id)
-    if !target.member_list.include? customer
-      errors.add(:customer, "has to be a member of Target")
-    end
-  end
-
-  def customer_is_member_of_target_another_way
     if Membership.where(memberable_id: target_id,
                         memberable_type: 'Customer',
                         member_id: customer_id,
