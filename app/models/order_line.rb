@@ -7,4 +7,13 @@ class OrderLine < ActiveRecord::Base
 
   validates :price, :quantity, :presence => true
   validates :order_id, :product_id, :presence => true
+  validate :child_order_line_is_not_self, :on => :update
+
+  # Check for self reference
+  def child_order_line_is_not_self
+    if self.id == order_line_id
+      errors.add(:order_line, "can't reference self as parent order line")
+    end
+  end
+
 end
