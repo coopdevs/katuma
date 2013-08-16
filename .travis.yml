@@ -9,3 +9,5 @@ branches:
 
 before_script:
   - "bundle exec rake db:setup"
+
+script: script/ci

@@ -1,0 +1,55 @@
+#!/usr/bin/env ruby
+# set ft=ruby
+
+class Ci
+
+  SPECS = [
+    {:name => 'Models', :path  => 'spec/models'}
+  ]
+
+  def self.run!
+    failed_specs = []
+    SPECS.each do |spec|
+      folder_wrap(spec[:name]) do
+        puts "Running: #{spec[:name]}"
+        failed_specs << spec if !run_spec(spec)
+      end
+    end
+    specs_output(failed_specs)
+  end
+
+  private
+
+  def self.run_spec(spec)
+    if system("bundle exec rspec #{spec[:path]}")
+      puts "Spec: '#{spec[:name]}' - PASS"
+      return true
+    else
+      puts "Spec: '#{spec[:name]}' - FAIL"
+      return false
+    end
+  end
+
+  def self.specs_output(failed_specs)
+    if failed_specs.empty?
+      puts "PASS"
+      exit 0
+    else
+      puts "FAIL!!!"
+      puts "Failed specs:"
+      failed_specs.each do |spec|
+        puts "- '#{spec[:name]}'"
+      end
+      exit 1
+    end
+  end
+
+  def self.folder_wrap(folder_name)
+    puts "travis_fold:start:#{folder_name}\r"
+    yield
+    puts "travis_fold:end:#{folder_name}\r"
+  end
+
+end
+
+Ci.run!
