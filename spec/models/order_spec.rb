@@ -3,10 +3,14 @@ require 'spec_helper'
 
 describe Order do
 
-  describe "Validations" do
+  describe Order::Validation do
+
     it "has valid factory" do
       expect(FactoryGirl.build(:order)).to be_valid
     end
+
+    it { should validate_presence_of(:customer_id) }
+
   end
 
   describe "Associations" do
@@ -21,4 +25,5 @@ describe Order do
     # customer_is_member_of_provider
     # validations
   end
+
 end
