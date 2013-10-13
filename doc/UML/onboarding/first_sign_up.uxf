@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="12.1">
+  <zoom_level>10</zoom_level>
+  <element>
+    <type>com.umlet.element.ActivityDiagramText</type>
+    <coordinates>
+      <x>470</x>
+      <y>170</y>
+      <w>274</w>
+      <h>337</h>
+    </coordinates>
+    <panel_attributes>title:first sign up
+Start
+sign up page
+input user email
+create unconfirmed user
+send user confirmation email
+go to email sent page
+End</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>

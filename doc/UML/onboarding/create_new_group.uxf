@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="12.1">
+  <zoom_level>8</zoom_level>
+  <element>
+    <type>com.umlet.element.ActivityDiagramText</type>
+    <coordinates>
+      <x>48</x>
+      <y>0</y>
+      <w>590</w>
+      <h>756</h>
+    </coordinates>
+    <panel_attributes>title:create new group
+Start
+If
+	[confirmed user]
+	create group page
+	input group name
+	create default group
+	create default UF
+	associate UF\with group
+	associate User\with UF
+	If
+		[invite users]
+		input list of user emails
+		send invitations\w/ link group public page
+		
+		[invite later]
+	EndIf
+	welcome on board
+	go to group public page
+
+	[unconfirmed user]
+	please confirm\email page
+
+	[not user]
+	sign up page
+EndIf
+End</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>

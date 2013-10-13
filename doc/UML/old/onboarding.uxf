@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="12.1">
+  <zoom_level>8</zoom_level>
+  <element>
+    <type>com.umlet.element.ActivityDiagramText</type>
+    <coordinates>
+      <x>48</x>
+      <y>0</y>
+      <w>882</w>
+      <h>1044</h>
+    </coordinates>
+    <panel_attributes>title:onboarding
+Start
+sign up page
+If
+	[new group]
+	input user email
+	input group name
+	create user
+	send user confirmation email
+	create default group
+	create default UF
+	associate UF\with group
+	associate User\with UF
+	If
+		[invite users]
+		input list of user emails
+		send invitations\w/ link group public page
+		
+		[invite later]
+	EndIf
+	
+	[existing group]
+	list/search group
+	go to group public page
+	If
+		[waiting list]
+		send request to group
+		-&gt;id1
+		
+		[no waiting list]
+		If
+			[with UFs]
+			If
+				[new UF]
+				input UF name
+				create UF
+
+				[existing UF]
+				list/search UF
+				select UF
+				send request to UF
+				-&gt;id1
+			EndIf
+			
+			[without UFs]
+			create unipersonal UF
+		EndIf
+		associate User\with UF
+	EndIf
+EndIf
+welcome on board
+go to dashboard~id1
+End</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>

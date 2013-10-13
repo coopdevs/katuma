@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="12.1">
+  <zoom_level>8</zoom_level>
+  <element>
+    <type>com.umlet.element.ActivityDiagramText</type>
+    <coordinates>
+      <x>256</x>
+      <y>8</y>
+      <w>502</w>
+      <h>588</h>
+    </coordinates>
+    <panel_attributes>title:onboarding invited user (UF)
+Start
+Receive an invite\from a UF
+Sign Up invited user\page
+If
+	[group exists]
+	If
+		[UF exists]
+		create User
+		send request to UF
+		welcome on board
+		go to dashboard
+
+		[UF doesn't exist]
+		error no UF
+		-&gt;id1
+	EndIf
+	
+	[group doesn't exists]
+	error no group
+	go to root~id1
+EndIf~id2
+End
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>

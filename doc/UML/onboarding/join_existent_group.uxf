@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="12.1">
+  <zoom_level>8</zoom_level>
+  <element>
+    <type>com.umlet.element.ActivityDiagramText</type>
+    <coordinates>
+      <x>112</x>
+      <y>0</y>
+      <w>894</w>
+      <h>888</h>
+    </coordinates>
+    <panel_attributes>title:join an existent group
+Start
+If
+	[confirmed user]
+	If
+		[waiting list]
+		send request to group
+		add User to group\waiting list
+		email sent page
+		
+		[no waiting list]
+		If
+			[with UFs]
+			If
+				[new UF]
+				input UF name
+				create UF
+
+				[existing UF]
+				list/search UF
+				select UF
+				send request to UF
+				email sent page
+				-&gt;id1
+			EndIf
+			
+			[without UFs]
+			create unipersonal UF
+		EndIf
+		associate User\with UF
+		welcome on board
+		go to dashboard
+	EndIf~id1
+
+	[unconfirmed user]
+	please confirm\email page
+
+	[not user]
+	sign up page
+EndIf
+End</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
