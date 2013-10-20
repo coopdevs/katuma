@@ -8,6 +8,10 @@ class User < ActiveRecord::Base
     :source => :memberable,
     :source_type => 'UsersUnit'
   has_many :customers, :through => :users_units
+  has_many :waiting_lists,
+    :through => :memberships,
+    :source => :memberable,
+    :source_type => 'WaitingList'
 
   validates :name, presence: true
   validates :email,

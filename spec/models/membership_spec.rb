@@ -13,6 +13,26 @@ describe Membership do
     # https://github.com/thoughtbot/shoulda-matchers/issues/203
     xit { FactoryGirl.create(:membership)
          should validate_uniqueness_of(:member_id).scoped_to(:memberable_id, :memberable_type) }
+
+    context "Custom validators" do
+
+      context "A User is member of Customer through UsersUnit" do
+        before :each do
+          @user = FactoryGirl.create :user
+          @coop = FactoryGirl.create :customer
+          @unit = FactoryGirl.create :users_unit, customer: @coop
+          @unit.users << @user
+          @wait = FactoryGirl.create :waiting_list, customer: @coop
+        end
+
+        it "A User cannot be added to a WaitingList if he's already a Customer member" do
+          expect {
+            @wait.users << @user
+          }.to raise_exception(ActiveRecord::RecordInvalid, /Member User is already a member/)
+        end
+      end
+
+    end
   end
 
   describe "Associations" do

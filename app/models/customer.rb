@@ -11,6 +11,10 @@ class Customer < ActiveRecord::Base
   has_many :users_units, :dependent => :destroy
   has_many :users,
     :through => :users_units
+  has_one  :waiting_list, :dependent => :destroy
+  has_many :waiting_users,
+    :through => :waiting_list,
+    :source => :users
   has_many :orders
   has_many :petitions, :as => :provider, :class_name => 'Order'
 

@@ -18,6 +18,7 @@ describe User do
     it { should have_many(:memberships) }
     it { should have_many(:users_units).through(:memberships) }
     it { should have_many(:customers).through(:users_units) }
+    it { should have_many(:waiting_lists).through(:memberships) }
   end
 
 end
