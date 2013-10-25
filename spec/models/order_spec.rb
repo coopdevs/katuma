@@ -10,9 +10,9 @@ describe Order do
   end
 
   describe "Associations" do
-    xit { should have_many(:order_lines) }
+    it { should have_many(:order_lines) }
     it { should belong_to(:customer) }
-    xit { should belong_to(:provider) }
+    it { should belong_to(:provider) }
   end
 
   pending "More validations" do
