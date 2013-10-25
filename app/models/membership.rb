@@ -4,6 +4,10 @@ class Membership < ActiveRecord::Base
   belongs_to :member, :polymorphic => true
   belongs_to :memberable, :polymorphic => true
 
-  validates :memberable_id, :memberable_type, :presence => true
-  validates :member_id, :member_type, :presence => true
+  validates :member, :memberable,
+              presence: true
+  validates :member_id,
+    uniqueness: {
+      scope: [:memberable_id, :memberable_type]
+    }
 end

@@ -16,6 +16,8 @@ describe User do
   describe "Associations" do
     it { should have_one(:profile) }
     it { should have_many(:memberships) }
+    it { should have_many(:users_units).through(:memberships) }
+    it { should have_many(:customers).through(:users_units) }
   end
 
 end
