@@ -13,7 +13,7 @@ describe Supplier do
   describe "Associations" do
     it { should have_one(:profile) }
     it { should have_many(:members) }
-    xit { should have_many(:petitions) }
+    it { should have_many(:petitions) }
   end
 
   describe "member_list" do
