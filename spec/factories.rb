@@ -1,11 +1,16 @@
 FactoryGirl.define do
   sequence :email do |n|
-    "person#{n}@katuma.coop"
+    "user#{n}@katuma.org"
   end
 
   factory :user do
-    name "My UF"
+    name "Jessie Pinkman"
     email
+  end
+
+  factory :users_unit do
+    name "My family"
+    customer
   end
 
   factory :supplier do
