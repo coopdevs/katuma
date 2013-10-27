@@ -1,6 +1,4 @@
 class UsersUnit < ActiveRecord::Base
-  attr_accessible :customer, :name
-
   belongs_to :customer
   has_many :memberships, :as => :memberable
   has_many :users,

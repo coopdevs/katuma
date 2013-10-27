@@ -1,6 +1,4 @@
 class User < ActiveRecord::Base
-  attr_accessible :email, :name
-
   has_one  :profile, :as => :profilable
   has_many :memberships, :as => :member
   has_many :users_units,
