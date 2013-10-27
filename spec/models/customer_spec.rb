@@ -19,6 +19,7 @@ describe Customer do
     it { should have_many(:customers).through(:members) }
     it { should have_many(:users_units).dependent(:destroy) }
     it { should have_many(:users).through(:users_units) }
+    it { should have_one(:waiting_list).dependent(:destroy) }
   end
 
 end

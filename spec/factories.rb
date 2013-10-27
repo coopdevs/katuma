@@ -30,5 +30,14 @@ FactoryGirl.define do
     customer
     association :provider, :factory => :supplier
   end
+
+  factory :waiting_list do
+    customer
+  end
+
+  factory :waiting_user do
+    waiting_list
+    user
+  end
 end
 

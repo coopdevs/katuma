@@ -1,5 +1,5 @@
-class UsersUnit < ActiveRecord::Base
-  attr_accessible :customer, :name
+class WaitingList < ActiveRecord::Base
+  attr_accessible :customer
 
   belongs_to :customer
   has_many :memberships, :as => :memberable
@@ -8,8 +8,8 @@ class UsersUnit < ActiveRecord::Base
     :source => :member,
     :source_type => 'User'
 
-  validates :name, :customer,
+  validates  :customer,
     presence: true
-  validates :customer_id,
+  validates  :customer_id,
     uniqueness: true
 end
