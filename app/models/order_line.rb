@@ -1,6 +1,4 @@
 class OrderLine < ActiveRecord::Base
-  attr_accessible :price, :quantity, :product, :order
-
   has_many :child_order_lines, :class_name => "OrderLine"
   belongs_to :order
   belongs_to :product
@@ -15,5 +13,4 @@ class OrderLine < ActiveRecord::Base
       errors.add(:order_line, "can't reference self as parent order line")
     end
   end
-
 end
