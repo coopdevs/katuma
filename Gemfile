@@ -30,7 +30,7 @@ group :development do
 end
 
 group :development, :test do
-  gem 'rspec-rails', '~> 2.13.0'
+  gem 'rspec-rails', '~> 2.14.0'
 end
 
 # To use debugger
