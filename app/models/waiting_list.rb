@@ -4,7 +4,10 @@ class WaitingList < ActiveRecord::Base
   has_many :users,
     :through => :memberships,
     :source => :member,
-    :source_type => 'User'
+    :source_type => 'User',
+    :dependent => :restrict_with_error
+
+  accepts_nested_attributes_for :users
 
   validates  :customer,
     presence: true

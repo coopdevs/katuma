@@ -10,4 +10,6 @@ class UsersUnit < ActiveRecord::Base
     presence: true
   validates :customer_id,
     uniqueness: true
+
+  accepts_nested_attributes_for :users
 end
