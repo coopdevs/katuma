@@ -4,6 +4,8 @@ class WaitingListMembership < ActiveRecord::Base
 
   validates  :group, :user,
     presence: true
+  validates :user_id,
+    uniqueness: { scope: :group_id }
   validate :is_in_users_unit?
 
   # Check if a User is already member

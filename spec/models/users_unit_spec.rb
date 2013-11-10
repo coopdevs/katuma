@@ -8,8 +8,6 @@ describe UsersUnit do
     end
     it { should validate_presence_of(:name) }
     it { should validate_presence_of(:group) }
-    it { FactoryGirl.create :users_unit
-         should validate_uniqueness_of(:group_id) }
   end
 
   describe "Associations" do

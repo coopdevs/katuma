@@ -7,6 +7,4 @@ class UsersUnit < ActiveRecord::Base
 
   validates :name, :group,
     presence: true
-  validates :group_id,
-    uniqueness: true
 end

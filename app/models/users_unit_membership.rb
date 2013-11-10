@@ -4,6 +4,8 @@ class UsersUnitMembership < ActiveRecord::Base
 
   validates  :users_unit, :user,
     presence: true
+  validates :user_id,
+    uniqueness: { scope: :users_unit_id }
   validate :is_waiter?
 
   # Check if a User is already member
