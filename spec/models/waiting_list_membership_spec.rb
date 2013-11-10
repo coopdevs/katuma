@@ -31,15 +31,15 @@ describe WaitingListMembership do
         users_unit.users << @user
 
         expect {
-          @group.waiters << @user
+          @group.waiting_users << @user
         }.to raise_exception(ActiveRecord::RecordInvalid)
       end
 
       it "validates that User is not subscribed twice" do
-        @group.waiters << @user
+        @group.waiting_users << @user
 
         expect {
-          @group.waiters << @user
+          @group.waiting_users << @user
         }.to raise_exception(ActiveRecord::RecordInvalid)
       end
     end

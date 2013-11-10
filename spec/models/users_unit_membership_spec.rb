@@ -9,7 +9,7 @@ describe UsersUnitMembership do
 
     context "shoulda matchers" do
       before :each do
-        UsersUnitMembership.any_instance.stub(:is_waiter?).and_return(true)
+        UsersUnitMembership.any_instance.stub(:is_waiting_user?).and_return(true)
       end
 
       it { should validate_presence_of(:users_unit) }
@@ -27,7 +27,7 @@ describe UsersUnitMembership do
       end
 
       it "validates that User is not in waiting list" do
-        @users_unit.group.waiters << @user
+        @users_unit.group.waiting_users << @user
 
         expect {
           @users_unit.users << @user
