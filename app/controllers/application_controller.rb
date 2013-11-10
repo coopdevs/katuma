@@ -1,3 +1,4 @@
 class ApplicationController < ActionController::API
-  #protect_from_forgery
+  # waiting for https://github.com/rails-api/rails-api/issues/81
+  include ActionController::StrongParameters
 end
