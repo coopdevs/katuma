@@ -17,4 +17,6 @@ class Customer < ActiveRecord::Base
   has_many :petitions, :as => :provider, :class_name => 'Order'
 
   validates :name, presence: true
+
+  accepts_nested_attributes_for :users_units, :waiting_list
 end
