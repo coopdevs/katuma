@@ -1,15 +1,16 @@
 class User < ActiveRecord::Base
-  has_one  :profile, :as => :profilable
-  has_many :memberships, :as => :member
+  has_one  :profile,
+    as: :profilable
+  has_many :waiting_list_memberships,
+    dependent: :destroy
+  has_many :users_unit_memberships,
+    dependent: :destroy
   has_many :users_units,
-    :through => :memberships,
-    :source => :memberable,
-    :source_type => 'UsersUnit'
-  has_many :customers, :through => :users_units
+    through: :users_unit_memberships
+  has_many :groups,
+    through: :users_units
   has_many :waiting_lists,
-    :through => :memberships,
-    :source => :memberable,
-    :source_type => 'WaitingList'
+    through: :waiting_list_memberships
 
   validates :name, presence: true
   validates :email,

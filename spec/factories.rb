@@ -10,33 +10,20 @@ FactoryGirl.define do
 
   factory :users_unit do
     name "My family"
-    customer
+    group
   end
 
-  factory :supplier do
-    name "Supplier"
+  factory :group do
+    name "Group"
   end
 
-  factory :customer do
-    name "Customer"
+  factory :users_unit_membership do
+    users_unit
+    user
   end
 
-  factory :membership do
-    association :member, :factory => :user
-    association :memberable, :factory => :customer
-  end
-
-  factory :order do
-    customer
-    association :provider, :factory => :supplier
-  end
-
-  factory :waiting_list do
-    customer
-  end
-
-  factory :waiting_user do
-    waiting_list
+  factory :waiting_list_membership do
+    group
     user
   end
 end

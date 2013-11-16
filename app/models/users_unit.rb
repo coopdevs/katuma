@@ -1,13 +1,10 @@
 class UsersUnit < ActiveRecord::Base
-  belongs_to :customer
-  has_many :memberships, :as => :memberable
+  belongs_to :group
+  has_many :users_unit_memberships,
+    dependent: :destroy
   has_many :users,
-    :through => :memberships,
-    :source => :member,
-    :source_type => 'User'
+    through: :users_unit_memberships
 
-  validates :name, :customer,
+  validates :name, :group,
     presence: true
-  validates :customer_id,
-    uniqueness: true
 end
