@@ -20,16 +20,28 @@ describe UsersUnitMembership do
       }
     end
 
-    it "validates that User is not in waiting list" do
-      users_unit = FactoryGirl.create(:users_unit)
-      user = FactoryGirl.create(:user)
-      users_unit.group.waiters << user
+    context "given a UsersUnit and a User" do
+      before :each do
+        @users_unit = FactoryGirl.create(:users_unit)
+        @user = FactoryGirl.create(:user)
+      end
 
-      expect {
-        users_unit.users << user
-      }.to raise_exception(ActiveRecord::RecordInvalid)
+      it "validates that User is not in waiting list" do
+        @users_unit.group.waiters << @user
+
+        expect {
+          @users_unit.users << @user
+        }.to raise_exception(ActiveRecord::RecordInvalid)
+      end
+
+      it "validates that User is not subscribed twice" do
+        @users_unit.users << @user
+
+        expect {
+          @users_unit.users << @user
+        }.to raise_exception(ActiveRecord::RecordInvalid)
+      end
     end
-
   end
 
   describe "Associations" do
