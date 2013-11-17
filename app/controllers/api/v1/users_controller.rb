@@ -2,12 +2,13 @@ module Api
   module V1
     class UsersController < ApplicationController
 
+      before_action :authenticate, except: :create
       before_action :load_memberable, only: :index
 
       # ToDo: remove this and put bootstrap data
       # in dashboard index HTML
       def bootstrap
-        render json: current_user.serializable_hash(methods: [:waiting_group_ids, :group_ids])
+        render json: @current_user.serializable_hash(methods: [:waiting_groups, :groups])
       end
 
       def index
