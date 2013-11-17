@@ -6,12 +6,12 @@ class UsersUnitMembership < ActiveRecord::Base
     presence: true
   validates :user_id,
     uniqueness: { scope: :users_unit_id }
-  validate :is_waiter?
+  validate :is_waiting_user?
 
   # Check if a User is already member
-  # of Customer through a WaitingListMembership
-  def is_waiter?
-    if users_unit.group.waiters.include? user
+  # of Group through a WaitingListMembership
+  def is_waiting_user?
+    if users_unit.group.waiting_users.include? user
       errors.add(:user_id, "User is already a member")
     end
   end
