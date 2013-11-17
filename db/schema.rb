@@ -32,10 +32,11 @@ ActiveRecord::Schema.define(version: 20131109203648) do
   end
 
   create_table "users", force: true do |t|
-    t.string   "email",      null: false
-    t.string   "name",       null: false
+    t.string   "email",           null: false
+    t.string   "name",            null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "password_digest", null: false
   end
 
   create_table "users_unit_memberships", force: true do |t|

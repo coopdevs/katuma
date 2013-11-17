@@ -6,6 +6,8 @@ FactoryGirl.define do
   factory :user do
     name "Jessie Pinkman"
     email
+    password "secret"
+    password_confirmation "secret"
   end
 
   factory :users_unit do
