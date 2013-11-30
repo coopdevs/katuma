@@ -1,6 +1,7 @@
 module Api
   module V1
     class GroupsController < ApplicationController
+      before_action :authenticate
 
       def index
         render json: Group.all

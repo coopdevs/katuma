@@ -11,10 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131109203648) do
+ActiveRecord::Schema.define(version: 20131117130511) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "api_keys", force: true do |t|
+    t.string   "access_token", null: false
+    t.integer  "user_id",      null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "api_keys", ["user_id"], name: "index_api_keys_on_user_id", using: :btree
 
   create_table "groups", force: true do |t|
     t.string   "name",       null: false
@@ -32,10 +41,11 @@ ActiveRecord::Schema.define(version: 20131109203648) do
   end
 
   create_table "users", force: true do |t|
-    t.string   "email",      null: false
-    t.string   "name",       null: false
+    t.string   "email",           null: false
+    t.string   "name",            null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "password_digest", null: false
   end
 
   create_table "users_unit_memberships", force: true do |t|

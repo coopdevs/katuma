@@ -27,6 +27,7 @@ GEM
       tzinfo (~> 0.3.37)
     arel (4.0.1)
     atomic (1.1.14)
+    bcrypt-ruby (3.0.1)
     builder (3.1.4)
     choice (0.1.6)
     diff-lcs (1.2.5)
@@ -116,6 +117,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  bcrypt-ruby (~> 3.0.0)
   factory_girl_rails (~> 4.2.1)
   jquery-rails
   pg

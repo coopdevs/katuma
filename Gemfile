@@ -2,9 +2,11 @@ source 'https://rubygems.org'
 
 gem 'rails', '~> 4.0.0'
 
-gem "rails-api", "~> 0.1.0"
+gem 'rails-api', '~> 0.1.0'
 
 gem 'pg'
+
+gem 'bcrypt-ruby', '~> 3.0.0'
 
 # Gems used only for assets and not required
 # in production environments by default.
