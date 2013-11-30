@@ -48,8 +48,18 @@ Katuma::Application.configure do
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
   # config.assets.precompile += %w( search.js )
 
-  # Disable delivery errors, bad email addresses will be ignored
+  # ActionMailer configuration
   # config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.delivery_method = :smtp # ToDo: move to Mandrill or similar service
+  config.action_mailer.smtp_settings = {
+    address:              'smtp.katuma.org',
+    port:                 578,
+    domain:               'katuma.org',
+    user_name:            ENV['SMTP_USERNAME'],
+    password:             ENV['SMTP_PASSWORD'],
+    authentication:       'plain',
+    enable_starttls_auto: false
+  }
 
   # Enable threaded mode
   # config.threadsafe!
