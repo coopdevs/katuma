@@ -1,0 +1,4 @@
+name: katuma.org dev blog
+markdown: redcarpet
+pygments: true
+baseurl: /katuma
