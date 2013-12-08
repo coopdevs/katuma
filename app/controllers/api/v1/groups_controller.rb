@@ -12,8 +12,10 @@ module Api
       end
 
       def create
+        p groups_params
         group = Group.new(groups_params)
-        if group.save
+        group_creation = GroupCreation.new(group, current_user)
+        if group_creation.create
           render json: group
         else
           render status: :bad_request,
@@ -38,13 +40,15 @@ module Api
       end
 
       def destroy
-        render json: Group.destroy(params[:id])
+        group = Group.find(params[:id])
+        authorize group
+        render json: group.destroy
       end
 
       private
 
       def groups_params
-        params.require(:group).permit(:name)
+        params.require(:group).permit(:name, users_units_attributes: [:name])
       end
 
     end

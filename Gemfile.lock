@@ -1,3 +1,9 @@
+GIT
+  remote: git://github.com/EppO/rolify.git
+  revision: 45de8cf4bf51e60accddee3385829a2266709cb0
+  specs:
+    rolify (3.3.0.rc5)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -52,6 +58,8 @@ GEM
     multi_json (1.8.2)
     pg (0.17.0)
     polyglot (0.3.3)
+    pundit (0.2.1)
+      activesupport (>= 3.0.0)
     rack (1.5.2)
     rack-test (0.6.2)
       rack (>= 1.0)
@@ -121,9 +129,11 @@ DEPENDENCIES
   factory_girl_rails (~> 4.2.1)
   jquery-rails
   pg
+  pundit
   rails (~> 4.0.0)
   rails-api (~> 0.1.0)
   rails-erd
+  rolify (~> 3.3.0.rc5)!
   rspec-rails (~> 2.14.0)
   shoulda-matchers (~> 2.4.0)
   uglifier (>= 1.0.3)
