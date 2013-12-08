@@ -38,7 +38,9 @@ module Api
       end
 
       def destroy
-        render json: Group.destroy(params[:id])
+        group = Group.find(params[:id])
+        authorize group
+        render json: group.destroy
       end
 
       private
