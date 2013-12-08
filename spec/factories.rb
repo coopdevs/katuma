@@ -22,6 +22,10 @@ FactoryGirl.define do
 
   factory :group do
     name "Group"
+
+    after :build do |g|
+      g.users_units.build(name: "My UsersUnit")
+    end
   end
 
   factory :users_unit_membership do
