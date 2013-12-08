@@ -8,6 +8,8 @@ class GroupCreation
     @creator = creator
   end
 
+  # Create a new Group and a new UsersUnit
+  # and add creator as group admin
   def create
     if self.group.save
       self.add_creator_as_group_admin

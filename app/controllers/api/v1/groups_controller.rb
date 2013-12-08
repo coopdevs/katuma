@@ -12,6 +12,7 @@ module Api
       end
 
       def create
+        p groups_params
         group = Group.new(groups_params)
         group_creation = GroupCreation.new(group, current_user)
         if group_creation.create
@@ -47,7 +48,7 @@ module Api
       private
 
       def groups_params
-        params.require(:group).permit(:name)
+        params.require(:group).permit(:name, users_units_attributes: [:name, users_ids: [current_user.id.to_s]])
       end
 
     end

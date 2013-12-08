@@ -9,7 +9,8 @@ class User < ActiveRecord::Base
   has_many :users_unit_memberships,
     dependent: :destroy
   has_many :users_units,
-    through: :users_unit_memberships
+    through: :users_unit_memberships,
+    inverse_of: :user
   has_many :groups,
     through: :users_units
   has_many :waiting_groups,
