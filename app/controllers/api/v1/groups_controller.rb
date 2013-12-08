@@ -13,7 +13,8 @@ module Api
 
       def create
         group = Group.new(groups_params)
-        if group.save
+        group_creation = GroupCreation.new(group, current_user)
+        if group_creation.create
           render json: group
         else
           render status: :bad_request,
