@@ -48,7 +48,7 @@ module Api
       private
 
       def groups_params
-        params.require(:group).permit(:name, users_units_attributes: [:name, users_ids: [current_user.id.to_s]])
+        params.require(:group).permit(:name, users_units_attributes: [:name])
       end
 
     end
