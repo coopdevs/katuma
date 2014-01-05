@@ -8,6 +8,16 @@ FactoryGirl.define do
     email
     password "secret"
     password_confirmation "secret"
+
+    factory :group_admin, parent: :user do
+      ignore do
+        group create(:group)
+      end
+
+      after(:create) do |user, evaluator|
+        user.add_role :admin, evaluator.group
+      end
+    end
   end
 
   factory :api_key do
@@ -22,6 +32,10 @@ FactoryGirl.define do
 
   factory :group do
     name "Group"
+
+    after :build do |g|
+      g.users_units.build(name: "My UsersUnit")
+    end
   end
 
   factory :users_unit_membership do
