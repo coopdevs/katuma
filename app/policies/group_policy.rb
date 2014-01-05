@@ -5,6 +5,18 @@ class GroupPolicy < ApplicationPolicy
     end
   end
 
+  def create?
+    true
+  end
+
+  def show?
+    user.has_role? :admin, record
+  end
+
+  def update?
+    user.has_role? :admin, record
+  end
+
   def destroy?
     user.has_role? :admin, record
   end
