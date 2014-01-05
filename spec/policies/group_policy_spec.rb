@@ -5,7 +5,7 @@ describe GroupPolicy do
 
   let(:group) { FactoryGirl.create :group }
 
-  context 'A visitor' do
+  context 'A new user' do
     let(:user) { FactoryGirl.create :user }
 
     it { should     permit :create }
