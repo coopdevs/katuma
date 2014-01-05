@@ -8,6 +8,13 @@ FactoryGirl.define do
     email
     password "secret"
     password_confirmation "secret"
+
+    factory :group_admin, parent: :user do
+      after(:create) do |user, evaluator|
+        group = evaluator.respond_to? :group ? evaluator.group : create(:group)
+        user.add_role :admin, evaluator.group
+      end
+    end
   end
 
   factory :api_key do
