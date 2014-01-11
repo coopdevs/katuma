@@ -38,5 +38,9 @@ group :development, :test do
   gem 'rspec-rails', '~> 2.14.0'
 end
 
+group :production do
+  gem 'rails_stdout_logging'
+end
+
 # To use debugger
 # gem 'debugger'
