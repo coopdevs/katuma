@@ -15,8 +15,10 @@ describe GroupPolicy do
   end
 
   context 'A group admin' do
-    let(:user) do
-      FactoryGirl.create :group_admin, group: group
+    let(:user) { FactoryGirl.create :user }
+    let(:group) { FactoryGirl.create :group }
+    before :each do
+      user.add_role :admin, group
     end
 
     it { should permit :create }
