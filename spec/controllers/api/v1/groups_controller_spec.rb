@@ -165,7 +165,7 @@ describe Api::V1::GroupsController do
 
         it_behaves_like 'a successful request'
         it 'returns an array of groups where user is admin' do
-          expect(JSON.parse(api_response.body)).to eq([group.as_json])
+          expect(JSON.parse(api_response.body)).to eq([JSON.parse(group.to_json)])
         end
       end
 
@@ -177,7 +177,7 @@ describe Api::V1::GroupsController do
 
         it_behaves_like 'a successful request'
         it 'returns the group details' do
-          expect(JSON.parse(api_response.body)).to eq(group.as_json)
+          expect(api_response.body).to eq(group.to_json)
         end
       end
 
@@ -201,7 +201,7 @@ describe Api::V1::GroupsController do
 
         it_behaves_like 'a successful request'
         it 'deletes the group' do
-          expect(JSON.parse(api_response.body)).to eq(group.as_json)
+          expect(api_response.body).to eq(group.to_json)
         end
       end
     end
