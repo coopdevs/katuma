@@ -27,10 +27,5 @@ FactoryGirl.define do
     users_unit
     user
   end
-
-  factory :waiting_list_membership do
-    group
-    user
-  end
 end
 

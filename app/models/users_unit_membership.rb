@@ -9,9 +9,9 @@ class UsersUnitMembership < ActiveRecord::Base
   validate :is_waiting_user?
 
   # Check if a User is already member
-  # of Group through a WaitingListMembership
+  # of Group as waiting user
   def is_waiting_user?
-    if users_unit.group.waiting_users.include? user
+    if user.has_role? :waiting_user, users_unit.group
       errors.add(:user_id, "User is already a member")
     end
   end
