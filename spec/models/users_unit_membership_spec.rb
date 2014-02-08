@@ -27,7 +27,7 @@ describe UsersUnitMembership do
       end
 
       it "validates that User is not in waiting list" do
-        @users_unit.group.waiting_users << @user
+        @user.add_role :waiting_user, @users_unit.group
 
         expect {
           @users_unit.users << @user
