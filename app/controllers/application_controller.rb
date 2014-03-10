@@ -5,6 +5,12 @@ class ApplicationController < ActionController::API
   # authorization gem
   include Pundit
   rescue_from Pundit::NotAuthorizedError, with: :unauthorized_request
+  after_filter :set_access_control_headers
+
+  def set_access_control_headers 
+    headers['Access-Control-Allow-Origin'] = '*' 
+    headers['Access-Control-Request-Method'] = '*' 
+  end
 
   def authenticate
     authenticate_or_request_with_http_token do |token, options|
