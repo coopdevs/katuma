@@ -52,7 +52,7 @@ module Api
       private
 
       def users_params
-        params.require(:user).permit(:name, :email, :password, :password_confirmation)
+        params.permit(:name, :email, :password, :password_confirmation)
       end
 
       def load_memberable
