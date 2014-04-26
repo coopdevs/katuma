@@ -5,24 +5,19 @@ module Api
       before_action :authenticate, except: :create
       before_action :load_memberable, only: :index
 
-      # ToDo: remove this and put bootstrap data
-      # in dashboard index HTML
-      def bootstrap
-        render json: @current_user.serializable_hash(methods: [:waiting_groups, :groups])
-      end
-
       def index
-        render json: @memberable.users
+        render json: UserSerializer.new(@memberable.users)
       end
 
       def show
-        render json: User.find(params[:id]).serializable_hash(except: :password_digest)
+        user = User.find(params[:id])
+        render json: UserSerializer.new(user)
       end
 
       def create
         user = User.new(users_params)
         if user.save
-          render json: user.serializable_hash(except: :password_digest)
+          render json: UserSerializer.new(user)
         else
           render status: :bad_request,
                  json: {
@@ -35,7 +30,7 @@ module Api
       def update
         user = User.find(params[:id])
         if user.update_attributes(users_params)
-          render json: user.serializable_hash(except: :password_digest)
+          render json: UserSerializer.new(user)
         else
           render status: :bad_request,
                  json: {
