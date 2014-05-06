@@ -81,8 +81,9 @@ describe Api::V1::GroupsController do
       end
 
       it_behaves_like 'a successful request'
+
       it 'returns an empty array' do
-        expect(JSON.parse(api_response.body)).to eq([])
+        expect(JSON.parse(api_response.body)).to eq('groups' => [])
       end
     end
 
@@ -131,7 +132,8 @@ describe Api::V1::GroupsController do
       it_behaves_like 'a successful request'
 
       it 'returns group details' do
-        expect(JSON.parse(api_response.body)['name']).to eq('coope')
+        groups = JSON.parse(api_response.body)['groups']
+        expect(groups.first['name']).to eq('coope')
       end
 
       it 'creates a new Group' do
@@ -144,7 +146,7 @@ describe Api::V1::GroupsController do
         expect(Group.first.users_units.first.name).to eq('my unit')
       end
 
-      it 'add user as group admin' do
+      it 'adds user as group admin' do
         api_response
         expect(user.has_role? :admin, Group.first).to be_true
       end
@@ -164,8 +166,9 @@ describe Api::V1::GroupsController do
         end
 
         it_behaves_like 'a successful request'
+
         it 'returns an array of groups where user is admin' do
-          expect(JSON.parse(api_response.body)).to eq([JSON.parse(group.to_json)])
+          expect(JSON.parse(api_response.body)).to eq('groups' => [JSON.parse(group.to_json)])
         end
       end
 
@@ -176,8 +179,9 @@ describe Api::V1::GroupsController do
         end
 
         it_behaves_like 'a successful request'
+
         it 'returns the group details' do
-          expect(api_response.body).to eq(group.to_json)
+          expect(JSON.parse(api_response.body)).to eq('groups' => [JSON.parse(group.to_json)])
         end
       end
 
@@ -188,8 +192,10 @@ describe Api::V1::GroupsController do
         end
 
         it_behaves_like 'a successful request'
+
         it 'returns the group details with updated attributes' do
-          expect(JSON.parse(api_response.body)['name']).to eq('Pummarola')
+          groups = JSON.parse(api_response.body)['groups']
+          expect(groups.first['name']).to eq('Pummarola')
         end
       end
 
@@ -200,6 +206,7 @@ describe Api::V1::GroupsController do
         end
 
         it_behaves_like 'a successful request'
+
         it 'deletes the group' do
           expect(api_response.body).to eq(group.to_json)
         end

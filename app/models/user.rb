@@ -24,6 +24,9 @@ class User < ActiveRecord::Base
     presence: true,
     uniqueness: true
 
+  # Retrieves the API key for the user
+  #
+  # @return [ApiKey]
   def session_api_key
     api_keys.first_or_create
   end

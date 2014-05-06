@@ -4,9 +4,10 @@ class ApiKey < ActiveRecord::Base
   end
   belongs_to :user
 
-  validates :access_token, :user,
+  validates :user,
     presence: true
   validates :access_token,
+    presence: true,
     uniqueness: true
 
   private

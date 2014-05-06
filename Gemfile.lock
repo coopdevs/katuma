@@ -38,7 +38,6 @@ GEM
     choice (0.1.6)
     diff-lcs (1.2.5)
     erubis (2.7.0)
-    execjs (2.0.2)
     factory_girl (4.2.0)
       activesupport (>= 3.0.0)
     factory_girl_rails (4.2.1)
@@ -46,16 +45,14 @@ GEM
       railties (>= 3.0.0)
     hike (1.2.3)
     i18n (0.6.5)
-    jquery-rails (3.0.4)
-      railties (>= 3.0, < 5.0)
-      thor (>= 0.14, < 2.0)
-    json (1.8.1)
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.25)
     minitest (4.7.5)
     multi_json (1.8.2)
+    oat (0.4.1)
+      activesupport
     pg (0.17.0)
     polyglot (0.3.3)
     pundit (0.2.1)
@@ -118,9 +115,6 @@ GEM
       polyglot
       polyglot (>= 0.3.1)
     tzinfo (0.3.38)
-    uglifier (2.3.0)
-      execjs (>= 0.3.0)
-      json (>= 1.8.0)
 
 PLATFORMS
   ruby
@@ -128,7 +122,7 @@ PLATFORMS
 DEPENDENCIES
   bcrypt-ruby (~> 3.0.0)
   factory_girl_rails (~> 4.2.1)
-  jquery-rails
+  oat (~> 0.4.1)
   pg
   pundit
   rails (~> 4.0.0)
@@ -138,4 +132,3 @@ DEPENDENCIES
   rolify (~> 3.3.0.rc5)!
   rspec-rails (~> 2.14.0)
   shoulda-matchers (~> 2.4.0)
-  uglifier (>= 1.0.3)
