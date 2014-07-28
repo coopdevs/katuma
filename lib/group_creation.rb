@@ -1,14 +1,14 @@
 class GroupCreation
   attr_accessor :group, :creator
 
-  # @param [Object] Group
-  # @param [Object] User
+  # @param group [Group]
+  # @param creator [User]
   def initialize(group, creator)
     @group = group
     @creator = creator
   end
 
-  # Create a new Group and a new UsersUnit,
+  # Creates a new Group and a new UsersUnit,
   # add creator as group admin and
   # add creator in UsersUnit.users
   def create
@@ -19,6 +19,8 @@ class GroupCreation
       end
     end
   end
+
+  private
 
   def add_creator_as_group_admin
     @creator.add_role :admin, @group

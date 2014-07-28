@@ -10,6 +10,12 @@ class ApplicationController < ActionController::Base
       User.find_by(id: session[:current_user_id])
   end
 
+  # Checks if the request comes from
+  # a logged in user
+  def authenticate
+    unauthorized_request unless current_user
+  end
+
   def unauthorized_request
     render text: "401 Unauthorized", status: :unauthorized
   end
