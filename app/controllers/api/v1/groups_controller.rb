@@ -1,6 +1,8 @@
 module Api
   module V1
     class GroupsController < ApplicationController
+
+      before_action :authenticate
       before_action :find_and_authorize_group,
         only: [:show, :update, :destroy]
 
@@ -46,11 +48,11 @@ module Api
       private
 
       def create_params
-        params.require(:group).permit(:name, users_units_attributes: [:name])
+        params.permit(:name, users_units_attributes: [:name])
       end
 
       def update_params
-        params.require(:group).permit(:name)
+        params.permit(:name)
       end
 
       def find_and_authorize_group

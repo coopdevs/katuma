@@ -15,6 +15,8 @@ module Api
       # Remove the user id from the session
       def destroy
         @_current_user = session[:current_user_id] = nil
+
+        render nothing: true, status: 200
       end
     end
   end
