@@ -20,15 +20,5 @@ describe User do
     it { should have_many(:users_units).through(:users_unit_memberships) }
     it { should have_many(:groups).through(:users_units) }
     it { should have_many(:waiting_groups).through(:waiting_list_memberships) }
-    it { should have_many(:api_keys).dependent(:destroy) }
   end
-
-  it "create a valid session api key" do
-    user = FactoryGirl.create :user
-    api_key = user.session_api_key
-
-    expect(api_key.access_token).to match /\S{32}/
-    expect(api_key.user).to eq(user)
-  end
-
 end

@@ -2,7 +2,6 @@ source 'https://rubygems.org'
 
 gem 'rails', '~> 4.0.0'
 
-gem 'rails-api', '~> 0.1.0'
 gem 'oat', '~> 0.4.1'
 
 gem 'pg'

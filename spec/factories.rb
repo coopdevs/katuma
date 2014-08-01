@@ -10,11 +10,6 @@ FactoryGirl.define do
     password_confirmation "secret"
   end
 
-  factory :api_key do
-    access_token "fuuuuuuu"
-    user
-  end
-
   factory :users_unit do
     name "My family"
     group
