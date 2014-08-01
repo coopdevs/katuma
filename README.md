@@ -2,6 +2,34 @@
 
 Ruby on Rails app to foster collaborative consumption
 
-## Entity-relationship diagram
+## Available API endpoints
 
-![ERD](./doc/erd.png?raw=true)
+### Users
+#### Create
+```
+POST api/v1/users
+
+{
+  'name': 'User name',
+  'email': 'user@email.com',
+  'password': 'sosecret',
+  'password_confirmation': 'sosecret'
+}
+```
+
+### Sessions
+#### Log in
+```
+POST api/v1/sessions
+
+{
+  'email': 'user@email.com',
+  'password': 'sosecret'
+}
+```
+#### Log out
+```
+DELETE api/v1/sessions
+
+{}
+```
