@@ -20,8 +20,6 @@ class GroupCreation
     end
   end
 
-  private
-
   def add_creator_as_group_admin
     @creator.add_role :admin, @group
   end
