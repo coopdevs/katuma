@@ -10,8 +10,6 @@ class User < ActiveRecord::Base
     through: :users_unit_memberships
   has_many :groups,
     through: :users_units
-  has_many :api_keys,
-    dependent: :destroy
 
   validates :name,
     presence: true
