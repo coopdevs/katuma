@@ -18,6 +18,5 @@ describe User do
     it { should have_many(:users_unit_memberships).dependent(:destroy) }
     it { should have_many(:users_units).through(:users_unit_memberships) }
     it { should have_many(:groups).through(:users_units) }
-    it { should have_many(:api_keys).dependent(:destroy) }
   end
 end
