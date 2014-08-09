@@ -16,10 +16,6 @@ group :test do
   gem 'shoulda-matchers', '~> 2.4.0'
 end
 
-group :development do
-  gem 'rails-erd'
-end
-
 group :development, :test do
   gem 'rspec-rails', '~> 2.14.0'
 end
