@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  rolify
+
   has_secure_password
 
   has_one  :profile,

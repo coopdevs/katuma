@@ -1,5 +1,4 @@
 class Group < ActiveRecord::Base
-  resourcify
 
   has_one  :profile,
     as: :profilable
