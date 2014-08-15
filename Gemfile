@@ -13,7 +13,7 @@ gem 'pundit'
 group :test do
   gem 'rspec-rails', '~> 2.14.0'
   gem 'factory_girl_rails', '~> 4.2.1'
-  gem 'shoulda-matchers', '~> 2.6.2'
+  gem 'shoulda-matchers', '~> 2.6.2', require: false
 end
 
 group :development, :test do

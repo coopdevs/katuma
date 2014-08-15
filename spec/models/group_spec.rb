@@ -1,4 +1,4 @@
-# spec/models/customer_spec.rb
+# spec/models/group_spec.rb
 require 'spec_helper'
 
 describe Group do
@@ -16,5 +16,4 @@ describe Group do
     it { should have_many(:users).through(:memberships) }
     it { should have_many(:users_units) }
   end
-
 end
