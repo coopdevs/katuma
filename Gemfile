@@ -17,6 +17,7 @@ group :test do
 end
 
 group :development, :test do
+  gem 'byebug'
 end
 
 group :production do
