@@ -1,9 +1,10 @@
+# spec/models/users_unit_spec.rb
 require 'spec_helper'
 
 describe UsersUnit do
 
   describe 'Validations' do
-    it 'should have valid factory' do
+    it 'has a valid factory' do
       expect(FactoryGirl.build(:users_unit)).to be_valid
     end
     it { should validate_presence_of(:name) }

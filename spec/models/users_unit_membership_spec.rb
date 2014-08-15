@@ -1,3 +1,4 @@
+# spec/models/users_unit_membership_spec.rb
 require 'spec_helper'
 
 describe UsersUnitMembership do
