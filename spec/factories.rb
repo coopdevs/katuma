@@ -4,26 +4,29 @@ FactoryGirl.define do
   end
 
   factory :user do
-    name "Jessie Pinkman"
+    name 'Jessie Pinkman'
     email
-    password "secret"
-    password_confirmation "secret"
+    password 'secret'
+    password_confirmation 'secret'
   end
 
   factory :users_unit do
-    name "My family"
+    name 'My unit'
     group
   end
 
   factory :group do
-    name "My group"
+    name 'My group'
+  end
 
-    after :build do |g|
-      g.users_units.build(name: "My UsersUnit")
-    end
+  factory :membership do
+    role 1
+    group
+    user
   end
 
   factory :users_unit_membership do
+    role 1
     users_unit
     user
   end
