@@ -11,17 +11,14 @@ gem 'bcrypt-ruby', '~> 3.0.0'
 gem 'pundit'
 
 group :test do
+  gem 'rspec-rails', '~> 2.14.0'
   gem 'factory_girl_rails', '~> 4.2.1'
-  gem 'shoulda-matchers', '~> 2.4.0'
+  gem 'shoulda-matchers', '~> 2.6.2'
 end
 
 group :development, :test do
-  gem 'rspec-rails', '~> 2.14.0'
 end
 
 group :production do
   gem 'rails_stdout_logging'
 end
-
-# To use debugger
-# gem 'debugger'
