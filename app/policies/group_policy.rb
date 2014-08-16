@@ -10,14 +10,14 @@ class GroupPolicy < ApplicationPolicy
   end
 
   def show?
-    user.has_role? :admin, record
+    Membership.where(group: record, user: user, role: Membership::ROLES[:admin]).any?
   end
 
   def update?
-    user.has_role? :admin, record
+    Membership.where(group: record, user: user, role: Membership::ROLES[:admin]).any?
   end
 
   def destroy?
-    user.has_role? :admin, record
+    Membership.where(group: record, user: user, role: Membership::ROLES[:admin]).any?
   end
 end
