@@ -67,14 +67,4 @@ ActiveRecord::Schema.define(version: 20140814214803) do
 
   add_index "users_units", ["group_id"], name: "index_users_units_on_group_id", using: :btree
 
-  create_table "waiting_list_memberships", force: true do |t|
-    t.integer  "user_id",    null: false
-    t.integer  "group_id",   null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "waiting_list_memberships", ["group_id"], name: "index_waiting_list_memberships_on_group_id", using: :btree
-  add_index "waiting_list_memberships", ["user_id"], name: "index_waiting_list_memberships_on_user_id", using: :btree
-
 end
