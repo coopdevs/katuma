@@ -1,12 +1,13 @@
 require 'spec_helper'
 
 describe GroupPolicy do
+
   subject { GroupPolicy.new(user, group) }
 
   let(:group) { FactoryGirl.create :group }
+  let(:user) { FactoryGirl.create :user }
 
-  context 'A new user' do
-    let(:user) { FactoryGirl.create :user }
+  context 'A user that does not pertain to the group' do
 
     it { should     permit :create }
     it { should_not permit :show }
@@ -15,10 +16,9 @@ describe GroupPolicy do
   end
 
   context 'A group admin' do
-    let(:user) { FactoryGirl.create :user }
-    let(:group) { FactoryGirl.create :group }
-    before :each do
-      user.add_role :admin, group
+
+    before do
+      FactoryGirl.create(:membership, user: user, group: group, role: Membership::ROLES[:admin])
     end
 
     it { should permit :create }
