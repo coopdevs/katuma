@@ -14,6 +14,7 @@ describe Group do
     it { should have_one(:profile) }
     it { should have_many(:memberships).dependent(:destroy) }
     it { should have_many(:users).through(:memberships) }
+    it { should have_many(:waiters).through(:memberships) }
     it { should have_many(:users_units) }
   end
 end
