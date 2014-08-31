@@ -10,7 +10,11 @@ class GroupPolicy < ApplicationPolicy
   end
 
   def show?
-    Membership.where(group: record, user: user, role: Membership::ROLES[:admin]).any?
+    Membership.where(
+      group: record,
+      user: user,
+      role: [Membership::ROLES[:admin], Membership::ROLES[:member]]
+    ).any?
   end
 
   def update?
