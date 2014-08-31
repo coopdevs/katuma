@@ -10,7 +10,6 @@ Katuma::Application.routes.draw do
       delete :sessions, controller: :sessions, action: :destroy
       resources :users, except: [:new, :edit, :index]
       resources :groups, except: [:new, :edit] do
-        resources :waiting_users, controller: :waiting_users, only: [:index, :create, :destroy]
         resources :users_units, except: [:new, :edit], shallow: true do
           get :users, controller: :users, action: :index
         end
