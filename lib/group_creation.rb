@@ -8,23 +8,21 @@ class GroupCreation
     @creator = creator
   end
 
-  # Creates a new Group and a new UsersUnit,
-  # add creator as group admin and
-  # add creator in UsersUnit.users
+  # Creates a new Group
+  # and add creator as group admin
   def create
     Group.transaction do
       if self.group.save
-        self.add_creator_as_group_admin
-        self.add_creator_in_users_unit
+        add_creator_as_group_admin
       end
     end
   end
 
-  def add_creator_as_group_admin
-    @creator.add_role :admin, @group
-  end
+  private
 
-  def add_creator_in_users_unit
-    @group.users_units.last.users << @creator
+  # Creates a new Membership for the creator
+  # as admin
+  def add_creator_as_group_admin
+    @group.memberships.create(user: @creator, role: Membership::ROLES[:admin])
   end
 end
