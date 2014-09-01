@@ -10,10 +10,14 @@ class MembershipPolicy < ApplicationPolicy
   end
 
   def create?
-    Membership.where(group: record.group, user: user, role: Membership::ROLES[:admin].any?)
+    Membership.where(group: record.group, user: user, role: Membership::ROLES[:admin]).any?
+  end
+
+  def update?
+    Membership.where(group: record.group, user: user, role: Membership::ROLES[:admin]).any?
   end
 
   def destroy?
-    Membership.where(group: record.group, user: user, role: Membership::ROLES[:admin].any?
+    Membership.where(group: record.group, user: user, role: Membership::ROLES[:admin]).any?
   end
 end
