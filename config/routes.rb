@@ -8,9 +8,8 @@ Katuma::Application.routes.draw do
       get :bootstrap, controller: :users, action: :bootstrap
       post :sessions, controller: :sessions, action: :create
       delete :sessions, controller: :sessions, action: :destroy
-      resources :users, except: [:new, :edit, :index] do
-        resources :memberships
-      end
+      resources :memberships
+      resources :users, except: [:new, :edit, :index]
       resources :groups, except: [:new, :edit] do
         resources :users_units, except: [:new, :edit], shallow: true do
           get :users, controller: :users, action: :index
