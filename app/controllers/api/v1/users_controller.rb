@@ -44,6 +44,10 @@ module Api
         render json: User.destroy(params[:id])
       end
 
+      def account
+        render json: UserSerializer.new(current_user)
+      end
+
       private
 
       def users_params
