@@ -92,7 +92,7 @@ describe Api::V1::GroupsController do
       it_behaves_like 'a successful request'
 
       it 'returns an empty array' do
-        expect(JSON.parse(api_response.body)).to eq('groups' => [])
+        expect(JSON.parse(api_response.body)).to eq []
       end
     end
 
@@ -136,8 +136,9 @@ describe Api::V1::GroupsController do
       it_behaves_like 'a successful request'
 
       it 'returns group details' do
-        groups = JSON.parse(api_response.body)['groups']
-        expect(groups.first['name']).to eq('coope')
+        group = JSON.parse(api_response.body)
+
+        expect(group['name']).to eq('coope')
       end
 
       it 'creates a new Group' do
@@ -169,7 +170,7 @@ describe Api::V1::GroupsController do
       it_behaves_like 'a successful request'
 
       it 'returns an array of groups which user pertains' do
-        expect(JSON.parse(api_response.body)).to eq('groups' => [JSON.parse(group.to_json)])
+        expect(JSON.parse(api_response.body)).to eq [JSON.parse(group.to_json)]
       end
     end
 
@@ -183,7 +184,7 @@ describe Api::V1::GroupsController do
       it_behaves_like 'a successful request'
 
       it 'returns the group details' do
-        expect(JSON.parse(api_response.body)).to eq('groups' => [JSON.parse(group.to_json)])
+        expect(JSON.parse(api_response.body)).to eq JSON.parse(group.to_json)
       end
     end
 
@@ -197,8 +198,9 @@ describe Api::V1::GroupsController do
       it_behaves_like 'a successful request'
 
       it 'returns the group details with updated attributes' do
-        groups = JSON.parse(api_response.body)['groups']
-        expect(groups.first['name']).to eq('Pummarola')
+        group = JSON.parse(api_response.body)
+
+        expect(group['name']).to eq('Pummarola')
       end
     end
 
