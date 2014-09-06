@@ -93,7 +93,7 @@ describe Api::V1::MembershipsController do
       it_behaves_like 'a successful request'
 
       it 'returns an empty array' do
-        expect(JSON.parse(api_response.body)).to eq('memberships' => [])
+        expect(JSON.parse(api_response.body)).to eq []
       end
     end
 
@@ -107,7 +107,7 @@ describe Api::V1::MembershipsController do
       it_behaves_like 'a successful request'
 
       it 'returns the membership details' do
-        expect(JSON.parse(api_response.body)).to eq('memberships' => [JSON.parse(membership.to_json)])
+        expect(JSON.parse(api_response.body)).to eq JSON.parse(membership.to_json)
       end
     end
 
@@ -141,7 +141,7 @@ describe Api::V1::MembershipsController do
       it_behaves_like 'a successful request'
 
       it 'returns membership details' do
-        membership = JSON.parse(api_response.body)['memberships'].first
+        membership = JSON.parse(api_response.body)
 
         expect(membership['group_id']).to eq group.id
         expect(membership['user_id']).to eq user.id
@@ -183,7 +183,7 @@ describe Api::V1::MembershipsController do
       it 'returns an array of memberships of the user groups' do
         memberships = Membership.where(group_id: member.group_ids)
 
-        expect(JSON.parse(api_response.body)).to eq('memberships' => JSON.parse(memberships.to_json))
+        expect(JSON.parse(api_response.body)).to eq JSON.parse(memberships.to_json)
       end
     end
 
@@ -197,7 +197,7 @@ describe Api::V1::MembershipsController do
       it_behaves_like 'a successful request'
 
       it 'returns the membership details' do
-        expect(JSON.parse(api_response.body)).to eq('memberships' => [JSON.parse(membership.to_json)])
+        expect(JSON.parse(api_response.body)).to eq JSON.parse(membership.to_json)
       end
     end
 
@@ -211,7 +211,7 @@ describe Api::V1::MembershipsController do
       it_behaves_like 'a successful request'
 
       it 'returns the membership details with updated attributes' do
-        membership = JSON.parse(api_response.body)['memberships'].first
+        membership = JSON.parse(api_response.body)
         expect(membership['role']).to eq Membership::ROLES[:admin]
       end
     end
