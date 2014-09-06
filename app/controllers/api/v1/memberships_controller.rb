@@ -3,13 +3,13 @@ module Api
     class MembershipsController < ApplicationController
 
       before_action :authenticate
-      before_action :load_user,
-        only: :index
       before_action :find_and_authorize_membership,
         only: [:show, :update, :destroy]
 
       def index
-        render json: MembershipsSerializer.new(@user.memberships)
+        memberships = Membership.where(group_id: current_user.group_ids)
+
+        render json: MembershipsSerializer.new(memberships)
       end
 
       def show
@@ -49,10 +49,6 @@ module Api
 
       def membership_params
         params.permit(:group_id, :user_id, :role)
-      end
-
-      def load_user
-        @user = User.find(params[:user_id])
       end
 
       def find_and_authorize_membership
