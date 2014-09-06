@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem 'rails', '~> 4.0.0'
 
-gem 'oat', '~> 0.4.1'
+gem 'oat', '~> 0.4.5'
 
 gem 'pg'
 
