@@ -180,8 +180,10 @@ describe Api::V1::MembershipsController do
 
       it_behaves_like 'a successful request'
 
-      it 'returns an array of memberships which user pertains' do
-        expect(JSON.parse(api_response.body)).to eq('memberships' => [JSON.parse(membership.to_json)])
+      it 'returns an array of memberships of the user groups' do
+        memberships = Membership.where(group_id: member.group_ids)
+
+        expect(JSON.parse(api_response.body)).to eq('memberships' => JSON.parse(memberships.to_json))
       end
     end
 
