@@ -5,6 +5,7 @@ Katuma::Application.routes.draw do
     namespace :v1 do
       post :sessions, controller: :sessions, action: :create
       delete :sessions, controller: :sessions, action: :destroy
+      get :account, controller: :users, action: :account
       resources :memberships
       resources :users, except: [:new, :edit, :index]
       resources :groups, except: [:new, :edit] do
