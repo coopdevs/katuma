@@ -3,14 +3,11 @@ Katuma::Application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      # ToDo: remove this and put bootstrap data
-      # in dashboard index HTML
-      get :bootstrap, controller: :users, action: :bootstrap
       post :sessions, controller: :sessions, action: :create
       delete :sessions, controller: :sessions, action: :destroy
+      resources :memberships
       resources :users, except: [:new, :edit, :index]
       resources :groups, except: [:new, :edit] do
-        resources :waiting_users, controller: :waiting_users, only: [:index, :create, :destroy]
         resources :users_units, except: [:new, :edit], shallow: true do
           get :users, controller: :users, action: :index
         end

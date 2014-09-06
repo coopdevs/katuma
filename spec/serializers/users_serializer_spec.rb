@@ -6,26 +6,24 @@ describe UsersSerializer do
 
     let(:first_user) { FactoryGirl.build(:user) }
     let(:second_user) { FactoryGirl.build(:user) }
-    let(:hash) { UsersSerializer.new([first_user, second_user]).to_hash }
 
-    subject(:users) { hash.fetch(:users) }
+    subject { UsersSerializer.new([first_user, second_user]).to_hash }
 
-    it 'returns the correct first_user properties' do
-      expect(users[0]).to include(
+    it { should include(
+      {
         id: first_user.id,
         name: first_user.name,
+        email: first_user.email,
         created_at: first_user.created_at,
         updated_at: first_user.updated_at
-      )
-    end
-
-    it 'returns the correct second_user properties' do
-      expect(users[0]).to include(
+      },
+      {
         id: second_user.id,
         name: second_user.name,
+        email: second_user.email,
         created_at: second_user.created_at,
         updated_at: second_user.updated_at
-      )
-    end
+      }
+    )}
   end
 end

@@ -20,17 +20,18 @@ shared_examples 'an unauthorized request' do
   end
 end
 
-describe Api::V1::GroupsController do
+describe Api::V1::MembershipsController do
 
   let(:user) { FactoryGirl.create(:user) }
   let(:group) { FactoryGirl.create(:group) }
+  let(:membership) { FactoryGirl.create(:membership) }
 
   context 'Not authenticaded user' do
 
     describe 'GET #index' do
 
       subject :api_response do
-        get :index
+        get :index, user_id: 666
         response
       end
 
@@ -40,7 +41,7 @@ describe Api::V1::GroupsController do
     describe 'GET #show' do
 
       subject :api_response do
-        get :show, id: group.id
+        get :show, user_id: 666, id: 666
         response
       end
 
@@ -50,7 +51,7 @@ describe Api::V1::GroupsController do
     describe 'POST #create' do
 
       subject :api_response do
-        post :create, name: 'ciola'
+        post :create, user_id: 666, name: 'ciola'
         response
       end
 
@@ -60,7 +61,7 @@ describe Api::V1::GroupsController do
     describe 'PUT #update' do
 
       subject :api_response do
-        put :update, { id: group.id, name: 'ciola' }
+        put :update, user_id: 666, id: 666, name: 'ciola'
         response
       end
 
@@ -70,7 +71,7 @@ describe Api::V1::GroupsController do
     describe 'DELETE #destroy' do
 
       subject :api_response do
-        delete :destroy, id: group.id
+        delete :destroy, user_id: 666, id: 666
         response
       end
 
@@ -85,7 +86,7 @@ describe Api::V1::GroupsController do
     describe 'GET #index' do
 
       subject :api_response do
-        get :index
+        get :index, user_id: user.id
         response
       end
 
@@ -99,17 +100,21 @@ describe Api::V1::GroupsController do
     describe 'GET #show' do
 
       subject :api_response do
-        get :show, id: group.id
+        get :show, user_id: user.id, id: membership.id
         response
       end
 
-      it_behaves_like 'an unauthorized request'
+      it_behaves_like 'a successful request'
+
+      it 'returns the membership details' do
+        expect(JSON.parse(api_response.body)).to eq JSON.parse(membership.to_json)
+      end
     end
 
     describe 'PUT #update' do
 
       subject :api_response do
-        put :update, { id: group.id, name: 'ciola' }
+        put :update, user_id: user.id, id: membership.id, name: 'ciola'
         response
       end
 
@@ -119,7 +124,7 @@ describe Api::V1::GroupsController do
     describe 'DELETE #destroy' do
 
       subject :api_response do
-        delete :destroy, id: group.id
+        delete :destroy, user_id: user.id, id: membership.id
         response
       end
 
@@ -129,31 +134,37 @@ describe Api::V1::GroupsController do
     describe 'POST #create' do
 
       subject :api_response do
-        post :create, name: 'coope'
+        post :create, user_id: user.id, group_id: group.id, role: Membership::ROLES[:admin]
         response
       end
 
       it_behaves_like 'a successful request'
 
-      it 'returns group details' do
-        group = JSON.parse(api_response.body)
+      it 'returns membership details' do
+        membership = JSON.parse(api_response.body)
 
-        expect(group['name']).to eq('coope')
+        expect(membership['group_id']).to eq group.id
+        expect(membership['user_id']).to eq user.id
+        expect(membership['role']).to eq Membership::ROLES[:admin]
       end
 
-      it 'creates a new Group' do
+      it 'creates a new Membership' do
         api_response
-        expect(Group.first.name).to eq('coope')
-      end
 
-      it 'adds user as group admin' do
-        api_response
-        expect(Group.first.admins).to include user
+        membership = Membership.first
+        expect(membership.group).to eq group
+        expect(membership.user).to eq user
+        expect(membership.role).to eq Membership::ROLES[:admin]
       end
     end
   end
 
   context 'Group admin user' do
+
+    let(:member) { FactoryGirl.create(:user) }
+    let!(:membership) do
+      group.memberships.create(user: member, role: Membership::ROLES[:member])
+    end
 
     before do
       group.memberships.create(user: user, role: Membership::ROLES[:admin])
@@ -163,58 +174,59 @@ describe Api::V1::GroupsController do
     describe 'GET #index' do
 
       subject :api_response do
-        get :index
+        get :index, user_id: member.id
         response
       end
 
       it_behaves_like 'a successful request'
 
-      it 'returns an array of groups which user pertains' do
-        expect(JSON.parse(api_response.body)).to eq [JSON.parse(group.to_json)]
+      it 'returns an array of memberships of the user groups' do
+        memberships = Membership.where(group_id: member.group_ids)
+
+        expect(JSON.parse(api_response.body)).to eq JSON.parse(memberships.to_json)
       end
     end
 
     describe 'GET #show' do
 
       subject :api_response do
-        get :show, id: group.id
+        get :show, user_id: member.id, id: membership.id
         response
       end
 
       it_behaves_like 'a successful request'
 
-      it 'returns the group details' do
-        expect(JSON.parse(api_response.body)).to eq JSON.parse(group.to_json)
+      it 'returns the membership details' do
+        expect(JSON.parse(api_response.body)).to eq JSON.parse(membership.to_json)
       end
     end
 
     describe 'PUT #update' do
 
       subject :api_response do
-        put :update, id: group.id, name: 'Pummarola'
+        put :update, user_id: member.id, id: membership.id, role: Membership::ROLES[:admin]
         response
       end
 
       it_behaves_like 'a successful request'
 
-      it 'returns the group details with updated attributes' do
-        group = JSON.parse(api_response.body)
-
-        expect(group['name']).to eq('Pummarola')
+      it 'returns the membership details with updated attributes' do
+        membership = JSON.parse(api_response.body)
+        expect(membership['role']).to eq Membership::ROLES[:admin]
       end
     end
 
     describe 'DELETE #destroy' do
 
       subject :api_response do
-        delete :destroy, id: group.id
+        delete :destroy, user_id: member.id, id: membership.id
         response
       end
 
       it_behaves_like 'a successful request'
 
-      it 'deletes the group' do
-        expect(api_response.body).to eq(group.to_json)
+      it 'deletes the membership' do
+        expect(api_response.body).to eq(membership.to_json)
       end
     end
   end

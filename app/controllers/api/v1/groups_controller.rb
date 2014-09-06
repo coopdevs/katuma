@@ -7,8 +7,7 @@ module Api
         only: [:show, :update, :destroy]
 
       def index
-        groups = Group.with_role(:admin, current_user)
-        render json: GroupsSerializer.new(groups)
+        render json: GroupsSerializer.new(current_user.groups)
       end
 
       def show
@@ -16,7 +15,7 @@ module Api
       end
 
       def create
-        group = Group.new(create_params)
+        group = Group.new(group_params)
         group_creation = GroupCreation.new(group, current_user)
         if group_creation.create
           render json: GroupSerializer.new(group)
@@ -30,7 +29,7 @@ module Api
       end
 
       def update
-        if @group.update_attributes(update_params)
+        if @group.update_attributes(group_params)
           render json: GroupSerializer.new(@group)
         else
           render status: :bad_request,
@@ -47,11 +46,7 @@ module Api
 
       private
 
-      def create_params
-        params.permit(:name, users_units_attributes: [:name])
-      end
-
-      def update_params
+      def group_params
         params.permit(:name)
       end
 
@@ -59,7 +54,6 @@ module Api
         @group = Group.find(params[:id])
         authorize @group
       end
-
     end
   end
 end
