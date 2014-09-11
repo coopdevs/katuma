@@ -10,8 +10,8 @@ Ruby on Rails app to foster collaborative consumption
 POST api/v1/sessions
 
 {
-  'email': 'user@email.com',
-  'password': 'sosecret'
+  "email": "user@email.com",
+  "password": "sosecret"
 }
 ```
 #### Log out
@@ -31,22 +31,48 @@ GET api/v1/account
 Response:
 ```
 {
-  'id': 1,
-  'name': 'User name',
-  'email': 'user@email.com',
-  'created_at': '2014-09-06T11:48:39.072Z',
-  'updated_at': '2014-09-06T11:48:39.072Z'
+  "id": 1,
+  "name": "User name",
+  "email": "user@email.com",
+  "created_at": "2014-09-06T11:48:39.072Z",
+  "updated_at": "2014-09-06T11:48:39.072Z"
 }
+```
+#### Get users in user network
+*All the users that have a Membership with any of the user's groups*
+```
+GET api/v1/users
+
+{}
+```
+Response:
+```
+[
+  {
+    "id": 1,
+    "name": "User name",
+    "email": "user@email.com",
+    "created_at": "2014-09-06T11:48:39.072Z",
+    "updated_at": "2014-09-06T11:48:39.072Z"
+  },
+  {
+    "id":2,
+    "name":"Other user",
+    "email":"other@hola.com",
+    "created_at":"2014-08-31T18:40:40.255Z",
+    "updated_at":"2014-08-31T18:40:40.255Z"
+  }
+]
 ```
 #### Create
 ```
 POST api/v1/users
 
 {
-  'name': 'User name',
-  'email': 'user@email.com',
-  'password': 'sosecret',
-  'password_confirmation': 'sosecret'
+  "name": "User name",
+  "email": "user@email.com",
+  "password": "sosecret",
+  "password_confirmation": "sosecret"
 }
 ```
 
@@ -56,7 +82,7 @@ POST api/v1/users
 POST api/v1/groups
 
 {
-  'name': 'My group'
+  "name": "My group"
 }
 ```
 
@@ -66,9 +92,9 @@ POST api/v1/groups
 POST api/v1/memberships
 
 {
-  'group_id': 1,
-  'user_id': 1,
-  'role': 1
+  "group_id": 1,
+  "user_id": 1,
+  "role": 1
 }
 ```
 A list of all the possible Group roles can be found in [app/models/membership.rb](app/models/membership.rb).
