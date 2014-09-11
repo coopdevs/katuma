@@ -3,14 +3,17 @@ module Api
     class UsersController < ApplicationController
 
       before_action :authenticate, except: :create
-      before_action :load_memberable, only: :index
 
       def index
-        render json: UserSerializer.new(@memberable.users)
+        users = User.where(id: Membership.where(group_id: current_user.group_ids).pluck(:user_id))
+
+        render json: UsersSerializer.new(users)
       end
 
       def show
         user = User.find(params[:id])
+        authorize user
+
         render json: UserSerializer.new(user)
       end
 
@@ -29,6 +32,8 @@ module Api
 
       def update
         user = User.find(params[:id])
+        authorize user
+
         if user.update_attributes(users_params)
           render json: UserSerializer.new(user)
         else
@@ -41,7 +46,10 @@ module Api
       end
 
       def destroy
-        render json: User.destroy(params[:id])
+        user = User.find(params[:id])
+        authorize user
+
+        render json: User.destroy(user.id)
       end
 
       def account
@@ -53,12 +61,6 @@ module Api
       def users_params
         params.permit(:name, :email, :password, :password_confirmation)
       end
-
-      def load_memberable
-        resource, id = request.path.split('/')[3,4]
-        @memberable = resource.singularize.classify.constantize.find(id)
-      end
-
     end
   end
 end
