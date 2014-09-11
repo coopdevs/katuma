@@ -6,6 +6,7 @@
 		"2f69cb92-9452-093d-9aa6-96b6401699e9",
 		"5357c699-c635-0474-1338-d1761d11f4d8",
 		"7ae135a7-c78a-f03f-b881-f2dd842e1b25",
+		"8b9f27f7-cc85-6c89-57ef-b8d25e16f3de",
 		"1aa9fc8d-851b-23e3-a149-68c3ef9000ef",
 		"fec5bfd1-012b-881c-7db8-a8b12834b30c",
 		"ed17347b-2433-91bb-8d1c-43a5cef41017",
@@ -24,7 +25,7 @@
 			"preRequestScript": "",
 			"pathVariables": {},
 			"method": "POST",
-			"data": "{\n  \"email\": \"user@mail.com\",\n  \"name\": \"user name\",\n  \"password\": \"secret\",\n  \"password_confirmation\": \"secret\"\n}",
+			"data": [],
 			"dataMode": "raw",
 			"version": 2,
 			"tests": "",
@@ -33,25 +34,27 @@
 			"description": "",
 			"collectionId": "ff8d41cd-1e7b-866e-005d-19e60b7f0c97",
 			"responses": [],
-			"synced": false
+			"synced": false,
+			"rawModeData": "{\n  \"email\": \"user@mail.com\",\n  \"name\": \"user name\",\n  \"password\": \"secret\",\n  \"password_confirmation\": \"secret\"\n}"
 		},
 		{
 			"id": "2f69cb92-9452-093d-9aa6-96b6401699e9",
 			"headers": "Content-Type: application/json\n",
-			"url": "http://localhost:3000/api/v1/session",
+			"url": "http://localhost:3000/api/v1/sessions",
 			"preRequestScript": "",
 			"pathVariables": {},
 			"method": "POST",
-			"data": "{\n  \"email\": \"user@mail.com\",\n  \"password\": \"secret\"\n}",
+			"data": [],
 			"dataMode": "raw",
 			"version": 2,
 			"tests": "",
-			"time": 1410007643124,
+			"time": 1410394724706,
 			"name": "New session",
 			"description": "",
 			"collectionId": "ff8d41cd-1e7b-866e-005d-19e60b7f0c97",
 			"responses": [],
-			"synced": false
+			"synced": false,
+			"rawModeData": "{\n  \"email\": \"user@mail.com\",\n  \"password\": \"secret\"\n}"
 		},
 		{
 			"id": "323b9445-5f26-c0bd-8d24-ac615f1bb64b",
@@ -60,7 +63,7 @@
 			"pathVariables": {},
 			"preRequestScript": "",
 			"method": "POST",
-			"data": "{\n  \"group_id\": 2,\n  \"user_id\": 2,\n  \"role\": 1\n}",
+			"data": [],
 			"dataMode": "raw",
 			"name": "Create Membership",
 			"description": "",
@@ -70,7 +73,8 @@
 			"responses": [],
 			"tests": "",
 			"collectionId": "ff8d41cd-1e7b-866e-005d-19e60b7f0c97",
-			"synced": false
+			"synced": false,
+			"rawModeData": "{\n  \"group_id\": 2,\n  \"user_id\": 2,\n  \"role\": 1\n}"
 		},
 		{
 			"id": "33d98757-2cf4-c859-afba-666cb3edd1ec",
@@ -92,21 +96,21 @@
 		{
 			"id": "5357c699-c635-0474-1338-d1761d11f4d8",
 			"headers": "Content-Type: application/json\n",
-			"url": "http://localhost:3000/api/v1/session",
-			"pathVariables": {},
+			"url": "http://localhost:3000/api/v1/sessions",
 			"preRequestScript": "",
+			"pathVariables": {},
 			"method": "DELETE",
-			"data": "",
+			"data": [],
 			"dataMode": "raw",
+			"version": 2,
+			"tests": "",
+			"time": 1410394731563,
 			"name": "Close session",
 			"description": "",
-			"descriptionFormat": "html",
-			"time": 1410007141117,
-			"version": 2,
-			"responses": [],
-			"tests": "",
 			"collectionId": "ff8d41cd-1e7b-866e-005d-19e60b7f0c97",
-			"synced": false
+			"responses": [],
+			"synced": false,
+			"rawModeData": ""
 		},
 		{
 			"id": "7ae135a7-c78a-f03f-b881-f2dd842e1b25",
@@ -128,13 +132,32 @@
 			"synced": false
 		},
 		{
+			"id": "8b9f27f7-cc85-6c89-57ef-b8d25e16f3de",
+			"headers": "Content-Type: application/json\nAuthorization: Token c2d325854725be2d824e089b319f9d04\n",
+			"url": "http://localhost:3000/api/v1/users",
+			"pathVariables": {},
+			"preRequestScript": "",
+			"method": "GET",
+			"data": [],
+			"dataMode": "params",
+			"name": "Retrieve Users",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1410394786203,
+			"version": 2,
+			"responses": [],
+			"tests": "",
+			"collectionId": "ff8d41cd-1e7b-866e-005d-19e60b7f0c97",
+			"synced": false
+		},
+		{
 			"id": "ed17347b-2433-91bb-8d1c-43a5cef41017",
 			"headers": "Content-Type: application/json\nAuthorization: Token c2d325854725be2d824e089b319f9d04\n",
 			"url": "http://localhost:3000/api/v1/groups",
 			"preRequestScript": "",
 			"pathVariables": {},
 			"method": "POST",
-			"data": "{\n  \"name\": \"My group\"\n}",
+			"data": [],
 			"dataMode": "raw",
 			"version": 2,
 			"tests": "",
@@ -143,7 +166,8 @@
 			"description": "",
 			"collectionId": "ff8d41cd-1e7b-866e-005d-19e60b7f0c97",
 			"responses": [],
-			"synced": false
+			"synced": false,
+			"rawModeData": "{\n  \"name\": \"My group\"\n}"
 		},
 		{
 			"id": "fb973d4e-22b4-234c-7d79-23b078ac771f",
