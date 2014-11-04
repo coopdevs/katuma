@@ -20,6 +20,7 @@ module Api
       def create
         user = User.new(users_params)
         if user.save
+          session[:current_user_id] = user.id
           render json: UserSerializer.new(user)
         else
           render status: :bad_request,
