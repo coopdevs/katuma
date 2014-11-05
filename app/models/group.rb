@@ -15,6 +15,8 @@ class Group < ActiveRecord::Base
     -> { where "memberships.role = #{ Membership::ROLES[:waiting] }" },
     through: :memberships,
     source: :user
+  has_many :invitations,
+    dependent: :destroy
 
   validates :name,
     presence: true

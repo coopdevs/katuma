@@ -12,6 +12,8 @@ class User < ActiveRecord::Base
     dependent: :destroy
   has_many :users_units,
     through: :users_unit_memberships
+  has_many :invitations,
+    dependent: :destroy
 
   validates :name,
     presence: true
