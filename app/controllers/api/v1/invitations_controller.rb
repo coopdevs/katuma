@@ -3,15 +3,24 @@ module Api
     class InvitationsController < ApplicationController
 
       before_action :authenticate
-      before_action :retrieve_collection, only: [:index]
+      before_action :load_group, only: [:index, :create]
+      before_action :load_invitation, only: [:accept]
+      before_action :load_collection, only: [:index]
 
       def index
         render json: InvitationsSerializer.new(@collection)
       end
 
       def create
-        invitation = Invitation.new(invitation_params)
-        invitation_creator = InvitationCreator.new(invitation, current_user)
+        invitation = Invitation.new(
+          group: @group,
+          user:  current_user,
+          email: invitation_params[:email]
+        )
+
+        authorize(invitation)
+
+        invitation_creator = InvitationService.new(invitation)
         if invitation_creator.create
           render json: InvitationSerializer.new(invitation)
         else
@@ -20,6 +29,21 @@ module Api
                    model: invitation.class.name,
                    errors: invitation.errors.full_messages
                  }
+        end
+      end
+
+      def accept
+        if @invitation.email != accept_params[:email]
+          render status: :bad_request,
+            json: {
+              errors: 'The email address associated to the invitation does not match'
+            }
+        end
+
+        if InvitationService.new(@invitation).accept!
+          render json: {}
+        else
+          render status: :bad_request, json: {}
         end
       end
 
@@ -33,11 +57,30 @@ module Api
         params.permit(:email, :group_id)
       end
 
-      def retrieve_collection
-        group = current_user.groups.find_by_id(collection_params[:group_id])
+      def accept_params
+        params.permit(:email)
+      end
 
-        if group && Membership.where(group: group, user: current_user, role: Membership::ROLES[:admin]).any?
-          @collection = Invitation.where(group_id: group.id)
+      def load_group
+        @group = current_user.groups.find_by_id(collection_params[:group_id])
+
+        unless @group
+          render status: :bad_request,
+            json: {
+              errors: 'Error related to Group'
+            }
+        end
+      end
+
+      def load_invitation
+        @invitation = Invitation.find_by_id(params[:id])
+
+        render status: :not_found, json: {} unless @invitation
+      end
+
+      def load_collection
+        if Membership.where(group: @group, user: current_user, role: Membership::ROLES[:admin]).any?
+          @collection = Invitation.where(group_id: @group.id)
         else
           @collection = Invitation.none
         end

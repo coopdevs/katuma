@@ -13,7 +13,11 @@ Katuma::Application.routes.draw do
         resources :users_units, except: [:new, :edit], shallow: true do
         end
       end
-      resources :invitations, except: [:new, :edit]
+      resources :invitations, except: [:new, :edit] do
+        member do
+          put :accept
+        end
+      end
     end
   end
 end
