@@ -12,6 +12,7 @@ gem 'pundit'
 
 group :test do
   gem 'rspec-rails', '~> 3.1.0'
+  gem 'rspec-its', '~> 1.1.0'
   gem 'factory_girl_rails', '~> 4.2.1'
   gem 'shoulda-matchers', '~> 2.7.0', require: false
 end
