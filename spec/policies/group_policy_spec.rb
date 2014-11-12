@@ -1,4 +1,5 @@
-require 'spec_helper'
+require 'rails_helper'
+require_relative '../support/matchers/pundit_matchers.rb'
 
 describe GroupPolicy do
 

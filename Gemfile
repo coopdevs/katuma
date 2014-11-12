@@ -11,9 +11,10 @@ gem 'bcrypt-ruby', '~> 3.0.0'
 gem 'pundit'
 
 group :test do
-  gem 'rspec-rails', '~> 2.14.0'
+  gem 'rspec-rails', '~> 3.1.0'
+  gem 'rspec-its', '~> 1.1.0'
   gem 'factory_girl_rails', '~> 4.2.1'
-  gem 'shoulda-matchers', '~> 2.6.2', require: false
+  gem 'shoulda-matchers', '~> 2.7.0', require: false
 end
 
 group :development, :test do
