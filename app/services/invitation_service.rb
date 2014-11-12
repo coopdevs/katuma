@@ -20,6 +20,8 @@ class InvitationService
     end
   end
 
+  # Accepts an invitation
+  # a new user is created and added to the group which has been invited
   def accept!
     create_user
     add_user_to_group
@@ -31,13 +33,6 @@ class InvitationService
 
   # Enqueues an InvitationJob to send the invitation
   def enqueue_invitation_job
-  end
-
-  # Generates invitation token
-  #
-  # @return [String]
-  def invitation_token
-    SecureRandom.hex(16)
   end
 
   def create_user
