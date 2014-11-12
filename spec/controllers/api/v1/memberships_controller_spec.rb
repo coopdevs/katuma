@@ -1,24 +1,6 @@
-require 'spec_helper'
-
-shared_examples 'a successful request' do
-
-  describe 'response is success' do
-
-    it 'respond with a 200 status code' do
-      expect(api_response.code).to eq('200')
-    end
-  end
-end
-
-shared_examples 'an unauthorized request' do
-
-  describe 'response is unauthorized' do
-
-    it 'respond with a 401 status code' do
-      expect(api_response.code).to eq('401')
-    end
-  end
-end
+require 'rails_helper'
+require_relative '../../../support/shared_examples/controllers.rb'
+require_relative '../../../support/authentication.rb'
 
 describe Api::V1::MembershipsController do
 
@@ -30,50 +12,35 @@ describe Api::V1::MembershipsController do
 
     describe 'GET #index' do
 
-      subject :api_response do
-        get :index, user_id: 666
-        response
-      end
+      subject { get :index, user_id: 666 }
 
       it_behaves_like 'an unauthorized request'
     end
 
     describe 'GET #show' do
 
-      subject :api_response do
-        get :show, user_id: 666, id: 666
-        response
-      end
+      subject { get :show, user_id: 666, id: 666 }
 
       it_behaves_like 'an unauthorized request'
     end
 
     describe 'POST #create' do
 
-      subject :api_response do
-        post :create, user_id: 666, name: 'ciola'
-        response
-      end
+      subject { post :create, user_id: 666, name: 'ciola' }
 
       it_behaves_like 'an unauthorized request'
     end
 
     describe 'PUT #update' do
 
-      subject :api_response do
-        put :update, user_id: 666, id: 666, name: 'ciola'
-        response
-      end
+      subject { put :update, user_id: 666, id: 666, name: 'ciola' }
 
       it_behaves_like 'an unauthorized request'
     end
 
     describe 'DELETE #destroy' do
 
-      subject :api_response do
-        delete :destroy, user_id: 666, id: 666
-        response
-      end
+      subject { delete :destroy, user_id: 666, id: 666 }
 
       it_behaves_like 'an unauthorized request'
     end
@@ -85,63 +52,45 @@ describe Api::V1::MembershipsController do
 
     describe 'GET #index' do
 
-      subject :api_response do
-        get :index, user_id: user.id
-        response
-      end
+      subject { get :index, user_id: user.id }
 
       it_behaves_like 'a successful request'
-
-      it 'returns an empty array' do
-        expect(JSON.parse(api_response.body)).to eq []
-      end
+      its(:body) { is_expected.to eq('[]') }
     end
 
     describe 'GET #show' do
 
-      subject :api_response do
-        get :show, user_id: user.id, id: membership.id
-        response
-      end
+      subject { get :show, user_id: user.id, id: membership.id }
 
       it_behaves_like 'a successful request'
 
       it 'returns the membership details' do
-        expect(JSON.parse(api_response.body)).to eq JSON.parse(membership.to_json)
+        expect(JSON.parse(subject.body)).to eq JSON.parse(membership.to_json)
       end
     end
 
     describe 'PUT #update' do
 
-      subject :api_response do
-        put :update, user_id: user.id, id: membership.id, name: 'ciola'
-        response
-      end
+      subject { put :update, user_id: user.id, id: membership.id, name: 'ciola' }
 
       it_behaves_like 'an unauthorized request'
     end
 
     describe 'DELETE #destroy' do
 
-      subject :api_response do
-        delete :destroy, user_id: user.id, id: membership.id
-        response
-      end
+      subject { delete :destroy, user_id: user.id, id: membership.id }
 
       it_behaves_like 'an unauthorized request'
     end
 
     describe 'POST #create' do
 
-      subject :api_response do
-        post :create, user_id: user.id, group_id: group.id, role: Membership::ROLES[:admin]
-        response
-      end
+      subject { post :create, user_id: user.id, group_id: group.id, role: Membership::ROLES[:admin] }
 
       it_behaves_like 'a successful request'
 
       it 'returns membership details' do
-        membership = JSON.parse(api_response.body)
+        membership = JSON.parse(subject.body)
 
         expect(membership['group_id']).to eq group.id
         expect(membership['user_id']).to eq user.id
@@ -149,7 +98,7 @@ describe Api::V1::MembershipsController do
       end
 
       it 'creates a new Membership' do
-        api_response
+        subject
 
         membership = Membership.first
         expect(membership.group).to eq group
@@ -173,60 +122,51 @@ describe Api::V1::MembershipsController do
 
     describe 'GET #index' do
 
-      subject :api_response do
-        get :index, user_id: member.id
-        response
-      end
+      subject { get :index, user_id: member.id }
+
+      let(:memberships) { Membership.where(group_id: member.group_ids) }
 
       it_behaves_like 'a successful request'
 
       it 'returns an array of memberships of the user groups' do
-        memberships = Membership.where(group_id: member.group_ids)
-
-        expect(JSON.parse(api_response.body)).to eq JSON.parse(memberships.to_json)
+        expect(JSON.parse(subject.body)).to eq JSON.parse(memberships.to_json)
       end
     end
 
     describe 'GET #show' do
 
-      subject :api_response do
-        get :show, user_id: member.id, id: membership.id
-        response
-      end
+      subject { get :show, user_id: member.id, id: membership.id }
 
       it_behaves_like 'a successful request'
 
       it 'returns the membership details' do
-        expect(JSON.parse(api_response.body)).to eq JSON.parse(membership.to_json)
+        expect(JSON.parse(subject.body)).to eq JSON.parse(membership.to_json)
       end
     end
 
     describe 'PUT #update' do
 
-      subject :api_response do
-        put :update, user_id: member.id, id: membership.id, role: Membership::ROLES[:admin]
-        response
-      end
+      subject { put :update, user_id: member.id, id: membership.id, role: Membership::ROLES[:admin] }
 
       it_behaves_like 'a successful request'
 
       it 'returns the membership details with updated attributes' do
-        membership = JSON.parse(api_response.body)
+        membership = JSON.parse(subject.body)
+
         expect(membership['role']).to eq Membership::ROLES[:admin]
       end
     end
 
     describe 'DELETE #destroy' do
 
-      subject :api_response do
-        delete :destroy, user_id: member.id, id: membership.id
-        response
-      end
+      subject { delete :destroy, user_id: member.id, id: membership.id }
 
       it_behaves_like 'a successful request'
 
       it 'deletes the membership' do
-        expect(api_response.body).to eq(membership.to_json)
+        expect {
+          subject
+        }.to change { Membership.count }.from(2).to(1)
       end
     end
   end
