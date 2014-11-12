@@ -6,10 +6,10 @@
   <body>
     <h1>Welcome to katuma.org, <%= @user.name %></h1>
     <p>
-      You have successfully signed up.<br/>
+      <%= @user.name %> invited you to join <%= @group.name %> group in <em>Katuma</em><br/>
     </p>
     <p>
-      To login to the site, just follow this link: <%= @url %>.
+      Please use the following link to create a <em>Katuma</em> account and join your friends: <%= link_to(@url, @url) %>
     </p>
     <p>Thanks for joining and have a great day!</p>
   </body>

@@ -2,7 +2,7 @@ module Api
   module V1
     class InvitationsController < ApplicationController
 
-      before_action :authenticate
+      before_action :authenticate, except: [:accept]
       before_action :load_group, only: [:index, :create]
       before_action :load_invitation, only: [:accept]
       before_action :load_collection, only: [:index]
