@@ -41,9 +41,9 @@ module Api
         end
 
         if InvitationService.new(@invitation).accept!
-          render json: {}
+          render nothing: true
         else
-          render status: :bad_request, json: {}
+          render nothing: true, status: :bad_request
         end
       end
 
@@ -75,7 +75,7 @@ module Api
       def load_invitation
         @invitation = Invitation.find_by_id(params[:id])
 
-        render status: :not_found, json: {} unless @invitation
+        render nothing: true, status: :not_found unless @invitation
       end
 
       def load_collection
