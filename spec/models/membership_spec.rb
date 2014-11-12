@@ -1,5 +1,5 @@
-# spec/models/membership_spec.rb
-require 'spec_helper'
+require 'rails_helper'
+require 'shoulda/matchers'
 
 describe Membership do
 
@@ -11,7 +11,7 @@ describe Membership do
     it { should validate_presence_of(:group) }
     it { should validate_presence_of(:user) }
     it { should validate_presence_of(:role) }
-    it { should ensure_inclusion_of(:role)
+    it { should validate_inclusion_of(:role)
          .in_array(UsersUnitMembership::ROLES.values)
     }
     it {

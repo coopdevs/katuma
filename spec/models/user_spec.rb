@@ -1,5 +1,5 @@
-# spec/models/user_spec.rb
-require 'spec_helper'
+require 'rails_helper'
+require 'shoulda/matchers'
 
 describe User do
 

@@ -1,5 +1,5 @@
-# spec/models/group_spec.rb
-require 'spec_helper'
+require 'rails_helper'
+require 'shoulda/matchers'
 
 describe Group do
 
