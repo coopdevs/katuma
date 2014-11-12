@@ -1,4 +1,5 @@
-require 'spec_helper'
+require 'rails_helper'
+require_relative '../../../support/shared_examples/controllers.rb'
 
 describe Api::V1::SessionsController do
 
@@ -14,53 +15,32 @@ describe Api::V1::SessionsController do
 
     context 'when the user exists and the password is correct' do
 
-      it 'associates the session to the user' do
-        post :create, { email: user.email, password: 'pwd' }
+      subject { post :create, email: user.email, password: 'pwd' }
+
+      it 'associates the session with the user' do
+        subject
 
         expect(session[:current_user_id]).to be user.id
       end
 
-      it 'renders an empty response' do
-        post :create, { email: user.email, password: 'pwd' }
-
-        expect(response.body).to be {}
-      end
-
-      it 'renders a response with status 201' do
-        post :create, { email: user.email, password: 'pwd' }
-
-        expect(response.status).to be 201
-      end
+      it_behaves_like 'a successful request (201)'
+      it_behaves_like 'response with empty body'
     end
 
     context 'when the user exists but the password is wrong' do
 
-      it 'renders an empty response' do
-        post :create, { email: user.email, password: 'wrongpwd' }
+      subject { post :create, email: user.email, password: 'wrongpwd' }
 
-        expect(response.body).to be {}
-      end
-
-      it 'renders a response with status 401' do
-        post :create, { email: user.email, password: 'wrongpwd' }
-
-        expect(response.status).to be 401
-      end
+      it_behaves_like 'an unauthorized request'
+      it_behaves_like 'response with empty body'
     end
 
     context 'when the user does not exist' do
 
-      it 'renders an empty response' do
-        post :create, { email: 'user@doesntexis.ts', password: 'pwd' }
+      subject { post :create, email: 'user@doesntexis.ts', password: 'pwd' }
 
-        expect(response.body).to be {}
-      end
-
-      it 'renders a response with status 401' do
-        post :create, { email: 'user@doesntexis.ts', password: 'pwd' }
-
-        expect(response.status).to be 401
-      end
+      it_behaves_like 'an unauthorized request'
+      it_behaves_like 'response with empty body'
     end
   end
 
@@ -68,22 +48,15 @@ describe Api::V1::SessionsController do
 
     before { session[:current_user_id] = user.id }
 
+    subject { delete :destroy }
+
     it 'Removes the association between the session and the user' do
-      delete :destroy
+      subject
 
       expect(session[:current_user_id]).to be nil
     end
 
-    it 'renders an empty response' do
-      delete :destroy
-
-      expect(response.body).to be {}
-    end
-
-    it 'renders a response with status 200' do
-      delete :destroy
-
-      expect(response.status).to be 200
-    end
+    it_behaves_like 'a successful request'
+    it_behaves_like 'response with empty body'
   end
 end
