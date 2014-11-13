@@ -11,12 +11,10 @@ class InvitationService
   #
   # @return [Boolean]
   def create
-    Invitation.transaction do
-      if @invitation.save
-        enqueue_invitation_job
+    if @invitation.save
+      send_invitation_email
 
-        true
-      end
+      true
     end
   end
 
@@ -31,8 +29,9 @@ class InvitationService
 
   private
 
-  # Enqueues an InvitationJob to send the invitation
-  def enqueue_invitation_job
+  # Sends the invitation by email
+  def send_invitation_email
+    InvitationMailer.invite_user(@invitation).deliver
   end
 
   def create_user
