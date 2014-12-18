@@ -1,3 +1,9 @@
+PATH
+  remote: engines/public_pages
+  specs:
+    public_pages (0.0.1)
+      rails (~> 4.1.7)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -122,6 +128,7 @@ DEPENDENCIES
   factory_girl_rails (~> 4.2.1)
   oat (~> 0.4.5)
   pg
+  public_pages!
   pundit
   rails (~> 4.1.0)
   rails_stdout_logging
