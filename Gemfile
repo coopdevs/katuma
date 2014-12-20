@@ -6,7 +6,7 @@ gem 'oat', '~> 0.4.5'
 
 gem 'pg'
 
-gem 'bcrypt-ruby', '~> 3.0.0'
+gem 'bcrypt-ruby', '~> 3.1.5'
 
 gem 'pundit'
 
