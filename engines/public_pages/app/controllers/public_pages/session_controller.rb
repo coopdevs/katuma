@@ -3,9 +3,13 @@ module PublicPages
 
     before_action :redirect_if_logged_in, only: :login
 
+    # Renders the login view
+    #
     def login
     end
 
+    # Logs in the user
+    #
     def login_attempt
       user = User.find_by(email: params[:email])
       if user && user.authenticate(params[:password])
@@ -16,6 +20,8 @@ module PublicPages
       end
     end
 
+    # Logs out the user
+    #
     def logout
       @_current_user = session[:current_user_id] = nil
 
