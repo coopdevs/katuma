@@ -11,8 +11,9 @@ module PublicPages
       if user.save
         session[:current_user_id] = user.id
 
-        redirect_to '/app/#/dashboard'
+        redirect_to '/app/#/dashboard' # TODO put this in some config
       else
+        flash[:error] = "Something went wrong :("
         render 'signup'
       end
     end
