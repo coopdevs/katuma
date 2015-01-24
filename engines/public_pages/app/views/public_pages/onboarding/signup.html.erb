@@ -1,3 +1,7 @@
+<% if flash[:error] %>
+  <p><%= flash[:error] %></p>
+<% end %>
+
 <div id="signupbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
   <div class="panel panel-info">
     <div class="panel-heading">
@@ -5,7 +9,7 @@
       <div style="float:right; font-size: 80%; position: relative; top:-10px"><a href="#">Forgot password?</a></div>
     </div>
     <div style="padding-top:30px" class="panel-body">
-      <form id="signup-form" class="" role="signup" action="create_user" method="post">
+      <form id="signup-form" class="" role="signup" action="signup" method="post">
         <div style="margin-bottom: 25px" class="input-group">
           <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
           <input type="text" id="name" class="form-control" name="name" placeholder="Name" />
@@ -20,7 +24,7 @@
         </div>
         <div style="margin-bottom: 25px" class="input-group">
           <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-          <input type="password" id="password-confirmation" class="form-control" name="password_confirmation" placeholder="Repeate password" />
+          <input type="password" id="password-confirmation" class="form-control" name="password_confirmation" placeholder="Repeatpassword" />
         </div>
         <div class="input-group">
           <div style="margin-top:10px" class="form-group">

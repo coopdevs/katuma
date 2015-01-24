@@ -14,9 +14,10 @@ module PublicPages
       user = User.find_by(email: params[:email])
       if user && user.authenticate(params[:password])
         session[:current_user_id] = user.id
-        redirect_to '/app/#/dashboard'
+        redirect_to '/app/#/dashboard' # TODO put this in some config
       else
-        render 'login'
+        flash[:error] = "Invalid Email or password"
+        render :login
       end
     end
 
