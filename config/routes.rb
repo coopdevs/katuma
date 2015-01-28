@@ -1,5 +1,7 @@
 Katuma::Application.routes.draw do
 
+  mount PublicPages::Engine, at: '/'
+
   namespace :api do
     namespace :v1 do
       post :sessions, controller: :sessions, action: :create
@@ -13,5 +15,4 @@ Katuma::Application.routes.draw do
       end
     end
   end
-
 end
