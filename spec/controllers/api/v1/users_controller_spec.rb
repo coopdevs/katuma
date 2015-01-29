@@ -115,7 +115,7 @@ describe Api::V1::UsersController do
 
         subject { get :show, id: user2.id }
 
-        it_behaves_like 'an unauthorized request'
+        it_behaves_like 'a forbidden request'
       end
     end
 
@@ -143,7 +143,7 @@ describe Api::V1::UsersController do
 
         subject { put :update, id: user2.id, name: 'ciola' }
 
-        it_behaves_like 'an unauthorized request'
+        it_behaves_like 'a forbidden request'
       end
     end
 
@@ -166,7 +166,7 @@ describe Api::V1::UsersController do
 
         subject { delete :destroy, id: user2.id }
 
-        it_behaves_like 'an unauthorized request'
+        it_behaves_like 'a forbidden request'
       end
     end
 

@@ -61,21 +61,21 @@ describe Api::V1::GroupsController do
 
       subject { get :show, id: group.id }
 
-      it_behaves_like 'an unauthorized request'
+      it_behaves_like 'a forbidden request'
     end
 
     describe 'PUT #update' do
 
       subject { put :update, { id: group.id, name: 'ciola' } }
 
-      it_behaves_like 'an unauthorized request'
+      it_behaves_like 'a forbidden request'
     end
 
     describe 'DELETE #destroy' do
 
       subject { delete :destroy, id: group.id }
 
-      it_behaves_like 'an unauthorized request'
+      it_behaves_like 'a forbidden request'
     end
 
     describe 'POST #create' do
