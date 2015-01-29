@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   # authorization gem
   include Pundit
-  rescue_from Pundit::NotAuthorizedError, with: :unauthorized_request
+  rescue_from Pundit::NotAuthorizedError, with: :forbidden_request
 
   private
 
@@ -13,10 +13,12 @@ class ApplicationController < ActionController::Base
   # Checks if the request comes from
   # a logged in user
   def authenticate
-    unauthorized_request unless current_user
+    unless current_user do
+      render text: "401 Unauthorized", status: :unauthorized
+    end
   end
 
-  def unauthorized_request
-    render text: "401 Unauthorized", status: :unauthorized
+  def forbidden_request
+    render text: "403 Forbidden", status: :forbidden
   end
 end
