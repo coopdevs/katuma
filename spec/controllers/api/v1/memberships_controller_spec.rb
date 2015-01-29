@@ -73,14 +73,14 @@ describe Api::V1::MembershipsController do
 
       subject { put :update, user_id: user.id, id: membership.id, name: 'ciola' }
 
-      it_behaves_like 'an unauthorized request'
+      it_behaves_like 'a forbidden request'
     end
 
     describe 'DELETE #destroy' do
 
       subject { delete :destroy, user_id: user.id, id: membership.id }
 
-      it_behaves_like 'an unauthorized request'
+      it_behaves_like 'a forbidden request'
     end
 
     describe 'POST #create' do
