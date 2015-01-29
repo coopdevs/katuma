@@ -1,5 +1,5 @@
 module PublicPages
-  class OnboardingController < ApplicationController
+  class OnboardingController < PublicPages::ApplicationController
 
     before_action :redirect_if_logged_in
 

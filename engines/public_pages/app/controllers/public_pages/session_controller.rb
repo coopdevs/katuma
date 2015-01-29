@@ -1,5 +1,5 @@
 module PublicPages
-  class SessionController < ApplicationController
+  class SessionController < PublicPages::ApplicationController
 
     before_action :redirect_if_logged_in, only: :login
 
