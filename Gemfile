@@ -1,14 +1,16 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 4.1.0'
+gem 'rails', '4.1.7'
 
 gem 'oat', '~> 0.4.5'
 
 gem 'pg'
 
-gem 'bcrypt-ruby', '~> 3.0.0'
+gem 'bcrypt-ruby', '~> 3.1.5'
 
 gem 'pundit'
+
+gem 'public_pages', path: "engines/public_pages"
 
 group :test do
   gem 'rspec-rails', '~> 3.1.0'
