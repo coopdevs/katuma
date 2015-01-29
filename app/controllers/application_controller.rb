@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
   # Checks if the request comes from
   # a logged in user
   def authenticate
-    unless current_user do
+    unless current_user
       render text: "401 Unauthorized", status: :unauthorized
     end
   end
