@@ -45,6 +45,8 @@ GEM
     columnize (0.8.9)
     debugger-linecache (1.2.0)
     diff-lcs (1.2.5)
+    doorkeeper (2.1.2)
+      railties (>= 3.1)
     erubis (2.7.0)
     factory_girl (4.2.0)
       activesupport (>= 3.0.0)
@@ -127,6 +129,7 @@ PLATFORMS
 DEPENDENCIES
   bcrypt-ruby (~> 3.1.5)
   byebug
+  doorkeeper
   factory_girl_rails (~> 4.2.1)
   oat (~> 0.4.5)
   pg
