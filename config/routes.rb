@@ -1,5 +1,7 @@
 Katuma::Application.routes.draw do
 
+  use_doorkeeper
+
   mount PublicPages::Engine, at: '/'
 
   namespace :api do
