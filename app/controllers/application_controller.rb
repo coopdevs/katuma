@@ -21,4 +21,8 @@ class ApplicationController < ActionController::Base
   def forbidden_request
     render text: "403 Forbidden", status: :forbidden
   end
+
+  def doorkeeper_unauthorized_render_options
+    {:json => {:error => "Not authorized"}}
+  end
 end
