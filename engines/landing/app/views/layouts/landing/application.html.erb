@@ -1,0 +1,7 @@
+<% content_for :stylesheets do %>
+  <%= stylesheet_link_tag "landing/application" %>
+<% end %>
+<% content_for :content do %>
+  <%= yield %>
+<% end %>
+<%= render template: "layouts/public_pages/application" %>
