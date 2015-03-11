@@ -10,7 +10,8 @@ gem 'bcrypt-ruby', '~> 3.1.5'
 
 gem 'pundit'
 
-gem 'public_pages', path: "engines/public_pages"
+gemspec path: "engines/shared"
+gemspec path: "engines/account"
 
 group :test do
   gem 'rspec-rails', '~> 3.1.0'
