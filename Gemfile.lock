@@ -5,6 +5,12 @@ PATH
       rails (~> 4.1.7)
 
 PATH
+  remote: engines/landing
+  specs:
+    landing (0.0.1)
+      rails (~> 4.1.7)
+
+PATH
   remote: engines/shared
   specs:
     shared (0.0.1)
@@ -136,6 +142,7 @@ DEPENDENCIES
   bcrypt-ruby (~> 3.1.5)
   byebug
   factory_girl_rails (~> 4.2.1)
+  landing!
   oat (~> 0.4.5)
   pg
   pundit

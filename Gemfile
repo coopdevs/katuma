@@ -12,6 +12,7 @@ gem 'pundit'
 
 gemspec path: "engines/shared"
 gemspec path: "engines/account"
+gemspec path: "engines/landing"
 
 group :test do
   gem 'rspec-rails', '~> 3.1.0'
