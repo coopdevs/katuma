@@ -7,11 +7,11 @@ require "account/version"
 Gem::Specification.new do |s|
   s.name        = "account"
   s.version     = Account::VERSION
-  s.authors     = ["TODO: Your name"]
-  s.email       = ["TODO: Your email"]
-  s.homepage    = "TODO"
-  s.summary     = "TODO: Summary of Account."
-  s.description = "TODO: Description of Account."
+  s.authors     = ["katuma team"]
+  s.email       = ["info@katuma.org"]
+  s.homepage    = "http://www.katuma.org"
+  s.summary     = "Account engine."
+  s.description = "Account engine."
   s.license     = "MIT"
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
