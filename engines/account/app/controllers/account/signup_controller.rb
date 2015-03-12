@@ -70,11 +70,11 @@ module Account
     end
 
     def user_params
-      params.permit(:id, :name, :password, :password_confirmation, :email, :token)
+      params.permit(:id, :username, :password, :password_confirmation, :email, :token)
     end
 
     def params_for_user_creation
-      user_params.slice(:id, :email, :name, :password, :password_confirmation)
+      user_params.slice(:id, :email, :username, :password, :password_confirmation)
     end
   end
 end
