@@ -59,7 +59,7 @@ module Katuma
     # Version of your assets, change this if you want to expire all your assets
     # config.assets.version = '1.0'
 
-    # Logout user when is comming from Oauth2 flow
+    # Logout user when is coming from Oauth2 flow
     config.to_prepare do
        Doorkeeper::AuthorizationsController.send(:include, Doorkeeper::LogoutAfterAuthorize)
     end
