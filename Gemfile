@@ -6,7 +6,7 @@ gem 'oat', '~> 0.4.5'
 
 gem 'pg'
 
-gem 'doorkeeper'
+gem 'doorkeeper', '2.1.3'
 
 gem 'bcrypt-ruby', '~> 3.1.5'
 
