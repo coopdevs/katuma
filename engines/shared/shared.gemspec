@@ -7,11 +7,11 @@ require "shared/version"
 Gem::Specification.new do |s|
   s.name        = "shared"
   s.version     = Shared::VERSION
-  s.authors     = ["TODO: Your name"]
-  s.email       = ["TODO: Your email"]
-  s.homepage    = "TODO"
-  s.summary     = "TODO: Summary of Shared."
-  s.description = "TODO: Description of Shared."
+  s.authors     = ["katuma team"]
+  s.email       = ["info@katuma.org"]
+  s.homepage    = "http://www.katuma.org"
+  s.summary     = "Shared engine."
+  s.description = "Shared engine."
   s.license     = "MIT"
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]

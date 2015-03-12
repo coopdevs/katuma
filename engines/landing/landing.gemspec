@@ -7,11 +7,11 @@ require "landing/version"
 Gem::Specification.new do |s|
   s.name        = "landing"
   s.version     = Landing::VERSION
-  s.authors     = ["TODO: Your name"]
-  s.email       = ["TODO: Your email"]
-  s.homepage    = "TODO"
-  s.summary     = "TODO: Summary of Landing."
-  s.description = "TODO: Description of Landing."
+  s.authors     = ["katuma team"]
+  s.email       = ["info@katuma.org"]
+  s.homepage    = "http://www.katuma.org"
+  s.summary     = "Landing engine."
+  s.description = "Landing engine."
   s.license     = "MIT"
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
