@@ -34,6 +34,18 @@ shared_examples 'an unauthorized request' do
   end
 end
 
+shared_examples 'a forbidden request' do
+
+  describe 'response is forbidden' do
+
+    it 'responds with a 403 status code' do
+      subject
+
+      expect(response).to have_http_status(403)
+    end
+  end
+end
+
 shared_examples 'response with empty body' do
 
   describe 'response body is empty' do

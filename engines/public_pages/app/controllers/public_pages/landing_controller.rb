@@ -1,5 +1,5 @@
 module PublicPages
-  class LandingController < ApplicationController
+  class LandingController < PublicPages::ApplicationController
 
     before_action :redirect_if_logged_in
 
