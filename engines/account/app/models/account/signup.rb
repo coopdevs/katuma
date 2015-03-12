@@ -7,10 +7,7 @@ module Account
       signup.token = SecureRandom.urlsafe_base64(32)
     end
 
-    validates :email,
-      presence: true
-    validates :token,
-      presence: true,
-      uniqueness: true
+    validates :email, presence: true
+    validates :token, presence: true, uniqueness: true
   end
 end

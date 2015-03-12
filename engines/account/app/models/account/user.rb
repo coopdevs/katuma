@@ -5,14 +5,7 @@ module Account
 
     has_secure_password
 
-    validates :name,
-      presence: true
-    validates :email,
-      presence: true,
-      uniqueness: true
-
-    has_many :memberships
-    has_many :groups,
-      through: :memberships
+    validates :email,    presence: true, uniqueness: true
+    validates :username, presence: true, uniqueness: true
   end
 end
