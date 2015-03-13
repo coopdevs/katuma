@@ -4,5 +4,4 @@ Katuma::Application.routes.draw do
 
   mount Landing::Engine,    at: '/'
   mount Account::Engine,    at: '/'
-  mount Landing::Engine,    at: '/'
 end
