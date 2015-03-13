@@ -26,7 +26,7 @@ module Account
     def logout
       @_current_user = session[:current_user_id] = nil
 
-      redirect_to :root
+      redirect_to '/'
     end
 
     private
