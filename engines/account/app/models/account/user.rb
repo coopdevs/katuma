@@ -7,5 +7,11 @@ module Account
 
     validates :email,    presence: true, uniqueness: true
     validates :username, presence: true, uniqueness: true
+
+    def full_name
+      return username if first_name.blank? && last_name.blank?
+      return first_name if last_name.blank?
+      "#{first_name} #{last_name}"
+    end
   end
 end

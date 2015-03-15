@@ -12,6 +12,7 @@ Account::Engine.routes.draw do
   namespace :api do
     namespace :v1 do
       get :account, controller: :users, action: :account
+      get :me, controller: :credentials, action: :me
       resources :users, except: [:new, :edit]
     end
   end
