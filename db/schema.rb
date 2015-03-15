@@ -11,32 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150307121902) do
+ActiveRecord::Schema.define(version: 20150216222130) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "groups", force: true do |t|
-    t.string   "name",       null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "invitations", force: true do |t|
-    t.integer  "group_id",   null: false
-    t.integer  "invited_by", null: false
+  create_table "signups", force: true do |t|
     t.string   "email",      null: false
-    t.datetime "sent_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "invitations", ["group_id"], name: "index_invitations_on_group_id", using: :btree
-
-  create_table "memberships", force: true do |t|
-    t.integer  "user_id",    null: false
-    t.integer  "group_id",   null: false
-    t.integer  "role",       null: false
+    t.string   "token",      null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -82,41 +64,14 @@ ActiveRecord::Schema.define(version: 20150307121902) do
 
   add_index "oauth_applications", ["uid"], name: "index_oauth_applications_on_uid", unique: true, using: :btree
 
-  create_table "profiles", force: true do |t|
-    t.text     "description"
-    t.string   "phone"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "profilable_id",   null: false
-    t.string   "profilable_type", null: false
-  end
-
   create_table "users", force: true do |t|
     t.string   "email",           null: false
-    t.string   "name",            null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "username",        null: false
     t.string   "password_digest", null: false
-  end
-
-  create_table "users_unit_memberships", force: true do |t|
-    t.integer  "users_unit_id", null: false
-    t.integer  "user_id",       null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "role",          null: false
-  end
-
-  add_index "users_unit_memberships", ["user_id"], name: "index_users_unit_memberships_on_user_id", using: :btree
-  add_index "users_unit_memberships", ["users_unit_id"], name: "index_users_unit_memberships_on_users_unit_id", using: :btree
-
-  create_table "users_units", force: true do |t|
-    t.integer  "group_id",   null: false
-    t.string   "name",       null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  add_index "users_units", ["group_id"], name: "index_users_units_on_group_id", using: :btree
 
 end

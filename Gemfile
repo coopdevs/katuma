@@ -17,7 +17,9 @@ gem 'pundit'
 gem 'foreman'
 gem 'puma'
 
-gem 'public_pages', path: "engines/public_pages"
+gemspec path: "engines/shared"
+gemspec path: "engines/account"
+gemspec path: "engines/landing"
 
 group :assets do
   gem 'sass-rails'
