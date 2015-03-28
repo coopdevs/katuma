@@ -5,6 +5,12 @@ PATH
       rails (~> 4.1.7)
 
 PATH
+  remote: engines/group
+  specs:
+    group (0.0.1)
+      rails (~> 4.1.7)
+
+PATH
   remote: engines/landing
   specs:
     landing (0.0.1)
@@ -163,6 +169,7 @@ DEPENDENCIES
   doorkeeper (= 2.1.3)
   factory_girl_rails (~> 4.2.1)
   foreman
+  group!
   landing!
   oat (~> 0.4.5)
   pg
