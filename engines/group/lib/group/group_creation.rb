@@ -12,7 +12,7 @@ class GroupCreation
   # and add creator as group admin
   def create
     Group.transaction do
-      if self.group.save
+      if @group.save
         add_creator_as_group_admin
       end
     end
