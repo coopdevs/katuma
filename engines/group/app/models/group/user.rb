@@ -5,9 +5,7 @@ module Group
 
     include Shared::Model::ReadOnly
 
-    has_many :memberships,
-      dependent: :destroy
-    has_many :groups,
-      through: :memberships
+    has_many :memberships, dependent: :destroy
+    has_many :groups, through: :memberships
   end
 end
