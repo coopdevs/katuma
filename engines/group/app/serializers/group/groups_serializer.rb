@@ -1,5 +1,5 @@
 module Group
-  class GroupsSerializer < BaseSerializer
+  class GroupsSerializer < Shared::BaseSerializer
 
     schema do
       type 'groups'
