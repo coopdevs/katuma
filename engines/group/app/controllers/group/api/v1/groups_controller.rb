@@ -16,8 +16,8 @@ module Group
         end
 
         def create
-          group = Group::Group.new(group_params)
-          group_creation = ::Group::GroupCreation.new(group, current_user)
+          group = Group.new(group_params)
+          group_creation = GroupCreation.new(group, current_user)
           if group_creation.create
             render json: GroupSerializer.new(group)
           else
