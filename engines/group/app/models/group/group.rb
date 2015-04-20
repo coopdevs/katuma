@@ -3,10 +3,8 @@ module Group
 
     self.table_name = :groups
 
-    has_many :memberships,
-      dependent: :destroy
-    has_many :users,
-      through: :memberships
+    has_many :memberships, dependent: :destroy
+    has_many :users, through: :memberships
     has_many :admins,
       -> { where "memberships.role = #{ Membership::ROLES[:admin] }" },
     through: :memberships,
@@ -16,7 +14,6 @@ module Group
     through: :memberships,
       source: :user
 
-    validates :name,
-      presence: true
+    validates :name, presence: true
   end
 end
