@@ -6,20 +6,21 @@ module Account
         before_action :authenticate, except: :create
 
         def index
-          users = User.where(id: Membership.where(group_id: current_user.group_ids).pluck(:user_id))
+          user = Group::User.find current_user.id
+          users = Account::User.where(id: Group::Membership.where(group_id: user.group_ids).pluck(:user_id))
 
           render json: UsersSerializer.new(users)
         end
 
         def show
-          user = User.find(params[:id])
+          user = Account::User.find(params[:id])
           authorize user
 
           render json: UserSerializer.new(user)
         end
 
         def create
-          user = User.new(users_params)
+          user = Account::User.new(users_params)
           if user.save
             session[:current_user_id] = user.id
             render json: UserSerializer.new(user)
@@ -33,7 +34,7 @@ module Account
         end
 
         def update
-          user = User.find(params[:id])
+          user = Account::User.find(params[:id])
           authorize user
 
           if user.update_attributes(users_params)
@@ -48,10 +49,10 @@ module Account
         end
 
         def destroy
-          user = User.find(params[:id])
+          user = Account::User.find(params[:id])
           authorize user
 
-          render json: User.destroy(user.id)
+          render json: Account::User.destroy(user.id)
         end
 
         def account
