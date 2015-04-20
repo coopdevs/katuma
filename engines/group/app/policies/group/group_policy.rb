@@ -1,27 +1,29 @@
-class GroupPolicy < ApplicationPolicy
-  class Scope < Struct.new(:user, :scope)
-    def resolve
-      scope
+module Group
+  class GroupPolicy < Shared::ApplicationPolicy
+    class Scope < Struct.new(:user, :scope)
+      def resolve
+        scope
+      end
     end
-  end
 
-  def create?
-    true
-  end
+    def create?
+      true
+    end
 
-  def show?
-    Membership.where(
-      group: record,
-      user: user,
-      role: [Membership::ROLES[:admin], Membership::ROLES[:member]]
-    ).any?
-  end
+    def show?
+      Membership.where(
+        group: record,
+        user: user,
+        role: [Membership::ROLES[:admin], Membership::ROLES[:member]]
+      ).any?
+    end
 
-  def update?
-    Membership.where(group: record, user: user, role: Membership::ROLES[:admin]).any?
-  end
+    def update?
+      Membership.where(group: record, user: user, role: Membership::ROLES[:admin]).any?
+    end
 
-  def destroy?
-    Membership.where(group: record, user: user, role: Membership::ROLES[:admin]).any?
+    def destroy?
+      Membership.where(group: record, user: user, role: Membership::ROLES[:admin]).any?
+    end
   end
 end
