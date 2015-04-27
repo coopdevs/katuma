@@ -14,7 +14,6 @@ describe Group do
 
   describe 'Associations' do
 
-    it { should have_one(:profile) }
     it { should have_many(:memberships).dependent(:destroy) }
     it { should have_many(:users).through(:memberships) }
     it { should have_many(:users_units) }
