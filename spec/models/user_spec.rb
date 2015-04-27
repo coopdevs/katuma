@@ -14,7 +14,6 @@ describe User do
   end
 
   describe 'Associations' do
-    it { should have_one(:profile) }
     it { should have_many(:users_unit_memberships).dependent(:destroy) }
     it { should have_many(:users_units).through(:users_unit_memberships) }
     it { should have_many(:memberships).dependent(:destroy) }
