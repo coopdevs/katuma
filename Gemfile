@@ -20,6 +20,7 @@ gem 'puma'
 gemspec path: "engines/shared"
 gemspec path: "engines/account"
 gemspec path: "engines/landing"
+gemspec path: "engines/group"
 
 group :assets do
   gem 'sass-rails'

@@ -1,5 +1,5 @@
 module Account
-  class UsersSerializer < Account::BaseSerializer
+  class UsersSerializer < Shared::BaseSerializer
 
     schema do
       type 'users'
