@@ -12,7 +12,7 @@ module Group
     # Creates a new Group
     # and add creator as group admin
     def create
-      Group.transaction do
+      ::Group::Group.transaction do
         if @group.save
           add_creator_as_group_admin
         end

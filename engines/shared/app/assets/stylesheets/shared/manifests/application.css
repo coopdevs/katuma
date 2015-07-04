@@ -15,6 +15,14 @@
  *= require_tree .
  */
 
+input {
+  width: 150px;
+}
+
+ul.group-list {
+  list-style-type: none;
+}
+
 @font-face {
   font-family: "Glyphicons Halflings";
   src: url("../public_pages/glyphicons-halflings-regular.eot");

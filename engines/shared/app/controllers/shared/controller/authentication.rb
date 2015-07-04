@@ -5,10 +5,6 @@ module Shared
       extend ::ActiveSupport::Concern
 
       included do
-        # TODO: Move Pundit stuff to Authorization module
-        include Pundit # authorization gem
-        rescue_from Pundit::NotAuthorizedError, with: :forbidden_request
-
         helper_method :redirect_if_logged_in
         helper_method :current_user
       end
@@ -27,25 +23,26 @@ module Shared
         @_current_user = klass.find_by_id(session[:current_user_id])
       end
 
-      # Checks if the request comes from
-      # a logged in user
+      # Checks if the request comes from a logged in user
+      #
       def authenticate
+        redirect_to '/logout' unless current_user
+      end
+
+      # Checks if the request comes from a logged in user
+      #
+      # TODO: move to API authentication module
+      #
+      def api_authenticate
         unless current_user
           render text: "401 Unauthorized", status: :unauthorized
         end
       end
 
-      def forbidden_request
-        render text: "403 Forbidden", status: :forbidden
-      end
-
-      # Redirects to private single page app if the user
-      # is already logged in
+      # Redirects to root page if the user is already logged in
       #
       def redirect_if_logged_in
-        if current_user
-          redirect_to '/app/#/dashboard' # TODO put this in some config
-        end
+        redirect_to '/dashboard' if current_user
       end
     end
   end
