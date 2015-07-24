@@ -36,7 +36,7 @@ module Account
         redirect_to session[:user_return_to]
         session[:user_return_to] = nil
       else
-        redirect_to '/app/#/dashboard' # TODO put this in some config
+        redirect_to '/dashboard'
       end
     end
   end

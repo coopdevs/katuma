@@ -1,0 +1,35 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Settings</h3>
+  </div>
+  <div class="panel-body">
+    <%= form_for @group, url: { action: 'update' } do |f| %>
+      <div class="form-group">
+        <%= f.label 'Group name:', for: 'group:name' %>
+        <%= f.text_field :name, class: 'form-control' %>
+      </div>
+      <%= f.submit 'Save changes', class: 'btn btn-success' %>
+    <% end %>
+    <button id="js-group-destroy" class="btn btn-danger" data-toggle="modal" data-target="#destroyGroupModal">Destroy group</button>
+  </div>
+</div>
+
+<div class="modal" id="destroyGroupModal" tabindex="-1" role="dialog" aria-labelledby="destroyGroupModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="destroyGroupModalLabel">Destroy group</h4>
+      </div>
+      <div class="modal-body">
+        You are going to <strong>destroy <%= @group.name %></strong> group. Are you sure?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <%= form_for @group, method: :delete do |f| %>
+          <%= f.submit 'Destroy', class: 'btn btn-danger' %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

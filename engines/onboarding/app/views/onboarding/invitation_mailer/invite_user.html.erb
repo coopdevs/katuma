@@ -1,0 +1,16 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Welcome to katuma.org, <%= @user.name %></h1>
+    <p>
+      <%= @user.name %> invited you to join <%= @group.name %> group in <em>Katuma</em><br/>
+    </p>
+    <p>
+      Please use the following link to create a <em>Katuma</em> account and <%= link_to('join your friends!', @url) %>
+    </p>
+    <p>Thanks for joining and have a great day!</p>
+  </body>
+</html>
