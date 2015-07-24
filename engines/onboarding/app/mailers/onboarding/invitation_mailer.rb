@@ -1,6 +1,5 @@
 module Onboarding
   class InvitationMailer < ActionMailer::Base
-    helper 'PublicUrlHelper'
     default from: 'info@katuma.org'
 
     def invite_user(invitation)
