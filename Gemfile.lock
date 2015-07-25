@@ -171,7 +171,7 @@ DEPENDENCIES
   factory_girl_rails (~> 4.2.1)
   foreman
   group!
-  haml
+  haml (= 4.0.6)
   landing!
   oat (~> 0.4.5)
   pg

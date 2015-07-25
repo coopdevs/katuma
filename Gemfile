@@ -17,7 +17,7 @@ gem 'pundit'
 gem 'foreman'
 gem 'puma'
 
-gem 'haml'
+gem 'haml', '4.0.6'
 
 gemspec path: "engines/shared"
 gemspec path: "engines/account"
