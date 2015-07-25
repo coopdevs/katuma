@@ -1,0 +1,18 @@
+- if flash[:error]
+  %p= flash[:error]
+#signupbox.mainbox.col-md-6.col-md-offset-3.col-sm-8.col-sm-offset-2{style: "margin-top:50px;"}
+  .panel.panel-info
+    .panel-heading
+      .panel-title Sign up
+      %div{style: "float:right; font-size: 80%; position: relative; top:-10px"}
+        %a{href: "#"} Forgot password?
+    .panel-body{style: "padding-top:30px"}
+      %form#signup-form{action: "signup", method: "post", role: "form"}
+        .input-group{style: "margin-bottom: 25px"}
+          %span.input-group-addon
+            %i.glyphicon.glyphicon-user
+          %input#email.form-control{name: "email", placeholder: "Email", type: "text"}/
+        .input-group
+          .form-group{style: "margin-top:10px"}
+            .col-sm-12.controls
+              %button#signupSubmit.btn.btn-success{type: "submit"} Sign up

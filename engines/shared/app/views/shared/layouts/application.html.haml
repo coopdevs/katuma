@@ -1,0 +1,31 @@
+!!!
+%html
+  %head
+    %meta{content: "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+
+    %title= 'Katuma.org'
+
+    = stylesheet_link_tag "shared/manifests/application"
+
+    = render_manifests('css')
+    = csrf_meta_tags
+  %body
+    .container-fluid
+      .navbar-header
+        %a.navbar-brand{href: "/dashboard"} Katuma
+
+      .js-nav-buttons.collapse.navbar-collapse
+        %a.js-login-button.btn.btn-default.navbar-btn.navbar-right{href: "#/login", type: "button"} Log in
+        %a.js-signup-button.btn.btn-default.navbar-btn.navbar-right{href: "#/signup", type: "button"} Sign up
+
+      - flash.each do |type, content|
+        - if content.respond_to?('each')
+          - content.each do |item|
+            = render 'shared/layouts/alert', type: type, content: item
+        - else
+          = render 'shared/layouts/alert', type: type, content: content
+
+      = yield
+
+    = javascript_include_tag "shared/manifests/application"
+    = render_manifests('js')

@@ -1,0 +1,22 @@
+- if flash[:error]
+  %p= flash[:error]
+#loginbox.mainbox.col-md-6.col-md-offset-3.col-sm-8.col-sm-offset-2{style: "margin-top:50px;"}
+  .panel.panel-info
+    .panel-heading
+      .panel-title Log in
+      %div{style: "float:right; font-size: 80%; position: relative; top:-10px"}
+        %a{href: "#"} Forgot PPP password?
+    .panel-body{style: "padding-top:30px"}
+      %form#login-form{action: "/login", method: "post", role: "login"}
+        .input-group{style: "margin-bottom: 25px"}
+          %span.input-group-addon
+            %i.glyphicon.glyphicon-user
+          %input#email.form-control{name: "email", placeholder: "Email", type: "text"}/
+        .input-group{style: "margin-bottom: 25px"}
+          %span.input-group-addon
+            %i.glyphicon.glyphicon-lock
+          %input#password.form-control{name: "password", placeholder: "Password", type: "password"}/
+        .input-group
+          .form-group{style: "margin-top:10px"}
+            .col-sm-12.controls
+              %button#loginSubmit.btn.btn-success{type: "submit"} Login
