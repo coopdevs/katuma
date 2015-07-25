@@ -1,0 +1,17 @@
+!!!
+%html
+  %head
+    %meta{content: "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+  %body
+    %h1
+      Welcome to katuma.org, #{@user.name}
+    %p
+      = @user.name
+      invited you to join #{@group.name} group in
+      %em Katuma
+      %br/
+    %p
+      Please use the following link to create a
+      %em Katuma
+      account and #{link_to('join your friends!', @url)}
+    %p Thanks for joining and have a great day!
