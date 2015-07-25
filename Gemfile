@@ -25,6 +25,7 @@ gemspec path: "engines/landing"
 gemspec path: "engines/group"
 
 group :assets do
+  gem 'autoprefixer-rails', '5.2.1.1'
   gem 'sass-rails'
   gem 'uglifier'
 end
