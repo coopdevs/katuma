@@ -3,6 +3,8 @@ module Shared
     module Manifests
       extend ::ActiveSupport::Concern
 
+      # TODO: Maybe deprecate. User standar `content_for`
+      # to yield extra content on a layout
       included do
         helper Shared::Controller::Manifests::Helper
         helper_method :manifests_registered
