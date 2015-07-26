@@ -1,0 +1,15 @@
+.focus-page
+  .focus-page__container
+    .focus-page__content
+      - if flash[:error]
+        = flash[:error]
+
+      %form{action: login_attempt_path, method: "POST"}
+        .form-group
+          %input.form-control.input-lg{name: "email", placeholder: t('account.session.email_placeholder'), type: "text"}
+
+        .form-group
+          %input.form-control.input-lg{name: "password", placeholder: t('account.session.password_placeholder'), type: "password"}
+
+        .form-group
+          %button.btn.btn-primary.btn-lg.btn-block{type: "submit"}= t('account.session.button_label')

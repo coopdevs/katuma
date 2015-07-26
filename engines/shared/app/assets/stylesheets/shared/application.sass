@@ -1,5 +1,24 @@
+// Katuma icons are here
 @import "font-awesome/font-awesome"
 
+// Katuma global sass variables
+@import "variables"
 
-@import "bootstrap/custom-variables"
+// Order in these 3 files is important
+// 1. Katuma boostrap variables override bootstrap defualt variables.
+// 2. Load bootstrap styles. This is defined in vendor
+// 3. Overrida default bootstrap clases/styles in katuma bootstrap theme
+@import "katuma-bootstrap/variables"
 @import "bootstrap/bootstrap"
+
+
+@import "mixins/utils"
+@import "katuma-bootstrap/theme"
+
+// Generic classes helpful everywhere
+@import "utils"
+
+// Generic katuma modules.
+@import "modules/focus-page"
+
+
