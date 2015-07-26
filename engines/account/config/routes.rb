@@ -1,7 +1,7 @@
 Account::Engine.routes.draw do
 
   get  'login',  to: 'session#login'
-  post 'login',  to: 'session#login_attempt'
+  post 'login',  to: 'session#login_attempt', as: 'login_attempt'
   get  'logout', to: 'session#logout'
   get  'signup', to: 'signup#new'
   post 'signup', to: 'signup#create'
