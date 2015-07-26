@@ -27,6 +27,7 @@ gemspec path: "engines/group"
 group :assets do
   gem 'autoprefixer-rails', '5.2.1.1'
   gem 'sass-rails'
+  gem 'bootstrap-sass', '3.3.5.1'  
   gem 'uglifier'
 end
 
