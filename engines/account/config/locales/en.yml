@@ -1,7 +1,0 @@
-en:
-  account:
-    session:
-      email_placeholder: 'Your email'
-      password_placeholder: 'Your password'
-      button_label: 'Login'
-

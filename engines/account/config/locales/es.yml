@@ -1,0 +1,7 @@
+es:
+  account:
+    session:
+      email_placeholder: 'Tu email'
+      password_placeholder: 'Tu contraseña'
+      button_label: 'Entrar'
+
