@@ -1,0 +1,27 @@
+# humanstxt.org/
+# The humans responsible & technology colophon
+
+/* TEAM */
+	Backend: Enrico Stano
+	Contact: info [at] katuma.org
+	Twitter: @enricostano
+	From: Barcelona, Catalonia, Spain
+
+	Frontend: Andrés Gutiérrez
+	Twitter: @andresgutgon
+	From: Barcelona, Catalonia, Spain
+
+
+/* SITE */
+	Last update: 2015/07/27
+	Language: Català / Spanish
+	Doctype: HTML5
+	IDE: Sublime Text, Vim
+
+/* TECHNOLOGY COLOPHON */
+
+    Ruby, PostgresSQL
+    CSS3, HTML5, Javascript
+    Normalize.css
+
+    Source: https://github.com/coopdevs/katuma
