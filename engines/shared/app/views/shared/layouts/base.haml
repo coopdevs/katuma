@@ -1,0 +1,19 @@
+!!!
+%html
+  %head
+    %meta{content: "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %link{type: 'text/plain', rel: 'author', href: '/humans.txt'}    
+
+    %title= 'Katuma.org'
+
+    = stylesheet_link_tag 'shared/application'
+    = content_for :extra_engine_css
+
+    = csrf_meta_tags
+  %body
+    .container-fluid
+      = content_for?(:header) ? yield(:header) : yield
+      = yield
+
+    = javascript_include_tag "shared/application"
+    = content_for :extra_engine_javascript

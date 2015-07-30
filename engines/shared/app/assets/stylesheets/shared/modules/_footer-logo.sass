@@ -1,0 +1,26 @@
+$logo_width: 200px
+$logo_height: 67px
+// .footer-logo Styles for generic katuma logo
+// on page like login or signup. In this component we show a text
+// and katuma logo
+//
+// Styleguide x.x
+.footer-logo
+  margin-top: 40px
+  text-align: center
+
+  &__logo
+    background-image: image-url('shared/katuma-logo-footer.png')
+    background-repeat: no-repeat
+    display:  inline-block
+    width: $logo_width
+    height: $logo_height
+
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (   min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx)
+  .footer-logo
+    &__logo
+      background-image: image-url('shared/katuma-logo-footer@2x.png')
+      background-size: $logo_width $logo_height 
+    
+  
