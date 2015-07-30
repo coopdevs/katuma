@@ -4,4 +4,5 @@ es:
       email_placeholder: 'Tu email'
       password_placeholder: 'Tu contraseña'
       button_label: 'Entrar'
+      footer_text: 'Accede a tu cuenta de'
 
