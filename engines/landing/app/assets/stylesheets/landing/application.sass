@@ -1,0 +1,123 @@
+@import "../../../../../shared/app/assets/stylesheets/shared/variables"
+@import "../../../../../shared/app/assets/stylesheets/shared/katuma-bootstrap/variables"
+
+// @roboto: "Roboto:300,400";
+// @roboto-slab: "Roboto Slab";
+// @url1: "http://fonts.googleapis.com/css?family=@{roboto}";
+// @url2: "http://fonts.googleapis.com/css?family=@{roboto-slab}";
+// @import url(@url1);
+// @import url(@url2);
+@import url('http://fonts.googleapis.com/css?family=Roboto:100,300,400|Roboto+Slab:300')
+
+$defaultFont: 20px
+
+body
+  font-family: 'Roboto', sans-serif
+  font-weight: 300
+  font-size: $defaultFont
+  background-color: $purple_main
+
+.jumbotron
+  font-size: $defaultFont
+  font-weight: 300
+  background-image: image-url('landing/sheep.jpg')
+  background-size: cover
+  color: white
+  position: relative
+  text-shadow: 0px 2px 5px rgb(0, 0, 0)
+  margin-bottom: 0
+  padding: 0
+
+  .header
+    height: 400px
+    padding: 100px 0 0 0
+
+  h1
+    font-family: 'Roboto Slab', serif
+    margin-top: 90px
+    height: 102px
+    background-image: image-url('landing/katuma-logo-landing.png')
+    background-size: 370px 102px
+    background-position: top center
+    background-repeat: no-repeat
+    font-size: 88px
+    font-weight: 300
+
+  h2
+    font-size: 32px
+    font-weight: 100
+    margin-top: 0px
+
+  .services
+    padding: 50px 0
+    width: 100%
+    background-color: rgba(0, 0, 0, 0.3)
+    margin-top: 80px
+
+    .col-lg-4
+      padding: 0 50px
+
+.footer
+  font-size: 18px
+  color: white
+  background-color: $purple_main
+  line-height: 67px
+  vertical-align: middle
+  text-align: center
+  width: 100%
+
+  p
+    margin: 0px !important
+    i
+      margin-right: 5px
+    a
+      color: white
+
+.landing-signup-form
+  margin-top: 40px
+  margin-bottom: 40px
+
+  .form-control
+    min-width: 380px
+
+  .form-control,
+  .form-control:focus
+    border-color: white
+
+.landing-login
+  display: inline-block
+  border-radius: 4px
+  padding: 6px 8px
+  background-color: rgba(0, 0, 0, 0.6)
+  margin-top: 12px
+  font-weight: 300
+  text-align: right
+  text-shadow: none
+  box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.9)
+  font-size: 13px
+
+  &__button,
+  &__button:hover
+    background-color: transparent
+    color: white
+    margin-left: 10px
+
+  &__button,
+  &__button:focus
+    border-color: white
+
+@media (max-width: 1200px)
+  .jumbotron
+    .services
+      .col-lg-4
+        padding: 0 50px 20px
+
+        &:last-child
+          padding: 0 50px 0px
+
+@media (max-width: 500px)
+  .jumbotrom
+    h1
+      font-size: 50px
+    h2
+      font-size: 28px
