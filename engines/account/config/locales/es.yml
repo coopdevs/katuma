@@ -7,3 +7,6 @@ es:
       footer_text: 'Accede a tu cuenta de'
       login_attempt: 'Tu email o contraseña no son correctos'
 
+    signup:
+      button_label: 'Crear cuenta'
+      footer_text: 'Crea tu cuenta en'
