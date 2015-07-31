@@ -3,16 +3,13 @@
 
 .jumbotron
   .container
-    .row
-      .col-xs-12.text-center
-        .landing-login
-          %span.small= t('landing.already_member')
-          %a{href: account.login_path, class: 'btn landing-login__button btn-sm'}
-            = t('landing.login_button')
     .row.header
       .col-xs-12.text-center
+
         %h1
           %span.sr-only KATUMA
+
+        %h2=t("landing.slogan")
         = form_tag(account.signup_path, {method: 'post', class: ' landing-signup-form'}) do
           .form-inline
 
@@ -23,8 +20,13 @@
             %button{type: 'submit', class: 'btn btn-default btn-primary btn-lg'}
               = t('landing.signup_button')
 
-        %h2=t("landing.slogan")
 
+    .row
+      .col-xs-12.text-center
+        .landing-login
+          %span.small= t('landing.already_member')
+          %a{href: account.login_path, class: 'btn landing-login__button btn-sm'}
+            = t('landing.login_button')
 
 
   .services
