@@ -14,9 +14,8 @@
 
     = csrf_meta_tags
   %body
-    .container-fluid
-      = content_for?(:header) ? yield(:header) : yield
-      = yield
+    = content_for :header
+    = yield
 
     = javascript_include_tag "shared/application"
     = content_for :extra_engine_javascript

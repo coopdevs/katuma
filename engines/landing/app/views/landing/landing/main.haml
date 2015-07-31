@@ -1,0 +1,57 @@
+= content_for :extra_engine_css do
+  = stylesheet_link_tag 'landing/application'
+
+.jumbotron
+  .container
+    .row
+      .col-xs-12.text-center
+        .landing-login
+          %span.small= t('landing.already_member')
+          %a{href: account.login_path, class: 'btn landing-login__button btn-sm'}
+            = t('landing.login_button')
+    .row.header
+      .col-xs-12.text-center
+        %h1
+          %span.sr-only KATUMA
+        = form_tag(account.signup_path, {method: 'post', class: ' landing-signup-form'}) do
+          .form-inline
+
+            .form-group
+              %label.sr-only{for: 'email'}=t('account.session.email_placeholder')
+              %input#email.form-control.input-lg{placeholder: t('account.session.email_placeholder'), type: "email"}
+
+            %button{type: 'submit', class: 'btn btn-default btn-primary btn-lg'}
+              = t('landing.signup_button')
+
+        %h2=t("landing.slogan")
+
+
+
+  .services
+    .container
+      .row
+        .col-sm-4
+          %p=t("landing.services.one")
+        .col-sm-4
+          %p=t("landing.services.two")
+        .col-sm-4
+          %p=t("landing.services.three")
+
+.footer
+  .container
+    .row
+      .col-lg-4
+        %p
+          %a{:href => "https://github.com/coopdevs"}
+            %i.fa.fa-github
+            %span=t("landing.footer.github")
+      .col-lg-4
+        %p
+          %a{:href => "https://twitter.com/katuma_org"}
+            %i.fa.fa-twitter
+            %span=t("landing.footer.twitter")
+      .col-lg-4
+        %p
+          %a{:href => "mailto:info@katuma.org"}
+            %i.fa.fa-envelope
+            %span=t("landing.footer.contact")
