@@ -30,14 +30,13 @@ body
 
   .header
     height: 400px
-    padding: 100px 0 0 0
 
   h1
     font-family: 'Roboto Slab', serif
     margin-top: 90px
-    height: 102px
+    height: 55px
     background-image: image-url('landing/katuma-logo-landing.png')
-    background-size: 370px 102px
+    background-size: 200px 55px
     background-position: top center
     background-repeat: no-repeat
     font-size: 88px
@@ -47,6 +46,7 @@ body
     font-size: 32px
     font-weight: 100
     margin-top: 0px
+    display: inline-block
 
   .services
     padding: 50px 0
@@ -74,11 +74,8 @@ body
       color: white
 
 .landing-signup-form
-  margin-top: 40px
+  margin-top: 10px
   margin-bottom: 40px
-
-  .form-control
-    min-width: 380px
 
   .form-control,
   .form-control:focus
@@ -87,8 +84,8 @@ body
 .landing-login
   display: inline-block
   border-radius: 4px
-  padding: 6px 8px
-  background-color: rgba(0, 0, 0, 0.6)
+  padding: 20px 30px
+  background-color: rgba(0, 0, 0, 0.2)
   margin-top: 12px
   font-weight: 300
   text-align: right
@@ -105,6 +102,21 @@ body
   &__button,
   &__button:focus
     border-color: white
+
+@media only screen and  (min-width: $container-tablet)        
+  .jumbotron
+    h1
+      height: 102px
+      background-size: 370px 102px
+
+  .landing-signup-form
+    .form-control
+      min-width: 380px
+
+@media only screen and  (min-width: $container-desktop)        
+  .jumbotron
+    h2
+      width: 80%
 
 @media (max-width: 1200px)
   .jumbotron
