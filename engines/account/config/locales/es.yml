@@ -5,4 +5,5 @@ es:
       password_placeholder: 'Tu contraseña'
       button_label: 'Entrar'
       footer_text: 'Accede a tu cuenta de'
+      login_attempt: 'Tu email o contraseña no son correctos'
 

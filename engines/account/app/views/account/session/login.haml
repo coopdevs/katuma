@@ -1,8 +1,8 @@
 .focus-page
   .focus-page__container
     .focus-page__content
-      - if flash[:error]
-        = flash[:error]
+
+      - show_flash
 
       %form{action: login_attempt_path, method: "POST"}
         .form-group
