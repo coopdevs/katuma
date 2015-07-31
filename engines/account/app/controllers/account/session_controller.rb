@@ -1,5 +1,6 @@
 module Account
   class SessionController < ApplicationController
+    helper Shared::ApplicationHelper
 
     before_action :redirect_if_logged_in, only: :login
 
@@ -16,7 +17,7 @@ module Account
         session[:current_user_id] = user.id
         redirect_after_login_success
       else
-        flash[:error] = "Invalid Email or password"
+        flash[:error] = t('account.session.login_attempt')
         render :login
       end
     end
