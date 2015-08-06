@@ -4,5 +4,7 @@ module Account
     include Shared::Controller::Layout
     include Shared::Controller::Manifests
     include Shared::Controller::Authentication
+
+    helper Shared::ApplicationHelper
   end
 end

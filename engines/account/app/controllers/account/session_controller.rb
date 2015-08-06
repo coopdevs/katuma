@@ -1,7 +1,5 @@
 module Account
   class SessionController < ApplicationController
-    helper Shared::ApplicationHelper
-
     before_action :redirect_if_logged_in, only: :login
 
     # Renders the login view
