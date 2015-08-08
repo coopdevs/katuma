@@ -9,14 +9,14 @@
         %h1
           %span.sr-only KATUMA
 
-        = form_tag(account.signup_path, {method: 'post', class: ' landing-signup-form'}) do
+        = form_tag(account.signup_path, { method: 'post', class: 'landing-signup-form' }) do
           .form-inline
 
             .form-group
-              %label.sr-only{for: 'email'}=t('account.session.email_placeholder')
-              %input#email.form-control.input-lg{placeholder: t('account.session.email_placeholder'), type: "email"}
+              %label.sr-only{ for: 'email' } = t('account.session.email_placeholder')
+              %input#email.form-control.input-lg{ placeholder: t('account.session.email_placeholder'), type: 'email', name: 'email' }
 
-            %button{type: 'submit', class: 'btn btn-default btn-primary btn-lg'}
+            %button{ type: 'submit', class: 'btn btn-default btn-primary btn-lg' }
               = t('landing.signup_button')
 
 .services
