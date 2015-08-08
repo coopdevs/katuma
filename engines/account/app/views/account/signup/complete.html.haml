@@ -8,7 +8,7 @@
         %em= @signup.email
       %div{style: "float:right; font-size: 80%; position: relative; top:-10px"}
     .panel-body{style: "padding-top:30px"}
-      %form#signup-form{action: "complete", method: "post", role: "signup"}
+      = form_tag(complete_signup_path, { method: 'post', class: 'complete-signup-form' }) do
         %input#email{name: "email", type: "hidden", value: "#{@signup.email}"}/
         %input#token{name: "token", type: "hidden", value: "#{@signup.token}"}/
         .input-group{style: "margin-bottom: 25px"}
