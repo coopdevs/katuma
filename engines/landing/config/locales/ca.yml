@@ -1,0 +1,16 @@
+ca:
+  landing:
+    slogan: Estalvia't l'intermediari, compra directament als productors.
+    login_button: Accede tu cuenta
+    already_member: ¿Eres ya miembro de Katuma?
+    signup_button: Crea tu cuenta
+
+    services:
+      one: Gestiona fàcilment grups de consum col·laboratiu.
+      two: Crea vincles de qualitat amb els productors.
+      three: Un mercat alternatiu per a productors.
+
+    footer:
+      github: KATUMA és de codi obert
+      twitter: Segueix-nos a Twitter
+      contact: Contacta amb nosaltres

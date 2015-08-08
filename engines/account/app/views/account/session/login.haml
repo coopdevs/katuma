@@ -1,0 +1,17 @@
+.focus-page
+  .focus-page__container
+    .focus-page__content
+
+      - show_flash
+
+      %form{action: login_attempt_path, method: "POST"}
+        .form-group
+          %input.form-control.input-lg{name: "email", placeholder: t('account.session.email_placeholder'), type: "text", autofocus: true}
+
+        .form-group
+          %input.form-control.input-lg{name: "password", placeholder: t('account.session.password_placeholder'), type: "password"}
+
+        .form-group
+          %button.btn.btn-primary.btn-lg.btn-block{type: "submit"}= t('account.session.button_label')
+
+      = render partial: 'shared/partials/footer_logo', locals: {text: t('account.session.footer_text')}

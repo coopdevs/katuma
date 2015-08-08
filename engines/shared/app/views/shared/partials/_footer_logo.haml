@@ -1,0 +1,10 @@
+.footer-logo
+
+  .footer-logo__text.small
+    = text 
+
+  .footer-logo__logo
+
+  - unless local_assigns[:tip].nil?
+    .footer-logo__tip
+      = tip

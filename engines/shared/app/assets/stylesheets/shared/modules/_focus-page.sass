@@ -1,0 +1,26 @@
+// .focus-page type of page typicaly only to display one think
+// for example a login form
+//
+// Styleguide x.x
+.focus-page
+  +position_absolute
+  right: 0
+  bottom: 0
+  height: 100%
+  text-align: center
+  background-color: $grey_lighter
+
+  &__container
+    display: inline-block
+    width: 100%
+
+  &__content
+    padding: floor(($grid-gutter-width / 2))
+
+
+@media only screen and  (min-width: $screen-xs-min)    
+  .focus-page
+
+    &__container
+      +vertical_align_helper
+      width: $focus_page_small_width

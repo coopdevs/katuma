@@ -49,7 +49,7 @@ module Account
       if user.save
         session[:current_user_id] = user.id
 
-        redirect_to '/app/#/dashboard' # TODO put this in some config
+        redirect_to '/'
       else
         redirect_to controller: :signup, action: :complete, email: user_params[:email], token: user_params[:token]
       end

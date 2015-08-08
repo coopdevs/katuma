@@ -1,0 +1,16 @@
+es:
+  landing:
+    slogan: Ahórrate los intermediarios, compra directamente a los productores.
+    login_button: Accede a tu cuenta
+    already_member: ¿Eres ya miembro de Katuma?
+    signup_button: Crea tu cuenta
+
+    services:
+      one: Gestiona fácilmente grupos de consumo colaborativo.
+      two: Crea vínculos de calidad con los productores.
+      three: Un mercado alternativo para productores.
+
+    footer:
+      github: KATUMA es de código abierto
+      twitter: Síguenos en Twitter
+      contact: Contacta con nosotros
