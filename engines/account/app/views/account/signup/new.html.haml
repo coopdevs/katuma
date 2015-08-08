@@ -4,7 +4,7 @@
 
       - show_flash
 
-      %form{action: signup_path, method: "POST"}
+      = form_tag(signup_path, { method: 'post', class: 'signup-form' }) do
         .form-group
           %input.form-control.input-lg{name: "email", placeholder: t('account.session.email_placeholder'), type: "text", autofocus: true}
 
