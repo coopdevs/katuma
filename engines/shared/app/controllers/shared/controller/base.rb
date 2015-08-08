@@ -5,6 +5,8 @@ module Shared
 
       included do
         before_action :set_locale
+
+        protect_from_forgery with: :exception
       end
 
       def set_locale
