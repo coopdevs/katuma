@@ -12,10 +12,7 @@ gem 'bcrypt-ruby', '~> 3.1.5'
 
 gem 'pundit'
 
-# Server recommended for run apps in Heroku is Puma
-# Also they recomment manage app start with foreman
-gem 'foreman'
-gem 'puma'
+gem 'unicorn', '4.9.0'
 
 gem 'haml', '4.0.6'
 

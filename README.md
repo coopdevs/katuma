@@ -102,11 +102,5 @@ A list of all the possible Group roles can be found in [app/models/membership.rb
 ### Postman collection
 [Postman](http://www.getpostman.com) users can download our [Postman collection](postman_collection.json).
 
-## Heroku, Foreman and Puma
-Heroku recomment run rails on Puma server. If you want to try it in development follow these steps:
-1. Copy `.env.example` file and name it `.env`
-2. `bundle install`
-3. Start rails server with Foreman `foreman start`
-
 ## Postgrest start
 `pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start`
