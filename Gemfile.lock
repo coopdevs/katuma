@@ -17,9 +17,21 @@ PATH
       rails (~> 4.1.7)
 
 PATH
+  remote: engines/producers
+  specs:
+    producers (0.0.1)
+      rails (~> 4.1.7)
+
+PATH
   remote: engines/shared
   specs:
     shared (0.0.1)
+      rails (~> 4.1.7)
+
+PATH
+  remote: engines/suppliers
+  specs:
+    suppliers (0.0.1)
       rails (~> 4.1.7)
 
 GEM
@@ -182,6 +194,7 @@ DEPENDENCIES
   landing!
   oat (~> 0.4.5)
   pg
+  producers!
   pundit
   rails (= 4.1.7)
   rails_stdout_logging
@@ -190,6 +203,7 @@ DEPENDENCIES
   sass-rails
   shared!
   shoulda-matchers (~> 2.7.0)
+  suppliers!
   uglifier
   unicorn (= 4.9.0)
 
