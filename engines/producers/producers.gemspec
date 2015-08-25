@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
   s.description = "Producers management engine."
   s.license     = "MIT"
 
-  s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
+  s.files = Dir["{app,config,db,lib}/**/*", "README.rdoc"]
 
   s.add_dependency "rails", "~> 4.1.7"
 end
