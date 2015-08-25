@@ -7,6 +7,11 @@
 	Twitter: @enricostano
 	From: Barcelona, Catalonia, Spain
 
+	Backend: Pau Pérez
+	Contact: saulopefa [at] gmail.com
+	Twitter: @prez_pau
+	From: Barcelona, Catalonia, Spain
+
 	Frontend: Andrés Gutiérrez
 	Twitter: @andresgutgon
 	From: Barcelona, Catalonia, Spain
