@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150815082649) do
+ActiveRecord::Schema.define(version: 20150825155715) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -73,6 +73,29 @@ ActiveRecord::Schema.define(version: 20150815082649) do
 
   add_index "oauth_applications", ["uid"], name: "index_oauth_applications_on_uid", unique: true, using: :btree
 
+  create_table "order_lines", force: true do |t|
+    t.integer  "unit",       default: 1, null: false
+    t.integer  "price",                  null: false
+    t.integer  "quantity",               null: false
+    t.integer  "order_id",               null: false
+    t.integer  "product_id",             null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "order_lines", ["order_id"], name: "index_order_lines_on_order_id", using: :btree
+  add_index "order_lines", ["product_id"], name: "index_order_lines_on_product_id", using: :btree
+
+  create_table "orders", force: true do |t|
+    t.integer  "user_id",    null: false
+    t.integer  "group_id",   null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "orders", ["group_id"], name: "index_orders_on_group_id", using: :btree
+  add_index "orders", ["user_id"], name: "index_orders_on_user_id", using: :btree
+
   create_table "producers", force: true do |t|
     t.string   "name",       null: false
     t.string   "email",      null: false
@@ -98,6 +121,16 @@ ActiveRecord::Schema.define(version: 20150815082649) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "suppliers", force: true do |t|
+    t.integer  "group_id",    null: false
+    t.integer  "producer_id", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "suppliers", ["group_id"], name: "index_suppliers_on_group_id", using: :btree
+  add_index "suppliers", ["producer_id"], name: "index_suppliers_on_producer_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email",           null: false
