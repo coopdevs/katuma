@@ -28,6 +28,12 @@ PATH
     shared (0.0.1)
       rails (~> 4.1.7)
 
+PATH
+  remote: engines/suppliers
+  specs:
+    suppliers (0.0.1)
+      rails (~> 4.1.7)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -208,6 +214,7 @@ DEPENDENCIES
   sass-rails
   shared!
   shoulda-matchers (~> 2.7.0)
+  suppliers!
   uglifier
   unicorn (= 4.9.0)
 

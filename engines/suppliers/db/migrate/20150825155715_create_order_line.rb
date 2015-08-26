@@ -1,12 +1,17 @@
 class CreateOrderLine < ActiveRecord::Migration
   def change
     create_table :order_lines do |t|
-      t.integer :unit, default: 0, null: false
+      t.integer :unit, default: 1, null: false
       t.integer :price, null: false
       t.integer :quantity, null: false
 
-      t.references :order, index: true
-      t.references :product, index: true
+      t.integer :order_id, null: false
+      t.integer :product_id, null: false
+
+      t.timestamps
     end
+
+    add_index :order_lines, [:order_id]
+    add_index :order_lines, [:product_id]
   end
 end
