@@ -4,7 +4,7 @@ module Account
     self.table_name = :signups
 
     before_validation do |signup|
-      signup.token = SecureRandom.urlsafe_base64(32)
+      signup.token ||= SecureRandom.urlsafe_base64(32)
     end
 
     validates :email, presence: true
