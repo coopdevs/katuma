@@ -11,9 +11,9 @@ module Account
     def execute
       if @signup.save
         SignupMailer.confirm_email(@signup).deliver
-
-        @signup
       end
+
+      @signup
     end
   end
 end
