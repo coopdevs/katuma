@@ -3,8 +3,8 @@ development:
   encoding: unicode
   database: katuma_development
   pool: 5
-  username: postgres
-  password:
+  username: <%= ENV['DB_USERNAME'] %>
+  password: <%= ENV['DB_PASSWORD'] %>
 
 test:
   adapter: postgresql
