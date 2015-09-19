@@ -6,13 +6,13 @@ module Shared
 
       included do
         include Pundit
-        rescue_from Pundit::NotAuthorizedError, with: :forbidden_request
+        rescue_from Pundit::NotAuthorizedError, with: :forbidden_response
       end
 
       protected
 
-      def forbidden_request
-        redirect_to '/dashboard', alert: 'Sorry, you are not authorized. Please ask to a group admin to get more help.'
+      def forbidden_response
+        render text: '403 - Forbidden', status: :forbidden
       end
     end
   end
