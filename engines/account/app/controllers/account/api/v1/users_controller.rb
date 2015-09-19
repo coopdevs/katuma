@@ -19,17 +19,23 @@ module Account
           render json: UserSerializer.new(user)
         end
 
+        # POST /users
+        #
+        # TODO: ensure that this route is exposed only to express
+        #
         def create
-          user = Account::User.new(users_params)
+          user = ::Account::User.new(users_params)
+
           if user.save
-            session[:current_user_id] = user.id
-            render json: UserSerializer.new(user)
+            render json: ::Account::UserSerializer.new(user)
           else
-            render status: :bad_request,
+            render(
+              status: :bad_request,
               json: {
-              model: user.class.name,
-              errors: user.errors.full_messages
-            }
+                model: user.class.name,
+                errors: user.errors.full_messages
+              }
+            )
           end
         end
 
@@ -62,7 +68,7 @@ module Account
         private
 
         def users_params
-          params.permit(:name, :email, :username, :first_name, :last_name, :password, :password_confirmation)
+          params.permit(:email, :username, :first_name, :last_name, :password, :password_confirmation)
         end
       end
     end
