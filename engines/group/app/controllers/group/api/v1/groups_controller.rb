@@ -4,8 +4,7 @@ module Group
       class GroupsController < ApplicationController
 
         before_action :authenticate
-        before_action :find_and_authorize_group,
-          only: [:show, :update, :destroy]
+        before_action :find_and_authorize_group, only: [:show, :update, :destroy]
 
         def index
           render json: GroupsSerializer.new(current_user.groups)
@@ -16,16 +15,18 @@ module Group
         end
 
         def create
-          group = Group.new(group_params)
+          group = ::Group::Group.new(group_params)
           group_creation = GroupCreation.new(group, current_user)
           if group_creation.create
             render json: GroupSerializer.new(group)
           else
-            render status: :bad_request,
+            render(
+              status: :bad_request,
               json: {
-              model: group.class.name,
-              errors: group.errors.full_messages
-            }
+                model: group.class.name,
+                errors: group.errors.full_messages
+              }
+            )
           end
         end
 
@@ -33,11 +34,13 @@ module Group
           if @group.update_attributes(group_params)
             render json: GroupSerializer.new(@group)
           else
-            render status: :bad_request,
+            render(
+              status: :bad_request,
               json: {
-              model: @group.class.name,
-              errors: @group.errors.full_messages
-            }
+                model: @group.class.name,
+                errors: @group.errors.full_messages
+              }
+            )
           end
         end
 
@@ -52,7 +55,8 @@ module Group
         end
 
         def find_and_authorize_group
-          @group = Group.find(params[:id])
+          @group = ::Group::Group.find(params[:id])
+
           authorize @group
         end
       end
