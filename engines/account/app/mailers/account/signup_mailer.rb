@@ -13,8 +13,11 @@ module Account
 
     private
 
+    # TODO Find a way to manage express URLs
+    #
+    # @return [String]
     def confirm_url
-      complete_signup_url(@signup, host: 'localhost:3000', email: @signup.email, token: @signup.token)
+      "http://10.0.3.70:8000?token=#{@signup.token}"
     end
   end
 end
