@@ -82,9 +82,9 @@ ActiveRecord::Schema.define(version: 20150815082649) do
   end
 
   create_table "products", force: true do |t|
-    t.string   "name",                    null: false
-    t.integer  "price",                   null: false
-    t.integer  "unit",        default: 0, null: false
+    t.string   "name",        null: false
+    t.integer  "price",       null: false
+    t.integer  "unit",        null: false
     t.integer  "provider_id"
     t.datetime "created_at"
     t.datetime "updated_at"
