@@ -21,7 +21,6 @@ gemspec path: 'engines/account'
 gemspec path: 'engines/landing'
 gemspec path: 'engines/group'
 gemspec path: 'engines/producers'
-gemspec path: 'engines/suppliers'
 
 group :assets do
   gem 'autoprefixer-rails', '5.2.1.1'

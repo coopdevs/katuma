@@ -4,6 +4,12 @@ module Producers
 
     belongs_to :provider
 
-    enum unit: [:kg, :pc, :lt]
+    enum unit: {
+      kg: 0,
+      pc: 1,
+      lt: 2
+    }
+
+    validates :name, :price, :unit, presence: true
   end
 end
