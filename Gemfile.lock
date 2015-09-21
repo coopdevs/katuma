@@ -17,6 +17,12 @@ PATH
       rails (~> 4.1.7)
 
 PATH
+  remote: engines/producers
+  specs:
+    producers (0.0.1)
+      rails (~> 4.1.7)
+
+PATH
   remote: engines/shared
   specs:
     shared (0.0.1)
@@ -182,6 +188,7 @@ DEPENDENCIES
   landing!
   oat (~> 0.4.5)
   pg
+  producers!
   pundit
   rails (= 4.1.7)
   rails_stdout_logging
