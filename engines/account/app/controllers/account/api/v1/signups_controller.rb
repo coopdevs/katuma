@@ -8,15 +8,12 @@ module Account
         def create
           signup = SignupService.new(signup_params[:email]).execute
 
-          if signup
+          if signup.valid?
             render status: :ok, json: {}
           else
             render(
               status: :bad_request,
-              json: {
-                model: signup.class.name,
-                errors: signup.errors.full_messages
-              }
+              json: { errors: signup.errors.full_messages }
             )
           end
         end
