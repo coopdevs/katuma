@@ -16,6 +16,8 @@ gem 'unicorn', '4.9.0'
 
 gem 'haml', '4.0.6'
 
+gem 'rails-i18n', '~> 4.0.0'
+
 gemspec path: "engines/shared"
 gemspec path: "engines/account"
 gemspec path: "engines/landing"
@@ -24,7 +26,7 @@ gemspec path: "engines/group"
 group :assets do
   gem 'autoprefixer-rails', '5.2.1.1'
   gem 'sass-rails'
-  gem 'bootstrap-sass', '3.3.5.1'  
+  gem 'bootstrap-sass', '3.3.5.1'
   gem 'uglifier'
 end
 
