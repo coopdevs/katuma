@@ -16,6 +16,8 @@ gem 'unicorn', '4.9.0'
 
 gem 'haml', '4.0.6'
 
+gem 'rails-i18n', '~> 4.0.0'
+
 gemspec path: 'engines/shared'
 gemspec path: 'engines/account'
 gemspec path: 'engines/landing'
