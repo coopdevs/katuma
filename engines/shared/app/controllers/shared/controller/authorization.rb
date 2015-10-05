@@ -12,7 +12,7 @@ module Shared
       protected
 
       def forbidden_response
-        render text: '403 - Forbidden', status: :forbidden
+        render nothing: true, status: :forbidden
       end
     end
   end
