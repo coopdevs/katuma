@@ -17,6 +17,13 @@ PATH
       rails (~> 4.1.7)
 
 PATH
+  remote: engines/mailing_list
+  specs:
+    mailing_list (0.0.1)
+      gibbon (= 2.0.0)
+      rails (~> 4.1.7)
+
+PATH
   remote: engines/shared
   specs:
     shared (0.0.1)
@@ -78,6 +85,11 @@ GEM
     factory_girl_rails (4.2.1)
       factory_girl (~> 4.2.0)
       railties (>= 3.0.0)
+    faraday (0.9.2)
+      multipart-post (>= 1.2, < 3)
+    gibbon (2.0.0)
+      faraday (>= 0.9.1)
+      multi_json (>= 1.11.0)
     haml (4.0.6)
       tilt
     hike (1.2.3)
@@ -88,7 +100,8 @@ GEM
       mime-types (>= 1.16, < 3)
     mime-types (2.4.3)
     minitest (5.5.1)
-    multi_json (1.10.1)
+    multi_json (1.11.2)
+    multipart-post (2.0.0)
     oat (0.4.5)
       activesupport
     pg (0.17.1)
@@ -138,12 +151,6 @@ GEM
       rspec-support (~> 3.1.0)
     rspec-support (3.1.2)
     sass (3.4.13)
-    sass-rails (5.0.1)
-      railties (>= 4.0.0, < 5.0)
-      sass (~> 3.1)
-      sprockets (>= 2.8, < 4.0)
-      sprockets-rails (>= 2.0, < 4.0)
-      tilt (~> 1.1)
     shoulda-matchers (2.7.0)
       activesupport (>= 3.0.0)
     slop (3.6.0)
@@ -183,6 +190,7 @@ DEPENDENCIES
   group!
   haml (= 4.0.6)
   landing!
+  mailing_list!
   oat (~> 0.4.5)
   pg
   pundit
@@ -191,7 +199,6 @@ DEPENDENCIES
   rails_stdout_logging
   rspec-its (~> 1.1.0)
   rspec-rails (~> 3.1.0)
-  sass-rails
   shared!
   shoulda-matchers (~> 2.7.0)
   uglifier

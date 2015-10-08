@@ -11,6 +11,7 @@ module Account
     def execute
       if @signup.save
         SignupMailer.confirm_email(@signup).deliver
+        MailingList::Client.new.add_user_to_list!
       end
 
       @signup
