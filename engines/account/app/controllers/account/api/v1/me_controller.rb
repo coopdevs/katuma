@@ -2,17 +2,12 @@ module Account
   module Api
     module V1
       class MeController < ApplicationController
+        before_action :authenticate
 
         def show
-          if current_user
-            render json: UserSerializer.new(current_user)
-          else
-            render status: :unauthorized, json: {}
-          end
+          render json: UserSerializer.new(current_user)
         end
-
       end
-
     end
   end
 end
