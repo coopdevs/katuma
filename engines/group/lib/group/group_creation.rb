@@ -9,11 +9,11 @@ module Group
       @creator = creator
     end
 
-    # Creates a new Group
-    # and add creator as group admin
+    # Creates a new Group and adds creator as group admin
+    #
     def create
       ::Group::Group.transaction do
-        if @group.save
+        if group.save
           add_creator_as_group_admin
         end
       end
@@ -21,10 +21,11 @@ module Group
 
     private
 
-    # Creates a new Membership for the creator
-    # as admin
+    # Creates a new Membership for the creator as admin
+    #
+    # @return [Group::Membership]
     def add_creator_as_group_admin
-      @group.memberships.create(user: @creator, role: Membership::ROLES[:admin])
+      group.memberships.create(user: creator, role: ::Group::Membership::ROLES[:admin])
     end
   end
 end
