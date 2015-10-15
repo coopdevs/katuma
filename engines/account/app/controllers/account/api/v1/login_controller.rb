@@ -7,7 +7,7 @@ module Account
           user = ::Account::User.find_by_email(login_params[:email])
 
           if user && user.authenticate(login_params[:password])
-            render status: :ok, json: { user_id: user.id }
+            render status: :ok, json: UserSerializer.new(user)
           else
             render status: :unauthorized, json: {}
           end
