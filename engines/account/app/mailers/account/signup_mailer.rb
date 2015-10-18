@@ -17,7 +17,7 @@ module Account
     #
     # @return [String]
     def confirm_url
-      "http://10.0.3.70:8000?token=#{@signup.token}"
+      "http://10.0.3.70:8000/signup/complete/#{@signup.token}"
     end
   end
 end
