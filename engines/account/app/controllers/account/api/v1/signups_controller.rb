@@ -3,13 +3,13 @@ module Account
     module V1
       class SignupsController < ApplicationController
 
-        # POST /signups
+        # POST /api/v1/signups
         #
         def create
-          signup = SignupService.new(signup_params[:email]).execute
+          signup = SignupService.new().create!(signup_params[:email])
 
-          if signup.valid?
-            render status: :ok, json: {}
+          if signup.valid? && signup.persisted?
+            render status: :ok, nothing: true
           else
             render(
               status: :bad_request,
@@ -28,7 +28,7 @@ module Account
           if signup
             render status: :ok, json: { email: signup.email }
           else
-            render status: :not_found, json: {}
+            render status: :not_found, nothing: true
           end
         end
 
