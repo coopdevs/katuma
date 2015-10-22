@@ -5,7 +5,6 @@ module Onboarding
 
     include Shared::Model::ReadOnly
 
-    has_many :invitations,
-      dependent: :destroy
+    has_many :invitations, dependent: :destroy
   end
 end

@@ -7,10 +7,7 @@ module Onboarding
     belongs_to :invited_user, class_name: 'Account::User'
     belongs_to :group
 
-    validates :group, :invited_by,
-      presence: true
-    validates :invited_user,
-      presence: true,
-      uniqueness: { scope: :group_id }
+    validates :group, :invited_by, :email, :token, :accepted, presence: true
+    validates :invited_user, uniqueness: { scope: :group_id }
   end
 end
