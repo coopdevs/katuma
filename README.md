@@ -4,21 +4,61 @@ Ruby on Rails app to foster collaborative consumption
 
 ## Available API endpoints
 
-### Session
-#### Log in
+### Sign up
+#### Create
+Request:
 ```
-POST api/v1/sessions
+POST api/v1/signups
 
 {
-  "email": "user@email.com",
-  "password": "sosecret"
+  "email": "user@email.com"
 }
 ```
-#### Log out
+Response:
 ```
-DELETE api/v1/sessions
+201 CREATED
 
 {}
+```
+#### Show
+Request:
+```
+GET api/v1/signups/:token
+```
+Response:
+```
+200 OK
+
+{
+  "email": "user@email.com"
+}
+```
+#### Complete
+Request:
+```
+POST api/v1/signups/complete/:token
+
+{
+  "username": "username",
+  "password": "sosecret",
+  "password_confirmation": "sosecret",
+  "first_name": "User",
+  "last_name": "Name"
+}
+```
+Response:
+```
+200 OK
+
+{
+  "id": 1,
+  "email": "user@email.com",
+  "username": "username",
+  "first_name": "User",
+  "last_name": "Name"
+  "created_at": "2014-09-06T11:48:39.072Z",
+  "updated_at": "2014-09-06T11:48:39.072Z"
+}
 ```
 
 ### Users
@@ -63,17 +103,6 @@ Response:
     "updated_at":"2014-08-31T18:40:40.255Z"
   }
 ]
-```
-#### Create
-```
-POST api/v1/users
-
-{
-  "name": "User name",
-  "email": "user@email.com",
-  "password": "sosecret",
-  "password_confirmation": "sosecret"
-}
 ```
 
 ### Groups

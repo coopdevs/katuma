@@ -2,14 +2,16 @@ module Account
   module Api
     module V1
       class SignupsController < ApplicationController
+        before_action :check_email_availability, only: [:create]
+        before_action :load_signup, only: [:show, :complete]
 
         # POST /api/v1/signups
         #
         def create
-          signup = SignupService.new().create!(signup_params[:email])
+          signup = SignupService.new().create!(signup_create_params[:email])
 
           if signup.valid? && signup.persisted?
-            render status: :ok, nothing: true
+            render status: :created, nothing: true
           else
             render(
               status: :bad_request,
@@ -23,23 +25,60 @@ module Account
         # TODO: better serialized response
         #
         def show
-          signup = ::Account::Signup.find_by_token(signup_show_params[:token])
+          render status: :ok, json: { email: @signup.email }
+        end
 
-          if signup
-            render status: :ok, json: { email: signup.email }
+        # POST /api/v1/signups/complete/:token
+        #
+        def complete
+          user = SignupService.new().complete!(@signup, signup_complete_params)
+
+          if user.valid? && user.persisted?
+            render json: UserSerializer.new(user)
           else
-            render status: :not_found, nothing: true
+            render(
+              status: :bad_request,
+              json: {
+                model: user.class.name,
+                errors: user.errors.full_messages
+              }
+            )
           end
         end
 
         private
 
-        def signup_params
+        def signup_create_params
           params.permit(:email)
         end
 
         def signup_show_params
           params.permit(:token)
+        end
+
+        def signup_complete_params
+          params.permit(:token, :username, :first_name, :last_name, :password, :password_confirmation)
+        end
+
+        def check_email_availability
+          user = ::Account::User.find_by_email(signup_create_params[:email])
+
+          return unless user
+
+          render(
+            status: :bad_request,
+            json: {
+              errors: ['A user already exists with the given email']
+            }
+          )
+        end
+
+        def load_signup
+          @signup = ::Account::Signup.find_by_token(signup_show_params[:token])
+
+          return if @signup
+
+          render status: :not_found, nothing: true
         end
       end
     end
