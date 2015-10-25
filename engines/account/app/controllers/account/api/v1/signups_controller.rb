@@ -38,10 +38,7 @@ module Account
           else
             render(
               status: :bad_request,
-              json: {
-                model: user.class.name,
-                errors: user.errors.full_messages
-              }
+              json: user.errors.to_json
             )
           end
         end
