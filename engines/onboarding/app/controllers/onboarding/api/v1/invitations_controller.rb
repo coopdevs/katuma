@@ -25,27 +25,6 @@ module Onboarding
           end
         end
 
-        # POST /api/v1/invitations
-        #
-        def create
-          authorize @group
-
-          invitation = InvitationService.new.create!(
-            invitation_params[:email],
-            @group,
-            current_user
-          )
-
-          if invitation.valid? && invitation.persisted?
-            render json: InvitationSerializer.new(invitation)
-          else
-            render(
-              status: :bad_request,
-              json: { errors: invitation.errors.to_json }
-            )
-          end
-        end
-
         # POST /api/v1/invitations/accept/:token
         #
         def accept
