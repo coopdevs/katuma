@@ -6,7 +6,7 @@ module Account
     has_secure_password
 
     validates :first_name, :last_name, presence: true
-    validates :email,    presence: true, uniqueness: true
+    validates :email,    presence: true, uniqueness: true, email: true
     validates :username, presence: true, uniqueness: true
     validates :username, format: {
       with: /\A[a-zA-Z0-9_\-]+\Z/,
