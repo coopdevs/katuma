@@ -31,10 +31,7 @@ module Group
           else
             render(
               status: :bad_request,
-              json: {
-                model: group.class.name,
-                errors: group.errors
-              }
+              json: group.errors.to_json
             )
           end
         end
@@ -80,7 +77,7 @@ module Group
         # TODO: Extract this to lib or gem
         #
         def add_side_effects_links
-          return unless @side_effects.any
+          return unless @side_effects.any?
 
           links = @side_effects.flatten.map do |side_effect|
             "<#{api_link(side_effect)}>; rel=\"created\" type=\"#{model_type(side_effect)}\""
@@ -90,7 +87,7 @@ module Group
         end
 
         def api_link(side_effect)
-          "#{web_app_url}/api/v1/#{model_type(side_effect).downcase.pluralize}/#{side_effect.id}"
+          "http://localhost:8000/api/v1/#{model_type(side_effect).downcase.pluralize}/#{side_effect.id}"
         end
 
         def model_type(side_effect)
