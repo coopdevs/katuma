@@ -1,9 +1,0 @@
-.panel.panel-default
-  .panel-heading
-    %h3.panel-title Create a new group
-  .panel-body
-    = form_for @group, url: { action: 'create' }, html: { class: 'form-group' } do |f|
-      .form-group
-        = f.label 'Group name:', for: 'group_name'
-        = f.text_field :name, class: 'form-control'
-      = f.submit 'Create', class: 'btn btn-success'
