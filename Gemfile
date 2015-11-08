@@ -24,6 +24,9 @@ gemspec path: 'engines/landing'
 gemspec path: 'engines/group'
 gemspec path: 'engines/producers'
 
+gem 'mina', '0.3.7'
+gem 'mina-unicorn', '0.3.0', require: false
+
 group :assets do
   gem 'autoprefixer-rails', '5.2.1.1'
   gem 'sass-rails'
