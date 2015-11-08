@@ -33,7 +33,9 @@ module Onboarding
     end
 
     # Accepts an invitation
-    # a new user is created and added to the group which has been invited
+    # If user already in db join they to that group if not present.
+    # If user not in db create and add to group.
+    # In both cases mark invitation as accepted
     #
     # @param invitation [Account::Invitation]
     # @param options [Hash]
@@ -44,26 +46,26 @@ module Onboarding
     # @option options [String] :last_name
     # @return [Account::User]
     def accept!(invitation, options)
-      user = ::Account::User.new(
-        email: invitation.email,
-        username: options[:username],
-        password: options[:password],
-        password_confirmation: options[:password_confirmation],
-        first_name: options[:first_name],
-        last_name: options[:last_name]
-      )
+      user = ::Account::User.find_by(email: invitation.email)
 
-      ::ActiveRecord::Base.transaction do
-        if user.save
+      if user
+        mark_invitation_as_accepted(invitation)
+        add_member_to_group(invitation.group.id, user.id)
+      else
+        user = ::Account::User.new(
+          email: invitation.email,
+          username: options[:username],
+          password: options[:password],
+          password_confirmation: options[:password_confirmation],
+          first_name: options[:first_name],
+          last_name: options[:last_name]
+        )
 
-          group = ::Group::Group.find invitation.group.id
-          group.memberships.create(
-            user_id: user.id,
-            role: ::Group::Membership::ROLES[:member]
-          )
-
-          invitation.accepted = true
-          invitation.save
+        ::ActiveRecord::Base.transaction do
+          if user.save
+            mark_invitation_as_accepted(invitation)
+            add_member_to_group(invitation.group.id, user.id)
+          end
         end
       end
 
@@ -71,6 +73,29 @@ module Onboarding
     end
 
     private
+
+    # Mark invitation as accepted
+    #
+    # @param invitation [Onboarding::Invitation]
+    def mark_invitation_as_accepted(invitation)
+      invitation.accepted = true
+      invitation.save
+    end
+
+    # Add user to group as meber
+    #
+    # @param group_id [Inteeger]
+    # @param user_id [Integer]
+    def add_member_to_group(group_id, user_id)
+      member = ::Group::Membership.find_by(user_id: user_id, group_id: group_id)
+      return if member
+
+      group = ::Group::Group.find group_id
+      group.memberships.create(
+        user_id: user_id,
+        role: ::Group::Membership::ROLES[:member]
+      )
+    end
 
     def load_invitation(email, group, inviting_user)
       invitation = Invitation.where(group: group, email: email).first
