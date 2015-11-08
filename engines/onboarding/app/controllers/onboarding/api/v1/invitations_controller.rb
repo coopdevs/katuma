@@ -3,7 +3,7 @@ module Onboarding
     module V1
       class InvitationsController < ApplicationController
         before_action :authenticate
-        before_action :load_group, only: [:create, :bulk]
+        before_action :load_group, only: [:bulk]
         before_action :load_invitation, only: [:accept]
 
         # Creates invitations in bulk
@@ -13,15 +13,30 @@ module Onboarding
         def bulk
           authorize @group
 
-          emails = bulk_params[:emails].split(',')
+          emails = bulk_params[:emails] || ''
+
+          if emails.empty?
+            return render(
+              status: :bad_request,
+              json: {errors: {emails: t('onboarding.invitation.bulk.errors.empty') }}
+            )
+          end
+
+          emails = emails.split(',')
           valids = valid_emails(emails)
 
           if valids.any?
-            InvitationService.new.bulk_invite!(@group, current_user, valids)
+            # We pick first 100 valid emails
+            # We don't want to allow infinite invitations.
+            valid_emails = valids.first(100)
+            InvitationService.new.bulk_invite!(@group, current_user, valid_emails)
 
             render nothing: true, status: :accepted
           else
-            render nothing: true, status: :bad_request
+            render(
+              status: :bad_request,
+              json: {errors: {emails: t('onboarding.invitation.bulk.errors.invalid') }}
+            )
           end
         end
 
@@ -42,17 +57,10 @@ module Onboarding
 
         private
 
-        def invitation_params
-          params.require(:group_id)
-          params.require(:email)
-          params.permit(:group_id, :email)
-        end
-
         # :emails is a String containing a comma separated list of email addresses
         #
         def bulk_params
           params.require(:group_id)
-          params.require(:emails)
           params.permit(:group_id, :emails)
         end
 
