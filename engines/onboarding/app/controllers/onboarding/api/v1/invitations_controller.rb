@@ -13,7 +13,7 @@ module Onboarding
         def bulk
           authorize @group
 
-          emails = bulk_params[:emails] || ''
+          emails = bulk_params.fetch(:emails, '')
 
           if emails.empty?
             return render(
