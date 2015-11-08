@@ -2,9 +2,9 @@ module Onboarding
   module Api
     module V1
       class InvitationsController < ApplicationController
-        before_action :authenticate
+        before_action :authenticate, only: [:bulk]
         before_action :load_group, only: [:bulk]
-        before_action :load_invitation, only: [:accept]
+        before_action :load_invitation, only: [:show, :accept]
 
         # Creates invitations in bulk
         #
@@ -40,13 +40,24 @@ module Onboarding
           end
         end
 
+        #
+        # GET /invitations/:token
+        #
+        def show
+          if current_user
+            render status: :not_found, nothing: true
+          else
+            render status: :ok, json: { email: @invitation.email }
+          end
+        end
+
         # POST /api/v1/invitations/accept/:token
         #
         def accept
           user = InvitationService.new.accept!(@invitation, accept_params)
 
           if user.valid? && user.persisted?
-            render json: UserSerializer.new(user)
+            render json: ::Account::UserSerializer.new(user)
           else
             render(
               status: :bad_request,

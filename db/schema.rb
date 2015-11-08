@@ -23,11 +23,12 @@ ActiveRecord::Schema.define(version: 20150825155715) do
   end
 
   create_table "invitations", force: true do |t|
-    t.integer  "group_id",      null: false
-    t.integer  "invited_by_id", null: false
-    t.string   "email",         null: false
-    t.string   "token",         null: false
+    t.integer  "group_id",                      null: false
+    t.integer  "invited_by_id",                 null: false
+    t.string   "email",                         null: false
+    t.string   "token",                         null: false
     t.datetime "sent_at"
+    t.boolean  "accepted",      default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -146,8 +147,8 @@ ActiveRecord::Schema.define(version: 20150825155715) do
 
   create_table "users", force: true do |t|
     t.string   "email",           null: false
-    t.string   "first_name",      null: false
-    t.string   "last_name",       null: false
+    t.string   "first_name"
+    t.string   "last_name"
     t.string   "username",        null: false
     t.string   "password_digest", null: false
     t.datetime "created_at"

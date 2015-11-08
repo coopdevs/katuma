@@ -35,7 +35,7 @@ module Onboarding
     # Accepts an invitation
     # a new user is created and added to the group which has been invited
     #
-    # @param signup [Account::Signup]
+    # @param invitation [Account::Invitation]
     # @param options [Hash]
     # @option options [String] :username
     # @option options [String] :password
@@ -45,7 +45,7 @@ module Onboarding
     # @return [Account::User]
     def accept!(invitation, options)
       user = ::Account::User.new(
-        email: signup.email,
+        email: invitation.email,
         username: options[:username],
         password: options[:password],
         password_confirmation: options[:password_confirmation],
@@ -54,7 +54,17 @@ module Onboarding
       )
 
       ::ActiveRecord::Base.transaction do
-        invitation.destroy if user.save
+        if user.save
+
+          group = ::Group::Group.find invitation.group.id
+          group.memberships.create(
+            user_id: user.id,
+            role: ::Group::Membership::ROLES[:member]
+          )
+
+          invitation.accepted = true
+          invitation.save
+        end
       end
 
       user
