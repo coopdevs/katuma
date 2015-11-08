@@ -6,6 +6,7 @@ class CreateInvitations < ActiveRecord::Migration
       t.string   :email, null: false
       t.string   :token, null: false
       t.datetime :sent_at
+      t.boolean  :accepted, default: false
 
       t.timestamps
 
