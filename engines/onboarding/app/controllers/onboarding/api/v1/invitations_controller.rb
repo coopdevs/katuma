@@ -39,24 +39,14 @@ module Onboarding
         def load_group
           @group = current_user.groups.find_by_id(invitation_params[:group_id])
 
-          unless @group
-            render status: :bad_request,
-              json: {
-                errors: 'Error related to Group'
-              }
-          end
+          head :not_found unless @group
         end
 
         def load_invited_user
           @invited_user = Onboarding::User.find_by_email(invitation_params[:email])
           @invited_user = Onboarding::User.create_from_email(invitation_params[:email]) unless @invited_user
 
-          unless @invited_user
-            render status: :bad_request,
-              json: {
-                errors: 'Error related to invited user'
-              }
-          end
+          head :not_found unless @invited_user
         end
       end
     end

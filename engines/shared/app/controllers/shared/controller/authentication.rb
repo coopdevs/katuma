@@ -26,7 +26,7 @@ module Shared
       # Checks if the request comes from a logged in user
       #
       def authenticate
-        render nothing: true, status: :unauthorized unless current_user
+        head :unauthorized unless current_user
       end
     end
   end

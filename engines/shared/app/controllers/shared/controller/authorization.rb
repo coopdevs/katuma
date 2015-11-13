@@ -12,7 +12,7 @@ module Shared
       protected
 
       def forbidden_response
-        render nothing: true, status: :forbidden
+        head :forbidden
       end
     end
   end

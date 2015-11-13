@@ -56,7 +56,8 @@ module Account
 
         def load_user
           @user = ::Account::User.find_by_id(params[:id])
-          render status: :not_found, nothing: true unless @user
+
+          head :not_found unless @user
         end
       end
     end

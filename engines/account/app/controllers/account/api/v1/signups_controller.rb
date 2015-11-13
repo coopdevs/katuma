@@ -75,7 +75,7 @@ module Account
 
           return if @signup
 
-          render status: :not_found, nothing: true
+          head :not_found
         end
       end
     end
