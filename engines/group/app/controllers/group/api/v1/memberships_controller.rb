@@ -68,6 +68,8 @@ module Group
         def find_and_authorize_membership
           @membership = Membership.find_by_id(params[:id])
 
+          head :not_found unless @membership
+
           authorize @membership
         end
       end

@@ -9,7 +9,7 @@ module Account
           if user && user.authenticate(login_params[:password])
             render status: :ok, json: UserSerializer.new(user)
           else
-            render status: :unauthorized, json: {}
+            head :unauthorized
           end
         end
 
