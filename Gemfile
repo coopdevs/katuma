@@ -23,6 +23,7 @@ gemspec path: 'engines/account'
 gemspec path: 'engines/landing'
 gemspec path: 'engines/group'
 gemspec path: 'engines/producers'
+gemspec path: 'engines/suppliers'
 
 gem 'mina', '0.3.7'
 gem 'mina-unicorn', '0.3.0', require: false
