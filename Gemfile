@@ -31,12 +31,10 @@ gemspec path: 'engines/onboarding'
 gem 'mina', '0.3.7'
 gem 'mina-unicorn', '0.3.0', require: false
 
-group :assets do
-  gem 'autoprefixer-rails', '6.1.0.1'
-  gem 'sass-rails', '5.0.4'
-  gem 'bootstrap-sass', '3.3.5.1'
-  gem 'uglifier', '2.7.2'
-end
+gem 'autoprefixer-rails', '6.1.0.1'
+gem 'sass-rails', '5.0.4'
+gem 'bootstrap-sass', '3.3.5.1'
+gem 'uglifier', '2.7.2'
 
 group :test do
   gem 'rspec-rails', '3.3.3'
