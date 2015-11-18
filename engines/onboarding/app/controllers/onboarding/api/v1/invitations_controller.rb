@@ -13,42 +13,33 @@ module Onboarding
         def bulk
           authorize @group
 
-          emails = bulk_params.fetch(:emails, '')
-
-          if emails.empty?
+          if bulk_params[:emails].blank?
             return render(
               status: :bad_request,
-              json: {errors: {emails: t('onboarding.invitation.bulk.errors.empty') }}
+              json: { errors: { emails: t('onboarding.invitation.bulk.errors.empty') } }
             )
           end
 
-          emails = emails.split(',')
-          valids = valid_emails(emails)
+          valid_emails = extract_emails(bulk_params[:emails])
 
-          if valids.any?
-            # We pick first 100 valid emails
-            # We don't want to allow infinite invitations.
-            valid_emails = valids.first(100)
+          if valid_emails.any?
             InvitationService.new.bulk_invite!(@group, current_user, valid_emails)
 
-            render nothing: true, status: :accepted
+            head :accepted
           else
             render(
               status: :bad_request,
-              json: {errors: {emails: t('onboarding.invitation.bulk.errors.invalid') }}
+              json: { errors: { emails: t('onboarding.invitation.bulk.errors.invalid') } }
             )
           end
         end
 
-        #
         # GET /invitations/:token
         #
         def show
-          if current_user
-            render status: :not_found, nothing: true
-          else
-            render status: :ok, json: { email: @invitation.email }
-          end
+          head :bad_request if current_user
+
+          render status: :ok, json: { email: @invitation.email }
         end
 
         # POST /api/v1/invitations/accept/:token
@@ -89,15 +80,21 @@ module Onboarding
         def load_invitation
           @invitation = Invitation.find_by_token(accept_params[:token])
 
-          head :not_found unless @invited_user
+          head :not_found unless @invitation
         end
 
-        # Filter only the valid emails
+        # Filters only the valid emails, we just pick the first 100 valid emails
+        # We don't want to allow infinite invitations.
         #
-        # @param emails [Array<String>]
+        # @param emails [String] comma separated email addresses
         # @return [Array<String>]
-        def valid_emails(emails)
-          emails.select { |email| ::EmailValidator.valid?(email) }
+        def extract_emails(emails)
+          return [] if emails.blank?
+
+          emails.
+            split(',').
+            select { |email| ::EmailValidator.valid?(email) }.
+            first(100)
         end
       end
     end
