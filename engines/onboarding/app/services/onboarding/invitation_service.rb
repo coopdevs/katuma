@@ -1,9 +1,6 @@
 module Onboarding
   class InvitationService
 
-    def initialize
-    end
-
     # Persists the Invitation and enqueues an InvitationJob
     #
     # @param email [String]
@@ -74,7 +71,7 @@ module Onboarding
 
     private
 
-    # Mark invitation as accepted
+    # Marks invitation as accepted
     #
     # @param invitation [Onboarding::Invitation]
     def mark_invitation_as_accepted(invitation)
@@ -82,21 +79,28 @@ module Onboarding
       invitation.save
     end
 
-    # Add user to group as meber
+    # Adds invited user to group with role :member
     #
-    # @param group_id [Inteeger]
+    # @param group_id [Integer]
     # @param user_id [Integer]
     def add_member_to_group(group_id, user_id)
-      member = ::Group::Membership.find_by(user_id: user_id, group_id: group_id)
-      return if member
+      membership = ::Onboarding::Membership.find_by(user_id: user_id, group_id: group_id)
+      return if membership
 
-      group = ::Group::Group.find group_id
+      # TODO: use #find_by_id and raise custom exception
+      group = ::Group::Group.find(group_id)
       group.memberships.create(
         user_id: user_id,
         role: ::Group::Membership::ROLES[:member]
       )
     end
 
+    # Find or create the invitation
+    #
+    # @param email [String]
+    # @param group [Onboarding::Group]
+    # @param inviting_user [Onboarding::User]
+    # @return [Onboarding::Invitation]
     def load_invitation(email, group, inviting_user)
       invitation = Invitation.where(group: group, email: email).first
       invitation ||= Invitation.new(group: group, email: email, invited_by: inviting_user)
