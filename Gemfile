@@ -18,12 +18,15 @@ gem 'haml', '4.0.6'
 
 gem 'rails-i18n', '~> 4.0.0'
 
+gem 'email_validator', '1.6.0', require: 'email_validator/strict'
+
 gemspec path: 'engines/shared'
 gemspec path: 'engines/account'
 gemspec path: 'engines/landing'
 gemspec path: 'engines/group'
 gemspec path: 'engines/producers'
 gemspec path: 'engines/suppliers'
+gemspec path: 'engines/onboarding'
 
 gem 'mina', '0.3.7'
 gem 'mina-unicorn', '0.3.0', require: false

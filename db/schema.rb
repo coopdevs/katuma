@@ -22,6 +22,19 @@ ActiveRecord::Schema.define(version: 20150825155715) do
     t.datetime "updated_at"
   end
 
+  create_table "invitations", force: true do |t|
+    t.integer  "group_id",                      null: false
+    t.integer  "invited_by_id",                 null: false
+    t.string   "email",                         null: false
+    t.string   "token",                         null: false
+    t.datetime "sent_at"
+    t.boolean  "accepted",      default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "invitations", ["token"], name: "index_invitations_on_token", using: :btree
+
   create_table "memberships", force: true do |t|
     t.integer  "user_id",    null: false
     t.integer  "group_id",   null: false
