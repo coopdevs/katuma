@@ -13,7 +13,7 @@ module Shared
       def current_user
         katuma_header = request.headers['HTTP_X_KATUMA_USER_ID']
         return @_current_user if defined?(@_current_user)
-        return unless katuma_header
+        return if katuma_header.blank?
 
         @_current_user = nil
         namespace = self.class.name.split('::').first
