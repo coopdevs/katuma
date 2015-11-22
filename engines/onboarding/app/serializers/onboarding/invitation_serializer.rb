@@ -1,5 +1,5 @@
 module Onboarding
-  class InvitationSerializer < BaseSerializer
+  class InvitationSerializer < Shared::BaseSerializer
 
     schema do
       type 'invitation'
