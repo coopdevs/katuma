@@ -16,6 +16,9 @@
 	Twitter: @andresgutgon
 	From: Barcelona, Catalonia, Spain
 
+  Frontend: Eduardo Lanchares
+  Twitter: @edulan
+  From: Barcelona, Catalonia, Spain
 
 /* SITE */
 	Last update: 2015/07/27
