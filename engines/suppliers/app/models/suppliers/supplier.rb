@@ -1,4 +1,4 @@
-module Supplier
+module Suppliers
   class Supplier < ActiveRecord::Base
     self.table_name = :suppliers
 
