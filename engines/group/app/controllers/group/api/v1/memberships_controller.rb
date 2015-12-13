@@ -9,7 +9,8 @@ module Group
         # GET /api/v1/memberships
         #
         def index
-          memberships = Membership.where(user_id: current_user.id)
+          group_ids = current_user.groups.map(&:id)
+          memberships = Membership.where(group_id: group_ids)
 
           render json: MembershipsSerializer.new(memberships)
         end
