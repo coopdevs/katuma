@@ -21,7 +21,7 @@ gem 'rails-i18n', '4.0.6'
 gem 'email_validator', '1.6.0', require: 'email_validator/strict'
 
 # Background processing
-gem 'sidekiq', '3.5.3'
+gem 'sidekiq', '4.0.1'
 
 gemspec path: 'engines/shared'
 gemspec path: 'engines/account'

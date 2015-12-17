@@ -9,7 +9,7 @@ module Account
     def create!(email)
       signup = Signup.find_or_initialize_by(email: email)
 
-      signup.save && SignupWorker.perform_async(signup.id)
+      signup.save && SignupJob.perform_later(signup.id)
       signup
     end
 
@@ -23,12 +23,14 @@ module Account
     # @return [Account::User]
     def complete!(signup, options)
       ::ActiveRecord::Base.transaction do
-        user = ::Account::User.create email: signup.email,
-                                      username: options[:username],
-                                      password: options[:password],
-                                      password_confirmation: options[:password_confirmation],
-                                      first_name: options[:first_name],
-                                      last_name: options[:last_name]
+        user = ::Account::User.create(
+          email: signup.email,
+          username: options[:username],
+          password: options[:password],
+          password_confirmation: options[:password_confirmation],
+          first_name: options[:first_name],
+          last_name: options[:last_name]
+        )
         signup.destroy
         user
       end
