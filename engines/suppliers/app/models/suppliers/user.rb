@@ -4,6 +4,6 @@ module Supplier
 
     self.table_name = :users
 
-    has_many :orders, class: 'Suppliers::Order'
+    has_many :orders, class_name: 'Suppliers::Order'
   end
 end
