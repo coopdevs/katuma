@@ -7,12 +7,9 @@ module Account
     # @param email [String]
     # @return [Account::Signup]
     def create!(email)
-      signup = Signup.find_by_email(email) || Signup.new(email: email)
+      signup = Signup.find_or_initialize_by(email: email)
 
-      if signup.save
-        SignupMailer.confirm_email(signup).deliver
-      end
-
+      signup.save && SignupJob.perform_later(signup.id)
       signup
     end
 
@@ -25,20 +22,18 @@ module Account
     # @option options [String] :last_name
     # @return [Account::User]
     def complete!(signup, options)
-      user = ::Account::User.new(
-        email: signup.email,
-        username: options[:username],
-        password: options[:password],
-        password_confirmation: options[:password_confirmation],
-        first_name: options[:first_name],
-        last_name: options[:last_name]
-      )
-
       ::ActiveRecord::Base.transaction do
-        signup.destroy if user.save
+        user = ::Account::User.create(
+          email: signup.email,
+          username: options[:username],
+          password: options[:password],
+          password_confirmation: options[:password_confirmation],
+          first_name: options[:first_name],
+          last_name: options[:last_name]
+        )
+        signup.destroy
+        user
       end
-
-      user
     end
   end
 end
