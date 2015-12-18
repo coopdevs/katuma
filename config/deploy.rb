@@ -3,10 +3,10 @@ require 'mina/rails'
 require 'mina/git'
 require 'mina/unicorn'
 
-set :domain, '10.0.3.80'
+set :domain, '10.0.3.52'
 set :deploy_to, '/opt/app/katuma'
 set :repository, 'https://github.com/coopdevs/katuma.git'
-set :branch, 'develop'
+set :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }
 
 # Manually create these paths in shared/ (eg: shared/config/database.yml) in your server.
 # They will be linked in the 'deploy:link_shared_paths' step.
