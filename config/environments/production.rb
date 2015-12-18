@@ -51,10 +51,10 @@ Katuma::Application.configure do
 
   # ActionMailer configuration
   # config.action_mailer.raise_delivery_errors = false
-  config.action_mailer.delivery_method = :smtp # ToDo: move to Mandrill or similar service
+  config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address:              'smtp.katuma.org',
-    port:                 578,
+    address:              'smtp.mailgun.org',
+    port:                 587,
     domain:               'katuma.org',
     user_name:            ENV['SMTP_USERNAME'],
     password:             ENV['SMTP_PASSWORD'],
