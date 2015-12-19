@@ -15,3 +15,7 @@ group = ::Group::Group.create(
   group: group,
   role: ::Group::Membership::ROLES[:admin]
 )
+
+Suppliers::Supplier.create(
+  group: group
+)

@@ -7,20 +7,20 @@ module Suppliers
         # GET /api/v1/suppliers
         #
         def index
-          suppliers = ::Suppliers::Supplier.all
-          render json: ::Suppliers::SuppliersSerializer.new(suppliers)
+          suppliers = SuppliersFinder.new(supplier_params[:group_id]).find
+          render json: SuppliersSerializer.new(suppliers)
         end
 
         # GET /api/v1/suppliers/:id
         #
         def show
-          render json: ::Suppliers::SupplierSerializer.new(@supplier)
+          render json: SupplierSerializer.new(@supplier)
         end
 
         # POST /api/v1/suppliers
         #
         def create
-          @supplier = Supplier::Supplier.new(supplier_params)
+          @supplier = Supplier.new(supplier_params)
 
           if @supplier
             render :show
@@ -52,11 +52,11 @@ module Suppliers
         private
 
         def supplier_params
-          params.require(:supplier).permit(:id, :group_id, :producer_id)
+          params.permit(:id, :group_id, :producer_id)
         end
 
         def load_supplier
-          @supplier = ::Suppliers::Supplier.find_by_id(params[:id])
+          @supplier = Supplier.find_by_id(params[:id])
         end
       end
     end
