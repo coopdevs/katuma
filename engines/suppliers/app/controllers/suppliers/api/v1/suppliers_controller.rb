@@ -7,7 +7,11 @@ module Suppliers
         # GET /api/v1/suppliers
         #
         def index
-          suppliers = SuppliersFinder.new(supplier_params[:group_id]).find
+          suppliers = SuppliersFinder.new(
+            current_user,
+            supplier_params[:group_id]
+          ).find
+
           render json: SuppliersSerializer.new(suppliers)
         end
 
@@ -52,7 +56,7 @@ module Suppliers
         private
 
         def supplier_params
-          params.permit(:id, :group_id, :producer_id)
+          params.permit(:group_id)
         end
 
         def load_supplier

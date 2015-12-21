@@ -1,4 +1,4 @@
-module Supplier
+module Suppliers
   class User < ActiveRecord::Base
     include Shared::Model::ReadOnly
 
