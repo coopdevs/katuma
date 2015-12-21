@@ -4,8 +4,7 @@ module Account
       class LoginController < ApplicationController
 
         def login
-          login = login_params[:email] || login_params[:username]
-          user = ::Account::User.where('username = :login OR email = :login', login: login).first
+          user = ::Account::User.find_by_login(login_params[:login])
 
           if user && user.authenticate(login_params[:password])
             render status: :ok, json: UserSerializer.new(user)
@@ -17,7 +16,7 @@ module Account
         private
 
         def login_params
-          params.permit(:username, :email, :password)
+          params.permit(:login, :password)
         end
       end
     end
