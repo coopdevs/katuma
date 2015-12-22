@@ -51,16 +51,73 @@ Katuma::Application.configure do
 
   # ActionMailer configuration
   # config.action_mailer.raise_delivery_errors = false
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {
-    address:              'smtp.mailgun.org',
-    port:                 587,
-    domain:               'katuma.org',
-    user_name:            ENV['SMTP_USERNAME'],
-    password:             ENV['SMTP_PASSWORD'],
-    authentication:       'plain',
-    enable_starttls_auto: false
-  }
+
+  strategies = [
+    # from YAML config file mailer.yml:
+    #
+    # production:
+    #     delivery_method: smtp
+    #     address: smtp.myservice.com
+    #     port: 567
+    #     user_name: me
+    #     password: my-passw0rD
+    -> (config) do
+      begin
+        mailer_settings = Rails.application.config_for(:mailer)
+      rescue RuntimeError # Could not load configuration. No such file - ROOT/config/mailer.yml
+        false
+      else
+        delivery_method = mailer_settings.delete("delivery_method").to_sym
+        config.delivery_method = delivery_method
+        if mailer_settings.present? # anything left
+          config.send("#{delivery_method}_settings=", mailer_settings)
+        end
+        true
+      end
+    end,
+    # from ENV
+    -> (config) do
+      if ENV['SMTP_USERNAME'].present?
+        config.delivery_method = :smtp
+        config.smtp_settings = {
+          address:              ENV['SMTP_ADDRESS'],
+          port:                 ENV['SMTP_PORT'],
+          domain:               ENV['SMTP_DOMAIN'],
+          user_name:            ENV['SMTP_USERNAME'],
+          password:             ENV['SMTP_PASSWORD'],
+          authentication:       (ENV['SMTP_AUTHENTICATION'].presence || 'plain'),
+          enable_starttls_auto: (ENV['SMTP_ENABLE_STARTTLS_AUTO'].present? || false)
+        }
+        true
+      else
+        false
+      end
+    end,
+    # from URL in ENV: smtp://user:pass@address:578/?domain=domain&authentication=plain&enable_starttls_auto=false
+    -> (config) do
+      if ENV['MAILER_URL'].present?
+        url = URI.parse(ENV['MAILER_URL'])
+        config.delivery_method = url.scheme.to_sym
+        query = Rack::Utils.parse_query(url.query)
+        mailer_settings = {
+          user_name: url.user,
+          password: url.password,
+          address: url.host,
+          port: url.port,
+          domain: query['domain'],
+          authentication: (query['authentication'].presence || 'plain'),
+          enable_starttls_auto: (query['enable_starttls_auto'].present? || false),
+        }
+        config.send("#{delivery_method}_settings=", mailer_settings)
+      else
+        false
+      end
+    end
+  ]
+  
+  strategies.detect do |strategy|
+    strategy.call(config.action_mailer)
+  end
 
   # Enable threaded mode
   # config.threadsafe!
