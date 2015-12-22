@@ -97,7 +97,8 @@ Katuma::Application.configure do
     -> (config) do
       if ENV['MAILER_URL'].present?
         url = URI.parse(ENV['MAILER_URL'])
-        config.delivery_method = url.scheme.to_sym
+        delivery_method = url.scheme.to_sym
+        config.delivery_method = delivery_method
         query = Rack::Utils.parse_query(url.query)
         mailer_settings = {
           user_name: url.user,
