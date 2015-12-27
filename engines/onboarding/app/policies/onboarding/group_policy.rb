@@ -7,7 +7,11 @@ module Onboarding
     end
 
     def bulk?
-      Membership.where(group: record, user: user, role: Membership::ROLES[:admin]).any?
+      Membership.where(
+        group: record,
+        user: user,
+        role: Role.new(:admin).index
+      ).any?
     end
   end
 end

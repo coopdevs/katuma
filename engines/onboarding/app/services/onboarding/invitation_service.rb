@@ -91,7 +91,7 @@ module Onboarding
       group = ::Group::Group.find(group_id)
       group.memberships.create(
         user_id: user_id,
-        role: ::Group::Membership::ROLES[:member]
+        role: :member
       )
     end
 

@@ -3,13 +3,20 @@ module Group
 
     self.table_name = :memberships
 
-    ROLES = { admin: 1, member: 2, waiting: 3 }
-
     belongs_to :group
     belongs_to :user
 
     validates :group, :user, :role, presence: true
-    validates :role, inclusion: { in: ROLES.values }
     validates :user_id, uniqueness: { scope: :group_id }
+
+    def role=(value)
+      @role = Role.new(value)
+      self[:role] = @role.index
+      @role
+    end
+
+    def role
+      @role ||= Role.from_index(self[:role])
+    end
   end
 end

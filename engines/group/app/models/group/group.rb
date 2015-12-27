@@ -6,11 +6,11 @@ module Group
     has_many :memberships, dependent: :destroy
     has_many :users, through: :memberships
     has_many :admins,
-      -> { where "memberships.role = #{ Membership::ROLES[:admin] }" },
+      -> { where "memberships.role = #{Role.new(:admin).index}" },
     through: :memberships,
       source: :user
     has_many :waiters,
-      -> { where "memberships.role = #{ Membership::ROLES[:waiting] }" },
+      -> { where "memberships.role = #{Role.new(:waiters).index}" },
     through: :memberships,
       source: :user
 

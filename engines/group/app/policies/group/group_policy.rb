@@ -14,7 +14,7 @@ module Group
       Membership.where(
         group: record,
         user: user,
-        role: [Membership::ROLES[:admin], Membership::ROLES[:member]]
+        role: [Role.new(:admin).index, Role.new(:member).index]
       ).any?
     end
 
@@ -22,7 +22,7 @@ module Group
       Membership.where(
         group: record,
         user: user,
-        role: Membership::ROLES[:admin]
+        role: Role.new(:admin).index
       ).any?
     end
 
@@ -30,7 +30,7 @@ module Group
       Membership.where(
         group: record,
         user: user,
-        role: Membership::ROLES[:admin]
+        role: Role.new(:admin).index
       ).any?
     end
   end

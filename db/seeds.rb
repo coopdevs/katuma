@@ -13,5 +13,5 @@ group = ::Group::Group.create(
 ::Group::Membership.create(
   user: ::Group::User.find(user.id),
   group: group,
-  role: ::Group::Membership::ROLES[:admin]
+  role: :admin
 )
