@@ -16,6 +16,16 @@ group = ::Group::Group.create(
   role: ::Group::Membership::ROLES[:admin]
 )
 
+producer = ::Producers::Producer.create(
+  name: 'Joan Pipa',
+  email: 'joan.pipa@katuma.org',
+  address: 'pl. Catalunya 1'
+)
+
+producer = Suppliers::Producer.find_by_id(producer.id)
+group = Suppliers::Group.find_by_id(group.id)
+
 Suppliers::Supplier.create(
+  producer: producer,
   group: group
 )
