@@ -3,7 +3,7 @@ require 'mina/rails'
 require 'mina/git'
 require 'mina/unicorn'
 
-set :domain, '10.0.3.52'
+set :domain, 'alfa.katuma.org'
 set :deploy_to, '/opt/app/katuma'
 set :repository, 'https://github.com/coopdevs/katuma.git'
 set :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }
@@ -16,8 +16,9 @@ set :shared_paths, ['config/database.yml', 'config/secrets.yml', 'log']
 set :unicorn_pid, '/var/run/unicorn/unicorn.pid'
 
 # Optional settings:
-set :user, 'katuma'
-# set :port, '30000'     # SSH port number.
+set :user, 'ubuntu'
+# SSH port number.
+set :port, '22666'
 set :forward_agent, true
 
 # This task is the environment that is loaded for most commands, such as
