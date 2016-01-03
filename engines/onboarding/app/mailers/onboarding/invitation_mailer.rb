@@ -14,11 +14,9 @@ module Onboarding
 
     private
 
-    # TODO Find a way to manage express URLs
-    #
     # @return [String]
     def accept_url
-      "http://localhost:8000/invitation/accept/#{@invitation.token}"
+      "#{::Shared::FrontendUrl.base_url}/invitation/accept/#{@invitation.token}"
     end
   end
 end
