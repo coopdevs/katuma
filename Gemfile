@@ -32,7 +32,6 @@ gemspec path: 'engines/suppliers'
 gemspec path: 'engines/onboarding'
 
 gem 'mina', '0.3.7'
-gem 'mina-unicorn', '0.3.0', require: false
 
 gem 'autoprefixer-rails', '6.1.0.1'
 gem 'sass-rails', '5.0.4'

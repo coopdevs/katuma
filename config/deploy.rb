@@ -1,7 +1,8 @@
 require 'mina/bundler'
 require 'mina/rails'
 require 'mina/git'
-require 'mina/unicorn'
+load File.expand_path("../../lib/tasks/unicorn.rake", __FILE__)
+load File.expand_path("../../lib/tasks/sidekiq.rake", __FILE__)
 
 set :domain, 'alfa.katuma.org'
 set :deploy_to, '/opt/app/katuma'
@@ -15,9 +16,8 @@ set :shared_paths, ['config/database.yml', 'config/secrets.yml', 'log']
 # Unicorn stuff
 set :unicorn_pid, '/var/run/unicorn/unicorn.pid'
 
-# Optional settings:
+# SSH settings
 set :user, 'ubuntu'
-# SSH port number.
 set :port, '22666'
 set :forward_agent, true
 
@@ -43,6 +43,7 @@ task :deploy => :environment do
       queue "mkdir -p #{deploy_to}/#{current_path}/tmp/"
       queue "touch #{deploy_to}/#{current_path}/tmp/restart.txt"
       invoke :'unicorn:restart'
+      invoke :'sidekiq:restart'
     end
   end
 end
