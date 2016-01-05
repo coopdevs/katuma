@@ -11,7 +11,7 @@ module Account
           signup = SignupService.new().create!(signup_create_params[:email])
 
           if signup.valid? && signup.persisted?
-            render status: :created, nothing: true
+            head :created
           else
             render(
               status: :bad_request,
