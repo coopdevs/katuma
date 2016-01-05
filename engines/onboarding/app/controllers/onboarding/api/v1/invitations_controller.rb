@@ -2,9 +2,19 @@ module Onboarding
   module Api
     module V1
       class InvitationsController < ApplicationController
-        before_action :authenticate, only: [:bulk]
-        before_action :load_group, only: [:bulk]
+        before_action :authenticate, only: [:index, :bulk]
+        before_action :load_group, only: [:index, :bulk]
         before_action :load_invitation, only: [:show, :accept]
+
+        # GET /api/v1/invitations?group_id=:id
+        #
+        def index
+          authorize @group
+
+          invitations = Invitation.where(group_id: @group.id)
+
+          render json: InvitationsSerializer.new(invitations)
+        end
 
         # Creates invitations in bulk
         #
@@ -59,6 +69,11 @@ module Onboarding
 
         private
 
+        def groups_params
+          params.require(:group_id)
+          params.permit(:group_id)
+        end
+
         # :emails is a String containing a comma separated list of email addresses
         #
         def bulk_params
@@ -72,7 +87,8 @@ module Onboarding
         end
 
         def load_group
-          @group = ::Onboarding::Group.find_by_id(bulk_params[:group_id])
+          group_id = bulk_params[:group_id] || groups_params[:group_id]
+          @group = ::Onboarding::Group.find_by_id(group_id)
 
           head :not_found unless @group
         end
