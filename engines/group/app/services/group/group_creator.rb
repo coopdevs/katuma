@@ -30,7 +30,7 @@ module Group
     def add_creator_as_group_admin
       group.memberships.create(
         user: creator,
-        role: ::Group::Membership::ROLES[:admin]
+        role: :admin
       )
     end
   end

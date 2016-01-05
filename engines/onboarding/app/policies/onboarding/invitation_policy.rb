@@ -7,7 +7,11 @@ module Onboarding
     end
 
     def create?
-      Membership.where(group: record.group, user: user, role: Membership::ROLES[:admin]).any?
+      Membership.where(
+        group: record.group,
+        user: user,
+        role: Role.new(:admin).index
+      ).any?
     end
   end
 end

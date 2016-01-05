@@ -8,7 +8,7 @@ module Account
         # POST /api/v1/signups
         #
         def create
-          signup = SignupService.new().create!(signup_create_params[:email])
+          signup = SignupService.new.create!(signup_create_params[:email])
 
           if signup.valid? && signup.persisted?
             head :created
@@ -31,7 +31,7 @@ module Account
         # POST /api/v1/signups/complete/:token
         #
         def complete
-          user = SignupService.new().complete!(@signup, signup_complete_params)
+          user = SignupService.new.complete!(@signup, signup_complete_params)
 
           if user.valid? && user.persisted?
             render json: UserSerializer.new(user)
