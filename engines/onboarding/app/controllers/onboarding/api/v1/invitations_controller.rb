@@ -9,7 +9,7 @@ module Onboarding
         # GET /api/v1/invitations?group_id=:id
         #
         def index
-          authorize @group
+          authorize @group, :show?
 
           invitations = Invitation.where(group_id: @group.id)
 
