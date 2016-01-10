@@ -25,9 +25,9 @@ module Onboarding
           valid_email = extract_emails(invitation_params[:email])
 
           if valid_email.any?
-            InvitationService.new.create!(group, current_user, valid_email)
+            invitation = InvitationService.new.create!(group, current_user, valid_email)
 
-            head :accepted
+            render json: InvitationSerializer.new(invitation)
           else
             render(
               status: :bad_request,
