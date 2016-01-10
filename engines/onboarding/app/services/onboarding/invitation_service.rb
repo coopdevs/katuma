@@ -3,12 +3,12 @@ module Onboarding
 
     # Persists the Invitation and enqueues an InvitationJob
     #
-    # @param email [String]
     # @param group [Group]
     # @param inviting_user [User]
+    # @param email [String]
     # @return [Invitation]
-    def create!(email, group, inviting_user)
-      invitation = load_invitation(email, group, inviting_user)
+    def create!(group, inviting_user, email)
+      invitation = load_invitation(group, inviting_user, email)
 
       if invitation.save
         # TODO: move to background job
@@ -26,7 +26,7 @@ module Onboarding
     # @param emails [Array<String>]
     def bulk_invite!(group, inviting_user, emails)
       # TODO: move to background job
-      emails.each { |email| create!(email, group, inviting_user) }
+      emails.each { |email| create!(group, inviting_user, email) }
     end
 
     # Accepts an invitation
@@ -97,11 +97,11 @@ module Onboarding
 
     # Find or create the invitation
     #
-    # @param email [String]
     # @param group [Onboarding::Group]
     # @param inviting_user [Onboarding::User]
+    # @param email [String]
     # @return [Onboarding::Invitation]
-    def load_invitation(email, group, inviting_user)
+    def load_invitation(group, inviting_user, email)
       invitation = Invitation.where(group: group, email: email).first
       invitation ||= Invitation.new(group: group, email: email, invited_by: inviting_user)
       invitation

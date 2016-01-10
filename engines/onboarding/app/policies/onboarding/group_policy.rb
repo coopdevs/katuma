@@ -6,7 +6,11 @@ module Onboarding
       end
     end
 
-    def bulk?
+    def show?
+      Membership.where(group: record, user: user).any?
+    end
+
+    def invite?
       Membership.where(group: record, user: user, role: Membership::ROLES[:admin]).any?
     end
   end
