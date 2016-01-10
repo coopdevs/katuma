@@ -98,7 +98,6 @@ module Onboarding
         #
         def bulk_params
           params.require(:group_id)
-          params.require(:emails)
           params.permit(:group_id, :emails)
         end
 
