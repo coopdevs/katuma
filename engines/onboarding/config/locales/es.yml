@@ -3,5 +3,4 @@ es:
     invitation:
       bulk:
         errors:
-          empty: 'Al menos debes escribir un email'
           invalid: 'Ninguno de los emails que has escrito es valido. Por favor revisalo.'
