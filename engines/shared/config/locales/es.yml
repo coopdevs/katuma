@@ -1,0 +1,6 @@
+es:
+  missing_param:
+    generic: el campo %{field} no puede quedar en blanco
+    invitations:
+      bulk:
+        emails: 'Al menos debes escribir un email'
