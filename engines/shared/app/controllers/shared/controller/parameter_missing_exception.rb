@@ -7,7 +7,6 @@ module Shared
         rescue_from ActionController::ParameterMissing, with: :missing_parameter
       end
 
-
       protected
 
       def missing_parameter(error)
@@ -26,7 +25,6 @@ module Shared
           )
         }
       end
-
     end
   end
 end
