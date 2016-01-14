@@ -6,6 +6,7 @@ module Suppliers
     belongs_to :producer, class_name: 'Suppliers::Producer'
 
     validates :group_id, :producer_id, presence: true
+    validates :group_id, uniqueness: { scope: :producer_id }
   end
 end
 

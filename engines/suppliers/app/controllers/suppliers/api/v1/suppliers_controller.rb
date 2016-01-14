@@ -71,7 +71,7 @@ module Suppliers
         def load_supplier
           @supplier = Supplier.find_by_id(params[:id])
 
-          unless @suppliers
+          unless @supplier
             render json: ::Shared::Error.new(
               Supplier,
               id: params[:id],
