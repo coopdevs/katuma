@@ -26,10 +26,13 @@ module Suppliers
         def create
           @supplier = Supplier.new(supplier_params)
 
-          if @supplier
-            render :show
+          if @supplier.save
+            render json: SupplierSerializer.new(@supplier)
           else
-            render :show, status: :bad_request
+            render json: ::Shared::Error.new(
+              @supplier,
+              name: :bad_request
+            )
           end
         end
 
@@ -37,9 +40,12 @@ module Suppliers
         #
         def update
           if @supplier.update_attributes(supplier_params)
-            render :show
+            render json: SupplierSerializer.new(@supplier)
           else
-            render :show, status: :bad_request
+            render json: ::Shared::Error.new(
+              @supplier,
+              name: :bad_request
+            )
           end
         end
 
@@ -49,18 +55,29 @@ module Suppliers
           if @supplier.destroy
             head :no_content
           else
-            head :bad_request
+            render json: ::Shared::Error.new(
+              @supplier,
+              name: :bad_request
+            )
           end
         end
 
         private
 
         def supplier_params
-          params.permit(:group_id)
+          params.permit(:group_id, :producer_id)
         end
 
         def load_supplier
           @supplier = Supplier.find_by_id(params[:id])
+
+          unless @suppliers
+            render json: ::Shared::Error.new(
+              Supplier,
+              id: params[:id],
+              name: :not_found
+            )
+          end
         end
       end
     end

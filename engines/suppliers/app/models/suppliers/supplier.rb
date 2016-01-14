@@ -4,6 +4,8 @@ module Suppliers
 
     belongs_to :group, class_name: 'Suppliers::Group'
     belongs_to :producer, class_name: 'Suppliers::Producer'
+
+    validates :group_id, :producer_id, presence: true
   end
 end
 
