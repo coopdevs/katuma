@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160114215709) do
+ActiveRecord::Schema.define(version: 20160115162846) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -156,4 +156,6 @@ ActiveRecord::Schema.define(version: 20160114215709) do
     t.datetime "updated_at"
   end
 
+  add_foreign_key "suppliers", "groups", on_delete: :nullify
+  add_foreign_key "suppliers", "producers", on_delete: :nullify
 end
