@@ -13,11 +13,9 @@ module Account
 
     private
 
-    # TODO Find a way to manage express URLs
-    #
     # @return [String]
     def confirm_url
-      "http://10.0.3.70:8000/signup/complete/#{@signup.token}"
+      "#{::Shared::FrontendUrl.base_url}/signup/complete/#{@signup.token}"
     end
   end
 end

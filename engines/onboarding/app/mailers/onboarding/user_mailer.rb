@@ -4,7 +4,7 @@ module Onboarding
 
     def welcome_email(user)
       @user = user
-      @url  = 'http://www.katuma.org'
+      @url  = ::Shared::FrontendUrl.base_url
       mail(to: @user.email, subject: 'Welcome to katuma.org!')
     end
   end
