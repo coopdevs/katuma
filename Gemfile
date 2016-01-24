@@ -39,7 +39,7 @@ gem 'bootstrap-sass', '3.3.5.1'
 gem 'uglifier', '2.7.2'
 
 group :test do
-  gem 'rspec-rails', '3.3.3'
+  gem 'rspec-rails', '3.4.0'
   gem 'rspec-its', '1.2.0'
   gem 'factory_girl_rails', '4.5.0'
   gem 'shoulda-matchers', '3.0.1', require: false
