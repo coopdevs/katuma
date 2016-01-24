@@ -1,5 +1,5 @@
 module Shared
-  class NotFound < StandardError
+  class NotFoundError < StandardError
     STATUS_CODE = 404
     NAME = 'Not Found'.freeze
 

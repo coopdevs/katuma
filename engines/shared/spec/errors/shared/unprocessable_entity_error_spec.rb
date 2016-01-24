@@ -1,13 +1,13 @@
 require 'rails_helper'
 
-describe Shared::UnprocessableEntity do
+describe Shared::UnprocessableEntityError do
   let(:unprocessable_entity) { described_class.new }
 
   describe '#message' do
     subject { unprocessable_entity.message }
 
     context 'when no item is provided' do
-      it { is_expected.to eq('The request could not be processed') }
+      it { is_expected.to eq('The entity could not be processed') }
     end
 
     context 'when an item is provided' do

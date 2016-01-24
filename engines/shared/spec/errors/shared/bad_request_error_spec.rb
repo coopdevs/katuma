@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Shared::BadRequest do
+describe Shared::BadRequestError do
   let(:bad_request) { described_class.new }
 
   describe '#message' do

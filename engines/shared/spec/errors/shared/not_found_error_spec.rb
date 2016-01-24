@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Shared::NotFound do
+describe Shared::NotFoundError do
   let(:not_found) { described_class.new }
 
   describe '#message' do

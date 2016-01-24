@@ -1,14 +1,14 @@
 module Shared
-  class UnprocessableEntity < StandardError
-    STATUS_CODE = 422
-    NAME = 'Unprocessable Entity'.freeze
+  class BadRequestError < StandardError
+    STATUS_CODE = 400
+    NAME = 'Bad Request'.freeze
 
     def initialize(item = nil)
       @item = item
     end
 
     def message
-      message_hash || 'The entity could not be processed'.freeze
+      message_hash || 'Malformed request'.freeze
     end
 
     def status_code
