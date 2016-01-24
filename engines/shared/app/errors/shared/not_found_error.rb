@@ -56,10 +56,14 @@ module Shared
       "#{model_name.capitalize} with id #{id} not found".freeze
     end
 
-    # TODO: doesn't AR provide this?
+    # Returns the name of the item's model. Note the item model_name return
+    # type must implement the ActiveModel::Naming interface:
+    # http://api.rubyonrails.org/classes/ActiveModel/Naming.html
+    #
+    # @return [Maybe<String>]
     def model_name
-      return unless item
-      @model_name ||= item.name.demodulize.downcase
+      return unless item
+      @model_name ||= item.model_name.human.downcase
     end
   end
 end
