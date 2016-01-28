@@ -9,6 +9,3 @@ branches:
 
 before_install:
   - gem update bundler
-
-before_script:
-  - "bundle exec rake db:setup"
