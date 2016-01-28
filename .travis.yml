@@ -3,9 +3,5 @@ language: ruby
 rvm:
   - 2.1.4
 
-branches:
-  only:
-    - develop
-
 before_script:
-  - "bundle exec rake db:setup"
+  - psql -c 'create database katuma_test;' -U postgres
