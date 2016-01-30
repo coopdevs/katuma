@@ -12,8 +12,6 @@ gem 'bcrypt-ruby', '3.1.5'
 
 gem 'pundit', '1.0.1'
 
-gem 'unicorn', '5.0.0'
-
 gem 'haml', '4.0.7'
 
 gem 'rails-i18n', '4.0.6'
@@ -47,4 +45,8 @@ end
 
 group :development, :test do
   gem 'byebug', '8.0.0'
+end
+
+group :production do
+  gem 'unicorn', '5.0.0'
 end
