@@ -1,11 +1,11 @@
 language: ruby
 
-rvm:
-  - 2.1.4
-
 branches:
   only:
     - develop
+
+env:
+  - RAILS_ENV=test
 
 before_script:
   - psql -c 'create database katuma_test;' -U postgres
