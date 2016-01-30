@@ -1,11 +1,11 @@
 language: ruby
 
-rvm:
-  - 2.1.4
-
 branches:
   only:
     - develop
 
 before_install:
   - gem update bundler
+
+env:
+  - RAILS_ENV=test
