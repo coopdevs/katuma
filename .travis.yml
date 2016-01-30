@@ -7,5 +7,8 @@ branches:
 env:
   - RAILS_ENV=test
 
+before_install:
+  - gem update bundler
+
 before_script:
   - psql -c 'create database katuma_test;' -U postgres
