@@ -11,5 +11,12 @@ FactoryGirl.define do
     password 'secret'
     password_confirmation 'secret'
   end
-end
 
+  factory :group, class: Group::Group do
+    name "Group"
+
+    # after :build do |g|
+      # g.users_units.build(name: "My UsersUnit")
+    # end
+  end
+end

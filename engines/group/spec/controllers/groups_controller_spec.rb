@@ -1,8 +1,9 @@
 require 'rails_helper'
-require_relative '../../../support/shared_examples/controllers.rb'
-require_relative '../../../support/authentication.rb'
+require 'support/shared_examples/controllers.rb'
+require 'support/authentication.rb'
 
-describe Api::V1::GroupsController do
+describe Group::Api::V1::GroupsController do
+  routes { Group::Engine.routes }
 
   let(:user) { FactoryGirl.create(:user) }
   let(:group) { FactoryGirl.create(:group) }
@@ -107,7 +108,7 @@ describe Api::V1::GroupsController do
   context 'Group admin user' do
 
     before do
-      group.memberships.create(user: user, role: Membership::ROLES[:admin])
+      group.memberships.create(user: user, role: Group::Membership::ROLES[:admin])
       authenticate_as user
     end
 
