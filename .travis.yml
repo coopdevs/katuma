@@ -9,3 +9,6 @@ before_install:
 
 env:
   - RAILS_ENV=test
+
+before_install:
+  - gem update bundler
