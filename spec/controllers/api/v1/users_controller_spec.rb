@@ -2,7 +2,7 @@ require 'rails_helper'
 require_relative '../../../support/shared_examples/controllers.rb'
 require_relative '../../../support/authentication.rb'
 
-describe Api::V1::UsersController do
+describe Account::Api::V1::UsersController do
 
   let(:user) { FactoryGirl.create(:user) }
   let(:user2) { FactoryGirl.create(:user) }

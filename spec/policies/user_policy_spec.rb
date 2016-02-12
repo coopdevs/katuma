@@ -1,7 +1,7 @@
 require 'rails_helper'
 require_relative '../support/matchers/pundit_matchers.rb'
 
-describe UserPolicy do
+describe Account::UserPolicy do
 
   let(:user) { FactoryGirl.create :user }
 

@@ -1,7 +1,7 @@
 require 'rails_helper'
 require_relative '../support/matchers/pundit_matchers.rb'
 
-describe GroupPolicy do
+describe Group::GroupPolicy do
 
   let(:group) { FactoryGirl.create :group }
   let(:user) { FactoryGirl.create :user }

@@ -1,7 +1,7 @@
 require 'rails_helper'
 require 'shoulda/matchers'
 
-describe Membership do
+describe Group::Membership do
 
   xit 'has a valid factory' do
     expect(FactoryGirl.build(:membership)).to be_valid

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe UserSerializer do
+describe Account::UserSerializer do
 
   context 'passing a User instance' do
 

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe GroupSerializer do
+describe Group::GroupSerializer do
 
   context 'passing a Group instance' do
 

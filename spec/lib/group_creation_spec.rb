@@ -1,7 +1,7 @@
 # spec/lib/group_creation_spec.rb
 require 'spec_helper'
 
-describe GroupCreation do
+describe Group::GroupCreator do
   let(:creator) { FactoryGirl.build(:user) }
   let(:group) { FactoryGirl.build(:group) }
   let(:gc) { GroupCreation.new(group, creator) }

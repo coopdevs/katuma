@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe MembershipSerializer do
+describe Group::MembershipSerializer do
 
   context 'passing a Membership instance' do
 
