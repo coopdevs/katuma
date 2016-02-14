@@ -1,7 +1,7 @@
 require 'rails_helper'
 require 'shoulda/matchers'
 
-describe Group do
+describe Group::Group do
 
   describe 'Validations' do
 
