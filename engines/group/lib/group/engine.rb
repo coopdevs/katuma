@@ -7,5 +7,9 @@ module Group
     isolate_namespace Group
 
     config.autoload_paths += %W(#{config.root}/lib)
+
+    config.generators do |c|
+      c.test_framework :rspec
+    end
   end
 end

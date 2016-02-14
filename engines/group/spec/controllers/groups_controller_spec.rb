@@ -1,6 +1,6 @@
 require 'rails_helper'
-require 'support/shared_examples/controllers.rb'
-require 'support/authentication.rb'
+require '../../spec/support/shared_examples/controllers.rb'
+require '../../spec/support/authentication.rb'
 
 describe Group::Api::V1::GroupsController do
 

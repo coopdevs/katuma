@@ -1,5 +1,4 @@
 require 'rails_helper'
-require 'shoulda/matchers'
 
 describe Group::Group do
 

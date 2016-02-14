@@ -1,6 +1,6 @@
 require 'rails_helper'
-require_relative '../../../support/shared_examples/controllers.rb'
-require_relative '../../../support/authentication.rb'
+require_relative '../../../../spec/support/shared_examples/controllers.rb'
+require_relative '../../../../spec/support/authentication.rb'
 
 describe Group::Api::V1::MembershipsController do
   let(:user) { FactoryGirl.create(:user) }

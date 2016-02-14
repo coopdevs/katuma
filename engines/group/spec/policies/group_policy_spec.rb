@@ -1,5 +1,5 @@
 require 'rails_helper'
-require_relative '../support/matchers/pundit_matchers.rb'
+require_relative '../../../../spec/support/matchers/pundit_matchers.rb'
 
 describe Group::GroupPolicy do
 

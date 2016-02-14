@@ -1,3 +1,5 @@
+require 'pundit'
+
 module Shared
   module Controller
     module Authorization
@@ -5,8 +7,8 @@ module Shared
       extend ::ActiveSupport::Concern
 
       included do
-        include Pundit
-        rescue_from Pundit::NotAuthorizedError, with: :forbidden_response
+        include ::Pundit
+        rescue_from ::Pundit::NotAuthorizedError, with: :forbidden_response
       end
 
       protected

@@ -18,6 +18,8 @@ Gem::Specification.new do |s|
   s.test_files = Dir['spec/**/*']
 
   s.add_dependency "rails", "4.2.5"
+  s.add_dependency 'pundit', '1.0.1'
+  s.add_dependency 'oat', '0.4.6'
 
   s.add_development_dependency 'rspec-rails', '~> 3.4'
 end
