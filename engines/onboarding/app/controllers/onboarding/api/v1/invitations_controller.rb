@@ -61,8 +61,6 @@ module Onboarding
         # GET /api/v1/invitations/:token
         #
         def show
-          head :bad_request if current_user
-
           render status: :ok, json: { email: @invitation.email }
         end
 
