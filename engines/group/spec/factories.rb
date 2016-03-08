@@ -5,9 +5,14 @@ FactoryGirl.define do
 
   factory :group, class: Group::Group do
     name "Group"
+  end
 
-    # after :build do |g|
-      # g.users_units.build(name: "My UsersUnit")
-    # end
+  factory :user, class: Group::User do
+    first_name 'Jessie'
+    last_name 'Pinkman'
+    username 'jess'
+    email
+    password 'secret'
+    password_confirmation 'secret'
   end
 end

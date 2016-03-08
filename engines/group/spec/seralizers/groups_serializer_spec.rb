@@ -1,9 +1,7 @@
 require 'spec_helper'
 
 describe Group::GroupsSerializer do
-
   context 'passing a collection of Group instances' do
-
     let(:first_group) { FactoryGirl.build(:group) }
     let(:second_group) { FactoryGirl.build(:group) }
 
