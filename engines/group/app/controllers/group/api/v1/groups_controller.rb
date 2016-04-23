@@ -81,19 +81,7 @@ module Group
         def add_side_effects_links
           return unless @side_effects.any?
 
-          links = @side_effects.flatten.map do |side_effect|
-            "<#{api_link(side_effect)}>; rel=\"created\" type=\"#{model_type(side_effect)}\""
-          end.join(', ')
-
-          response.headers['Link'] = links
-        end
-
-        def api_link(side_effect)
-          "http://localhost:8000/api/v1/#{model_type(side_effect).downcase.pluralize}/#{side_effect.id}"
-        end
-
-        def model_type(side_effect)
-          side_effect.class.name
+          response.headers['Link'] = ::Shared::HttpResourceLinks.build(@side_effects.flatten.uniq)
         end
       end
     end
