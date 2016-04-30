@@ -5,8 +5,6 @@ module Group
 
         before_action :authenticate
         before_action :find_and_authorize_group, only: [:show, :update, :destroy]
-        before_action :initialize_side_effects, only: [:create]
-        after_action :add_side_effects_links, only: [:create]
 
         # GET api/v1/groups
         #
@@ -70,18 +68,6 @@ module Group
           head :not_found unless @group
 
           authorize @group
-        end
-
-        def initialize_side_effects
-          @side_effects = []
-        end
-
-        # TODO: Extract this to lib or gem
-        #
-        def add_side_effects_links
-          return unless @side_effects.any?
-
-          response.headers['Link'] = ::Shared::HttpResourceLinks.build(@side_effects.flatten.uniq)
         end
       end
     end
