@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150825155715) do
+ActiveRecord::Schema.define(version: 20160115162846) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -142,6 +142,7 @@ ActiveRecord::Schema.define(version: 20150825155715) do
     t.datetime "updated_at"
   end
 
+  add_index "suppliers", ["group_id", "producer_id"], name: "index_suppliers_on_group_id_and_producer_id", unique: true, using: :btree
   add_index "suppliers", ["group_id"], name: "index_suppliers_on_group_id", using: :btree
   add_index "suppliers", ["producer_id"], name: "index_suppliers_on_producer_id", using: :btree
 
@@ -155,4 +156,6 @@ ActiveRecord::Schema.define(version: 20150825155715) do
     t.datetime "updated_at"
   end
 
+  add_foreign_key "suppliers", "groups", on_delete: :nullify
+  add_foreign_key "suppliers", "producers", on_delete: :nullify
 end
