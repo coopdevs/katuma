@@ -121,12 +121,12 @@ ActiveRecord::Schema.define(version: 20150825155715) do
     t.string   "name",        null: false
     t.integer  "price",       null: false
     t.integer  "unit",        null: false
-    t.integer  "provider_id"
+    t.integer  "producer_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "products", ["provider_id"], name: "index_products_on_provider_id", using: :btree
+  add_index "products", ["producer_id"], name: "index_products_on_producer_id", using: :btree
 
   create_table "signups", force: :cascade do |t|
     t.string   "email",      null: false
@@ -142,6 +142,7 @@ ActiveRecord::Schema.define(version: 20150825155715) do
     t.datetime "updated_at"
   end
 
+  add_index "suppliers", ["group_id", "producer_id"], name: "index_suppliers_on_group_id_and_producer_id", unique: true, using: :btree
   add_index "suppliers", ["group_id"], name: "index_suppliers_on_group_id", using: :btree
   add_index "suppliers", ["producer_id"], name: "index_suppliers_on_producer_id", using: :btree
 
@@ -155,4 +156,6 @@ ActiveRecord::Schema.define(version: 20150825155715) do
     t.datetime "updated_at"
   end
 
+  add_foreign_key "suppliers", "groups", on_delete: :nullify
+  add_foreign_key "suppliers", "producers", on_delete: :nullify
 end
