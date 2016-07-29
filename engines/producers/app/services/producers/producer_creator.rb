@@ -12,14 +12,16 @@ module Producers
       @side_effects = []
     end
 
-    # Creates a new Producer and adds creator as producer admin
+    # Creates a new Producer
     #
-    # @return [Producer, Supplier]
+    # TODO: create a new relationship between the user (@creator) and the producer
+    #       same as we do for groups
+    #
     def create
       ::ActiveRecord::Base.transaction do
         if producer.save
           supplier = add_provider_as_group_supplier
-          @side_effects << supplier
+          side_effects << supplier
         end
       end
     end

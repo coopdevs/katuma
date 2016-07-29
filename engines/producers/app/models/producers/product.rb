@@ -10,6 +10,7 @@ module Producers
       lt: 2
     }
 
+    # TODO: move price to its own table/s
     validates :name, :price, :unit, presence: true
   end
 end

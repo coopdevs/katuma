@@ -14,6 +14,7 @@ module Producers
 
           # TODO: move to a finder object
           # TODO: although `group_id` is not a Provider thing maybe we can add it as a filter here
+          # TODO: review this, it seems that it will return all the producers of all the groups the pertain to
           producer_ids = ::Suppliers::Supplier.where(group_id: user.group_ids).pluck(:producer_id)
           producers = Producer.where(id: producer_ids)
 
@@ -29,7 +30,7 @@ module Producers
         # POST /api/v1/producers
         #
         # When creating a new producer we may pass a `X-KATUMA-GROUP-ID-FOR-PROVIDER`
-        # header in the POST request to specify which group the provider
+        # header in the POST request to specify which group the producer
         # will be attached to as a supplier.
         #
         # The generated `Supplier` instance will be treated as a side effect

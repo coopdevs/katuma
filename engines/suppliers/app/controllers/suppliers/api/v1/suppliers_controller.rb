@@ -48,7 +48,7 @@ module Suppliers
         # DELETE /api/v1/suppliers/:id
         #
         def destroy
-          if @suppliers.destroy
+          if @supplier.destroy
             head :no_content
           else
             head :bad_request
