@@ -76,7 +76,7 @@ module Producers
 
           return head :not_found unless @producer
 
-          Pundit.policy!(current_user, @producer).show?
+          ::Pundit.authorize(current_user, @producer, :show?)
         end
       end
     end
