@@ -10,3 +10,5 @@ gemspec
 # Git. Remember to move these dependencies to your gemspec before releasing
 # your gem to rubygems.org.
 gem 'shared', path: File.expand_path('../../shared/', __FILE__)
+gem 'account', path: File.expand_path('../../account/', __FILE__)
+gem 'group', path: File.expand_path('../../group/', __FILE__)

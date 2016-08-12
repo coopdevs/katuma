@@ -1,4 +1,3 @@
 Rails.application.routes.draw do
-
-  mount Group::Engine => "/group"
+  mount Group::Engine => "/"
 end

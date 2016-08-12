@@ -2,7 +2,6 @@ module Group
   module Api
     module V1
       class MembershipsController < ApplicationController
-
         before_action :authenticate
         before_action :find_and_authorize_membership, only: [:show, :update, :destroy]
 

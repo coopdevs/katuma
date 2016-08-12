@@ -1,12 +1,11 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Group::GroupsSerializer do
-  context 'passing a collection of Group instances' do
+  context 'Passing a collection of Group instances' do
     let(:first_group) { FactoryGirl.build(:group) }
     let(:second_group) { FactoryGirl.build(:group) }
 
-    subject { GroupsSerializer.new([first_group, second_group]).to_hash }
-
+    subject { described_class.new([first_group, second_group]).to_hash }
 
     it { should include(
       {

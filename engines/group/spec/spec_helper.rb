@@ -18,6 +18,10 @@
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 require 'rspec/its'
 require 'factory_girl'
+require 'byebug'
+require File.expand_path('../dummy/config/environment', __FILE__)
+
+FactoryGirl.reload
 
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate

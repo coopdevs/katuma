@@ -1,12 +1,10 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Group::GroupSerializer do
-
   context 'passing a Group instance' do
-
     let(:group) { FactoryGirl.build(:group) }
 
-    subject { GroupSerializer.new(group).to_hash }
+    subject { described_class.new(group).to_hash }
 
     it { should include(
         id: group.id,

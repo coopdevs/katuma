@@ -2,7 +2,8 @@ require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
 
-Bundler.require(*Rails.groups)
+require "shared"
+require "account"
 require "group"
 
 module Dummy
