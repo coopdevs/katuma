@@ -12,3 +12,5 @@ gemspec
 
 # To use debugger
 # gem 'debugger'
+gem 'shared', path: File.expand_path('../../shared/', __FILE__)
+gem 'account', path: File.expand_path('../../account/', __FILE__)

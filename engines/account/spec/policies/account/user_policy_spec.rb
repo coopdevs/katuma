@@ -1,13 +1,11 @@
 require 'rails_helper'
-require_relative '../support/matchers/pundit_matchers.rb'
+require_relative '../../../../../spec/support/matchers/pundit_matchers.rb'
 
 describe Account::UserPolicy do
-
   let(:user) { FactoryGirl.create :user }
 
   context 'When the user is the same as current user' do
-
-    subject { UserPolicy.new(user, user) }
+    subject { described_class.new(user, user) }
 
     it { should permit_to :show }
     it { should permit_to :update }
@@ -15,10 +13,9 @@ describe Account::UserPolicy do
   end
 
   context 'When the user is NOT the same as current user' do
-
     let(:user2) { FactoryGirl.create :user }
 
-    subject { UserPolicy.new(user, user2) }
+    subject { described_class.new(user, user2) }
 
     it { should_not permit_to :show }
     it { should_not permit_to :update }
