@@ -16,13 +16,13 @@ ActiveRecord::Schema.define(version: 20150825155715) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "groups", force: true do |t|
+  create_table "groups", force: :cascade do |t|
     t.string   "name",       null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "invitations", force: true do |t|
+  create_table "invitations", force: :cascade do |t|
     t.integer  "group_id",                      null: false
     t.integer  "invited_by_id",                 null: false
     t.string   "email",                         null: false
@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(version: 20150825155715) do
 
   add_index "invitations", ["token"], name: "index_invitations_on_token", using: :btree
 
-  create_table "memberships", force: true do |t|
+  create_table "memberships", force: :cascade do |t|
     t.integer  "user_id",    null: false
     t.integer  "group_id",   null: false
     t.integer  "role",       null: false
@@ -45,7 +45,7 @@ ActiveRecord::Schema.define(version: 20150825155715) do
 
   add_index "memberships", ["user_id", "group_id"], name: "index_memberships_on_user_id_and_group_id", unique: true, using: :btree
 
-  create_table "oauth_access_grants", force: true do |t|
+  create_table "oauth_access_grants", force: :cascade do |t|
     t.integer  "resource_owner_id", null: false
     t.integer  "application_id",    null: false
     t.string   "token",             null: false
@@ -58,7 +58,7 @@ ActiveRecord::Schema.define(version: 20150825155715) do
 
   add_index "oauth_access_grants", ["token"], name: "index_oauth_access_grants_on_token", unique: true, using: :btree
 
-  create_table "oauth_access_tokens", force: true do |t|
+  create_table "oauth_access_tokens", force: :cascade do |t|
     t.integer  "resource_owner_id"
     t.integer  "application_id"
     t.string   "token",             null: false
@@ -73,7 +73,7 @@ ActiveRecord::Schema.define(version: 20150825155715) do
   add_index "oauth_access_tokens", ["resource_owner_id"], name: "index_oauth_access_tokens_on_resource_owner_id", using: :btree
   add_index "oauth_access_tokens", ["token"], name: "index_oauth_access_tokens_on_token", unique: true, using: :btree
 
-  create_table "oauth_applications", force: true do |t|
+  create_table "oauth_applications", force: :cascade do |t|
     t.string   "name",                         null: false
     t.string   "uid",                          null: false
     t.string   "secret",                       null: false
@@ -86,7 +86,7 @@ ActiveRecord::Schema.define(version: 20150825155715) do
 
   add_index "oauth_applications", ["uid"], name: "index_oauth_applications_on_uid", unique: true, using: :btree
 
-  create_table "order_lines", force: true do |t|
+  create_table "order_lines", force: :cascade do |t|
     t.integer  "unit",       default: 1, null: false
     t.integer  "price",                  null: false
     t.integer  "quantity",               null: false
@@ -99,7 +99,7 @@ ActiveRecord::Schema.define(version: 20150825155715) do
   add_index "order_lines", ["order_id"], name: "index_order_lines_on_order_id", using: :btree
   add_index "order_lines", ["product_id"], name: "index_order_lines_on_product_id", using: :btree
 
-  create_table "orders", force: true do |t|
+  create_table "orders", force: :cascade do |t|
     t.integer  "user_id",    null: false
     t.integer  "group_id",   null: false
     t.datetime "created_at"
@@ -109,7 +109,7 @@ ActiveRecord::Schema.define(version: 20150825155715) do
   add_index "orders", ["group_id"], name: "index_orders_on_group_id", using: :btree
   add_index "orders", ["user_id"], name: "index_orders_on_user_id", using: :btree
 
-  create_table "producers", force: true do |t|
+  create_table "producers", force: :cascade do |t|
     t.string   "name",       null: false
     t.string   "email",      null: false
     t.text     "address",    null: false
@@ -117,7 +117,7 @@ ActiveRecord::Schema.define(version: 20150825155715) do
     t.datetime "updated_at"
   end
 
-  create_table "products", force: true do |t|
+  create_table "products", force: :cascade do |t|
     t.string   "name",        null: false
     t.integer  "price",       null: false
     t.integer  "unit",        null: false
@@ -128,14 +128,14 @@ ActiveRecord::Schema.define(version: 20150825155715) do
 
   add_index "products", ["provider_id"], name: "index_products_on_provider_id", using: :btree
 
-  create_table "signups", force: true do |t|
+  create_table "signups", force: :cascade do |t|
     t.string   "email",      null: false
     t.string   "token",      null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "suppliers", force: true do |t|
+  create_table "suppliers", force: :cascade do |t|
     t.integer  "group_id",    null: false
     t.integer  "producer_id", null: false
     t.datetime "created_at"
@@ -145,7 +145,7 @@ ActiveRecord::Schema.define(version: 20150825155715) do
   add_index "suppliers", ["group_id"], name: "index_suppliers_on_group_id", using: :btree
   add_index "suppliers", ["producer_id"], name: "index_suppliers_on_producer_id", using: :btree
 
-  create_table "users", force: true do |t|
+  create_table "users", force: :cascade do |t|
     t.string   "email",           null: false
     t.string   "first_name",      null: false
     t.string   "last_name",       null: false
