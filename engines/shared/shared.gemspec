@@ -21,5 +21,5 @@ Gem::Specification.new do |s|
   s.add_dependency 'pundit', '1.0.1'
   s.add_dependency 'oat', '0.4.6'
 
-  s.add_development_dependency 'rspec-rails', '~> 3.4'
+  s.add_development_dependency 'rspec-rails', '3.5.0'
 end
