@@ -1,4 +1,6 @@
 language: ruby
+rvm:
+  - 2.1.4
 
 branches:
   only:
@@ -6,9 +8,13 @@ branches:
 
 before_install:
   - gem update bundler
+  - cd $(dirname $BUNDLE_GEMFILE)
 
-env:
-  - RAILS_ENV=test
+gemfile:
+  - Gemfile
+  - engines/account/Gemfile
+  - engines/group/Gemfile
+  - engines/shared/Gemfile
 
-before_install:
-  - gem update bundler
+script:
+  - ./script/test.sh
