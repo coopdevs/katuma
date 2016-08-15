@@ -9,7 +9,7 @@ module Shared
     # Constructor
     #
     # @param id [Integer]
-    # @param item [#name, #model_name]
+    # @param item [#model_name]
     def initialize(id = nil, item = nil)
       @id = id
       @item = item
@@ -46,6 +46,7 @@ module Shared
     # @return [Maybe<Hash>]
     def message_hash
       return unless model_name
+
       { model_name => item_message }
     end
 
@@ -62,7 +63,8 @@ module Shared
     #
     # @return [Maybe<String>]
     def model_name
-      return unless item
+      return unless item
+
       @model_name ||= item.model_name.human.downcase
     end
   end
