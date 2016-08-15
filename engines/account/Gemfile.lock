@@ -12,6 +12,7 @@ PATH
   specs:
     shared (0.0.1)
       oat (= 0.4.6)
+      pg (= 0.18.3)
       pundit (= 1.0.1)
       rails (= 4.2.5)
 
