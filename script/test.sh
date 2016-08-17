@@ -1,18 +1,18 @@
 #!/bin/bash
 
-result=0
+RESULT=0
 
-for engine_name in $(ls -d engines/*/ | cut -f 2 -d '/'); do
-  pushd engines/$engine_name > /dev/null
+for engine_script in engines/*/script/test.sh; do
+  pushd "$(dirname "${engine_script}")/.." > /dev/null
   ./script/test.sh
-  result+=$?
+  RESULT+=$?
   popd > /dev/null
 done
 
-if [ $result -eq 0 ]; then
+if [ ${RESULT} -eq 0 ]; then
   echo "SUCCESS"
 else
   echo "FAILURE"
 fi
 
-exit $result
+exit ${RESULT}
