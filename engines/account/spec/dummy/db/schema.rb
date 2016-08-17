@@ -11,25 +11,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150328134731) do
+ActiveRecord::Schema.define(version: 20150216222130) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "groups", force: :cascade do |t|
-    t.string   "name",       null: false
+  create_table "signups", force: :cascade do |t|
+    t.string   "email",      null: false
+    t.string   "token",      null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "memberships", force: :cascade do |t|
-    t.integer  "user_id",    null: false
-    t.integer  "group_id",   null: false
-    t.integer  "role",       null: false
+  create_table "users", force: :cascade do |t|
+    t.string   "email",           null: false
+    t.string   "first_name",      null: false
+    t.string   "last_name",       null: false
+    t.string   "username",        null: false
+    t.string   "password_digest", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  add_index "memberships", ["user_id", "group_id"], name: "index_memberships_on_user_id_and_group_id", unique: true, using: :btree
 
 end

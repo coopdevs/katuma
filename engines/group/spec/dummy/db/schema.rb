@@ -32,4 +32,21 @@ ActiveRecord::Schema.define(version: 20150328134731) do
 
   add_index "memberships", ["user_id", "group_id"], name: "index_memberships_on_user_id_and_group_id", unique: true, using: :btree
 
+  create_table "signups", force: :cascade do |t|
+    t.string   "email",      null: false
+    t.string   "token",      null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string   "email",           null: false
+    t.string   "first_name",      null: false
+    t.string   "last_name",       null: false
+    t.string   "username",        null: false
+    t.string   "password_digest", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
 end
