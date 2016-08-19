@@ -1,4 +1,4 @@
-# katuma [![Build Status](https://travis-ci.org/coopdevs/katuma.svg?branch=master)](https://travis-ci.org/coopdevs/katuma) [![Code Climate](https://codeclimate.com/github/coopdevs/katuma/badges/gpa.svg)](https://codeclimate.com/github/coopdevs/katuma) [![Test Coverage](https://codeclimate.com/github/coopdevs/katuma/badges/coverage.svg)](https://codeclimate.com/github/coopdevs/katuma/coverage)
+# katuma [![Build Status](https://travis-ci.org/coopdevs/katuma.svg?branch=develp)](https://travis-ci.org/coopdevs/katuma) [![Code Climate](https://codeclimate.com/github/coopdevs/katuma/badges/gpa.svg)](https://codeclimate.com/github/coopdevs/katuma) [![Test Coverage](https://codeclimate.com/github/coopdevs/katuma/badges/coverage.svg)](https://codeclimate.com/github/coopdevs/katuma/coverage)
 
 Ruby on Rails app to foster collaborative consumption
 
