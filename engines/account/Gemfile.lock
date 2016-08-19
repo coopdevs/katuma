@@ -1,19 +1,19 @@
 PATH
+  remote: ../../engines/shared
+  specs:
+    shared (0.0.1)
+      oat (= 0.4.6)
+      pg (= 0.18.3)
+      pundit (= 1.0.1)
+      rails (= 4.2.5)
+
+PATH
   remote: .
   specs:
     account (0.0.1)
       bcrypt (= 3.1.11)
       email_validator (= 1.6.0)
       pg (= 0.18.3)
-      rails (= 4.2.5)
-
-PATH
-  remote: /home/ubuntu/katuma/engines/shared
-  specs:
-    shared (0.0.1)
-      oat (= 0.4.6)
-      pg (= 0.18.3)
-      pundit (= 1.0.1)
       rails (= 4.2.5)
 
 GEM
