@@ -6,7 +6,7 @@ module Group
     ROLES = { admin: 1, member: 2, waiting: 3 }
 
     belongs_to :group
-    belongs_to :user
+    belongs_to :user, class_name: 'Group::User'.freeze
 
     validates :group, :user, :role, presence: true
     validates :role, inclusion: { in: ROLES.values }

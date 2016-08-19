@@ -1,3 +1,5 @@
+require 'email_validator'
+
 module Account
   class User < ActiveRecord::Base
 

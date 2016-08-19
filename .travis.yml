@@ -1,5 +1,4 @@
 language: ruby
-
 rvm:
   - 2.1.4
 
@@ -7,8 +6,16 @@ branches:
   only:
     - develop
 
-before_install:
-  - gem update bundler
+install: true
 
 before_script:
-  - "bundle exec rake db:setup"
+  - gem update bundler
+  - cd $(dirname $BUNDLE_GEMFILE)
+
+gemfile:
+  - engines/account/Gemfile
+  - engines/group/Gemfile
+  - engines/shared/Gemfile
+
+script:
+  - ./script/test.sh

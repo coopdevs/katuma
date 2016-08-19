@@ -12,7 +12,9 @@ describe Shared::NotFoundError do
 
     context 'when an item is provided' do
       class Thing
-        def name; 'Thing'; end
+        def model_name
+          ::ActiveModel::Name.new(self.class)
+        end
       end
 
       let(:id) { 1 }
@@ -25,7 +27,9 @@ describe Shared::NotFoundError do
     context 'when an item with namespace is provided' do
       module Namespace
         class Thing
-          def name; 'Thing'; end
+          def model_name
+            ::ActiveModel::Name.new(self.class)
+          end
         end
       end
 
@@ -39,11 +43,13 @@ describe Shared::NotFoundError do
 
   describe '#status_code' do
     subject { not_found.status_code }
+
     it { is_expected.to eq(404) }
   end
 
   describe '#name' do
     subject { not_found.name }
+
     it { is_expected.to eq('Not Found') }
   end
 end

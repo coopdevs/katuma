@@ -16,5 +16,11 @@ Gem::Specification.new do |s|
 
   s.files = Dir["{app,config,db,lib}/**/*", "README.rdoc"]
 
-  s.add_dependency "rails", "~> 4.2.5"
+  s.add_dependency "rails", "4.2.5"
+
+  s.add_development_dependency 'rspec-rails', '3.5.0'
+  s.add_development_dependency 'byebug', '>= 8'
+  s.add_development_dependency 'rspec-its', '1.2.0'
+  s.add_development_dependency 'shoulda-matchers', '3.0.1'
+  s.add_development_dependency 'factory_girl_rails', '4.5.0'
 end

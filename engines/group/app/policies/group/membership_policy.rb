@@ -10,6 +10,10 @@ module Group
       true
     end
 
+    def show?
+      Membership.where(group: record.group, user: user).any?
+    end
+
     def create?
       Membership.where(group: record.group, user: user, role: Membership::ROLES[:admin]).any?
     end

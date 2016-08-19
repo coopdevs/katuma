@@ -1,6 +1,5 @@
 module Group
-  class GroupSerializer < Shared::BaseSerializer
-
+  class GroupSerializer < ::Shared::BaseSerializer
     schema do
       type 'group'
 

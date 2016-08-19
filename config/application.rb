@@ -64,9 +64,9 @@ module Katuma
     # config.assets.version = '1.0'
 
     # Logout user when is coming from Oauth2 flow
-    config.to_prepare do
-       Doorkeeper::AuthorizationsController.send(:include, Doorkeeper::LogoutAfterAuthorize)
-    end
+    # config.to_prepare do
+    #    Doorkeeper::AuthorizationsController.send(:include, Doorkeeper::LogoutAfterAuthorize)
+    # end
 
     config.active_job.queue_adapter = :sidekiq
   end

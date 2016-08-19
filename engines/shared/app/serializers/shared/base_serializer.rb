@@ -1,5 +1,7 @@
+require 'oat'
+
 module Shared
-  class BaseSerializer < Oat::Serializer
+  class BaseSerializer < ::Oat::Serializer
     adapter FlatAPI
   end
 end
