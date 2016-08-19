@@ -6,7 +6,9 @@ branches:
   only:
     - develop
 
-before_install:
+install: true
+
+before_script:
   - gem update bundler
   - cd $(dirname $BUNDLE_GEMFILE)
 
