@@ -142,8 +142,7 @@ ActiveRecord::Schema.define(version: 20150825155715) do
     t.datetime "updated_at"
   end
 
-  add_index "suppliers", ["group_id"], name: "index_suppliers_on_group_id", using: :btree
-  add_index "suppliers", ["producer_id"], name: "index_suppliers_on_producer_id", using: :btree
+  add_index "suppliers", ["group_id", "producer_id"], name: "index_suppliers_on_group_id_and_producer_id", unique: true, using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",           null: false
@@ -155,4 +154,6 @@ ActiveRecord::Schema.define(version: 20150825155715) do
     t.datetime "updated_at"
   end
 
+  add_foreign_key "suppliers", "groups"
+  add_foreign_key "suppliers", "producers"
 end
