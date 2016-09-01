@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150825155715) do
+ActiveRecord::Schema.define(version: 20160901094107) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -117,6 +117,19 @@ ActiveRecord::Schema.define(version: 20150825155715) do
     t.datetime "updated_at"
   end
 
+  create_table "producers_memberships", force: :cascade do |t|
+    t.integer  "producer_id", null: false
+    t.integer  "user_id"
+    t.integer  "group_id"
+    t.integer  "role",        null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "producers_memberships", ["group_id"], name: "producers_memberships_group_id_idx", unique: true, where: "(group_id IS NOT NULL)", using: :btree
+  add_index "producers_memberships", ["producer_id"], name: "producers_memberships_producer_id_idx", unique: true, where: "(producer_id IS NOT NULL)", using: :btree
+  add_index "producers_memberships", ["user_id"], name: "producers_memberships_user_id_idx", unique: true, where: "(user_id IS NOT NULL)", using: :btree
+
   create_table "products", force: :cascade do |t|
     t.string   "name",        null: false
     t.integer  "price",       null: false
@@ -154,6 +167,9 @@ ActiveRecord::Schema.define(version: 20150825155715) do
     t.datetime "updated_at"
   end
 
+  add_foreign_key "producers_memberships", "groups", name: "producers_memberships_group_id_fkey"
+  add_foreign_key "producers_memberships", "producers", name: "producers_memberships_producer_id_fkey"
+  add_foreign_key "producers_memberships", "users", name: "producers_memberships_user_id_fkey"
   add_foreign_key "suppliers", "groups"
   add_foreign_key "suppliers", "producers"
 end
