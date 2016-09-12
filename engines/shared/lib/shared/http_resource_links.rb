@@ -8,9 +8,10 @@ module Shared
     # for more info please visit https://www.w3c.org/wiki/LinkHeader
     #
     # @param objects [Array<ActiveRecord::Base>]
+    # @param custom_relation [String] optional, e.g. 'created'
     # @return [String]
-    def build(objects)
-      Collection.new(objects).links
+    def build(objects, custom_relation=nil)
+      Collection.new(objects, custom_relation).links
     end
   end
 end

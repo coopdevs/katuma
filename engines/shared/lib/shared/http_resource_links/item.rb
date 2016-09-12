@@ -3,11 +3,13 @@ module Shared
     class Item
       API_VERSION = 1
 
-      attr_accessor :object
+      attr_accessor :object, :custom_relation
 
       # @param object [ActiveRecord::Base]
-      def initialize(object)
+      # @param custom_relation [String] optional, e.g. 'created'
+      def initialize(object, custom_relation=nil)
         @object = object
+        @custom_relation = custom_relation
       end
 
       # Returns the link header
@@ -28,6 +30,7 @@ module Shared
 
       # @return [String]
       def relation
+        return custom_relation unless custom_relation.blank?
         return 'created' if new_record?
 
         'updated'
