@@ -28,10 +28,19 @@ module Producers
 
       subject { creator.create }
 
-      its(:persisted?) { is_expected.to be_truthy }
-      its(:name) { is_expected.to eq(producer.name) }
-      its(:email) { is_expected.to eq(producer.email) }
-      its(:address) { is_expected.to eq(producer.address) }
+      it 'does not change the Producer.count' do
+        expect { subject }.to change(Producer, :count)
+      end
+
+      describe 'its attributes' do
+        before { creator.create }
+
+        subject { Producer.last }
+
+        its(:name) { is_expected.to eq(producer.name) }
+        its(:email) { is_expected.to eq(producer.email) }
+        its(:address) { is_expected.to eq(producer.address) }
+      end
 
       context 'when something fails' do
         before { allow(creator).to receive(:create_membership_for_creator_or_group).and_raise }
@@ -40,6 +49,15 @@ module Producers
           expect do
             subject
           end.to raise_error(ActiveRecord::Rollback)
+        end
+      end
+
+      context 'when the provider is not valid' do
+        let(:producer) { Producer.new(name: 'Proveidor') }
+
+        it { is_expected.to be_falsey }
+        it 'does not change the Producer.count' do
+          expect { subject }.to_not change(Producer, :count)
         end
       end
 

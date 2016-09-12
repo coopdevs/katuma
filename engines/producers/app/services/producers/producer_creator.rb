@@ -14,7 +14,7 @@ module Producers
 
     # Creates a new Producer
     #
-    # @return [Producer]
+    # @return [Boolean]
     def create
       ::ActiveRecord::Base.transaction do
         if producer.save
@@ -23,7 +23,7 @@ module Producers
         end
       end
 
-      producer
+      producer.persisted?
     end
 
     private
