@@ -46,6 +46,18 @@ shared_examples 'a forbidden request' do
   end
 end
 
+shared_examples 'a bad request' do
+
+  describe 'response is bad request' do
+
+    it 'responds with a 400 status code' do
+      subject
+
+      expect(response).to have_http_status(400)
+    end
+  end
+end
+
 shared_examples 'response with empty body' do
 
   describe 'response body is empty' do
