@@ -164,7 +164,7 @@ PLATFORMS
 
 DEPENDENCIES
   account!
-  byebug (>= 8)
+  byebug (= 9.0.5)
   factory_girl_rails (= 4.5.0)
   group!
   rspec-its (= 1.2.0)

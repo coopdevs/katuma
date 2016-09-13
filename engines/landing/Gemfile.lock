@@ -44,7 +44,7 @@ GEM
       tzinfo (~> 1.1)
     arel (6.0.3)
     builder (3.2.2)
-    byebug (8.0.0)
+    byebug (9.0.5)
     concurrent-ruby (1.0.2)
     diff-lcs (1.2.5)
     erubis (2.7.0)
@@ -136,7 +136,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  byebug (>= 8)
+  byebug (= 9.0.5)
   factory_girl_rails (= 4.5.0)
   landing!
   rspec-its (= 1.2.0)
