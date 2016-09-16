@@ -10,26 +10,58 @@ module Producers
       false
     end
 
-    # TODO: add `Producer::Membership` condition
     def show?
-      # TODO: find a better way to deal with dependencies
-      #       we're making the User query twice here :scream:
-      group_user = ::Group::User.find(user.id)
-
-      supplier_ids = ::Suppliers::Supplier.where(
-        group_id: group_user.group_ids,
-        producer_id: record.id
-      ).pluck(:id)
-
-      supplier_ids.any?
+      user_membership_for?(user) || group_membership_for?(user)
     end
 
     def update?
-      false
+      user_admin_membership_for?(user) || group_admin_membership_for?(user)
     end
 
     def destroy?
-      false
+      user_admin_membership_for?(user) || group_admin_membership_for?(user)
+    end
+
+    private
+
+    def user_membership_for?(user)
+      Membership.where(
+        user_id: user.id,
+        producer_id: record.id
+      ).any?
+    end
+
+    def user_admin_membership_for?(user)
+      Membership.where(
+        user_id: user.id,
+        producer_id: record.id,
+        role: Membership::ROLES[:admin]
+      ).any?
+    end
+
+    def group_membership_for?(user)
+      group_ids = ::Group::Membership.where(
+        user_id: user.id
+      ).pluck(:group_id)
+
+      producer_membership_for_groups?(group_ids)
+    end
+
+    def group_admin_membership_for?(user)
+      group_ids = ::Group::Membership.where(
+        user_id: user.id,
+        role: ::Group::Membership::ROLES[:admin]
+      ).pluck(:group_id)
+
+      producer_membership_for_groups?(group_ids)
+    end
+
+    def producer_membership_for_groups?(group_ids)
+      Membership.where(
+        group_id: group_ids,
+        producer_id: record.id,
+        role: Membership::ROLES[:admin]
+      ).any?
     end
   end
 end
