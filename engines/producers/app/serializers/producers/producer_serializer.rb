@@ -3,7 +3,7 @@ module Producers
     schema do
       type 'producer'
 
-      map_properties :id, :name, :email, :address
+      map_properties :id, :name, :email, :address, :created_at, :updated_at
     end
   end
 end
