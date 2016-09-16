@@ -30,6 +30,7 @@ PATH
   remote: engines/producers
   specs:
     producers (0.0.1)
+      pg (= 0.18.3)
       rails (= 4.2.5)
 
 PATH
