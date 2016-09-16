@@ -26,9 +26,8 @@ class AddProducersMembership < ActiveRecord::Migration
         )
       );
 
-      CREATE UNIQUE INDEX ON producers_memberships (producer_id) WHERE producer_id IS NOT NULL;
-      CREATE UNIQUE INDEX ON producers_memberships (user_id) WHERE user_id IS NOT NULL;
-      CREATE UNIQUE INDEX ON producers_memberships (group_id) WHERE group_id IS NOT NULL;
+      CREATE UNIQUE INDEX ON producers_memberships (producer_id, user_id) WHERE user_id IS NOT NULL;
+      CREATE UNIQUE INDEX ON producers_memberships (producer_id, group_id) WHERE group_id IS NOT NULL;
     SQL
   end
 

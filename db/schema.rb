@@ -126,9 +126,8 @@ ActiveRecord::Schema.define(version: 20160901094107) do
     t.datetime "updated_at"
   end
 
-  add_index "producers_memberships", ["group_id"], name: "producers_memberships_group_id_idx", unique: true, where: "(group_id IS NOT NULL)", using: :btree
-  add_index "producers_memberships", ["producer_id"], name: "producers_memberships_producer_id_idx", unique: true, where: "(producer_id IS NOT NULL)", using: :btree
-  add_index "producers_memberships", ["user_id"], name: "producers_memberships_user_id_idx", unique: true, where: "(user_id IS NOT NULL)", using: :btree
+  add_index "producers_memberships", ["producer_id", "group_id"], name: "producers_memberships_producer_id_group_id_idx", unique: true, where: "(group_id IS NOT NULL)", using: :btree
+  add_index "producers_memberships", ["producer_id", "user_id"], name: "producers_memberships_producer_id_user_id_idx", unique: true, where: "(user_id IS NOT NULL)", using: :btree
 
   create_table "products", force: :cascade do |t|
     t.string   "name",        null: false
