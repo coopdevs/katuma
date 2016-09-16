@@ -22,6 +22,18 @@ shared_examples 'a successful request (201)' do
   end
 end
 
+shared_examples 'a successful request (204)' do
+
+  describe 'response is success (204)' do
+
+    it 'responds with a 204 status code' do
+      subject
+
+      expect(response).to have_http_status(204)
+    end
+  end
+end
+
 shared_examples 'an unauthorized request' do
 
   describe 'response is unauthorized' do
@@ -42,6 +54,18 @@ shared_examples 'a forbidden request' do
       subject
 
       expect(response).to have_http_status(403)
+    end
+  end
+end
+
+shared_examples 'a not found request' do
+
+  describe 'response is not found request' do
+
+    it 'responds with a 404 status code' do
+      subject
+
+      expect(response).to have_http_status(404)
     end
   end
 end
