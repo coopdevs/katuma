@@ -7,7 +7,11 @@ module Suppliers
     end
 
     def create?
-      false
+      Membership.where(
+        group: record,
+        user: user,
+        role: Membership::ROLES[:admin]
+      ).any?
     end
 
     def show?
@@ -18,20 +22,16 @@ module Suppliers
       ).any?
     end
 
+    def index?
+      show?
+    end
+
     def update?
       false
     end
 
     def destroy?
       false
-    end
-
-    def add_supplier?
-      Membership.where(
-        group: record,
-        user: user,
-        role: Membership::ROLES[:admin]
-      ).any?
     end
   end
 end
