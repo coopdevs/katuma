@@ -19,7 +19,6 @@ module Producers
       ::ActiveRecord::Base.transaction do
         if producer.save
           create_membership_for_creator_or_group
-          # add_provider_as_group_supplier
         end
       end
 
@@ -43,20 +42,6 @@ module Producers
       membership.save!
 
       side_effects << membership
-    end
-
-    # Adds the provider as a supplier to the given group
-    #
-    # @return [Supplier]
-    def add_provider_as_group_supplier
-      return unless group
-
-      supplier = group.suppliers.build(
-        producer_id: producer.id
-      )
-      supplier.save!
-
-      side_effects << supplier
     end
   end
 end
