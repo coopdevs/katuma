@@ -32,7 +32,7 @@ module Producers
     # @return [Membership]
     def create_membership_for_creator_or_group
       membership = producer.memberships.build(
-        role: ::Producers::Membership::ROLES[:admin]
+        role: Membership::ROLES[:admin]
       )
       if group
         membership.group = group
