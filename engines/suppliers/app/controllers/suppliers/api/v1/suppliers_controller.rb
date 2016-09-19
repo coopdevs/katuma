@@ -2,8 +2,10 @@ module Suppliers
   module Api
     module V1
       class SuppliersController < ApplicationController
+        before_action :authenticate
         before_action :load_supplier, only: [:show, :update, :destroy]
-        before_action :load_group, only: [:index]
+        before_action :load_group, only: [:index, :create]
+        before_action :load_producer, only: [:create]
 
         # GET /api/v1/suppliers
         #
@@ -26,22 +28,18 @@ module Suppliers
         # POST /api/v1/suppliers
         #
         def create
-          @supplier = Supplier::Supplier.new(supplier_params)
+          supplier = Supplier.new(
+            group: @group,
+            producer: @producer
+          )
 
-          if @supplier
-            render :show
+          if supplier.valid? && supplier.save
+            render json: SupplierSerializer.new(supplier)
           else
-            render :show, status: :bad_request
-          end
-        end
-
-        # PUT /api/v1/suppliers/:id
-        #
-        def update
-          if @supplier.update_attributes(supplier_params)
-            render :show
-          else
-            render :show, status: :bad_request
+            render(
+              status: :bad_request,
+              json: supplier.errors
+            )
           end
         end
 
@@ -57,24 +55,32 @@ module Suppliers
 
         private
 
-        def suppliers_params
-          params.permit(:group_id)
-        end
-
         def supplier_params
-          params.require(:supplier).permit(:id, :group_id, :producer_id)
+          params.permit(:group_id, :producer_id)
         end
 
         def load_supplier
-          @supplier = ::Suppliers::Supplier.find_by_id(params[:id])
+          @supplier = Supplier.find_by_id(params[:id])
+
+          return head :not_found unless @supplier
+
+          authorize @supplier.group
         end
 
         def load_group
-          @group = ::Suppliers::Group.find_by_id(suppliers_params[:group_id])
+          @group = ::Suppliers::Group.find_by_id(supplier_params[:group_id])
 
           return head :not_found unless @group
 
-          Pundit.policy!(current_user, @group).show?
+          authorize @group
+        end
+
+        def load_producer
+          @producer = ::Suppliers::Producer.find_by_id(supplier_params[:producer_id])
+
+          return head :not_found unless @producer
+
+          authorize @producer
         end
       end
     end

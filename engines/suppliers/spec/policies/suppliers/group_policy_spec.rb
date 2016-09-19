@@ -11,13 +11,13 @@ module Suppliers
 
     subject { described_class }
 
-    permissions :update?, :destroy? do
+    permissions :update? do
       it 'is set to `false` by default' do
         expect(subject).to_not permit(instance_double(User), instance_double(Producer))
       end
     end
 
-    permissions :create? do
+    permissions :create?, :destroy? do
       context 'when the user is member of the group' do
         let(:group_user) { ::Group::User.find(user.id) }
         before do

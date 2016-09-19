@@ -31,7 +31,7 @@ module Suppliers
     end
 
     def destroy?
-      false
+      create?
     end
   end
 end
