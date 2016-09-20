@@ -34,7 +34,8 @@ group :test do
 end
 
 group :development, :test do
-  gem 'byebug', '8.0.0'
+  gem 'byebug', '9.0.5'
+  gem 'pry-byebug', '3.4.0'
 end
 
 group :production do

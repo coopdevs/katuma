@@ -4,7 +4,7 @@ class CreateProducts < ActiveRecord::Migration
       t.string :name, null: false
       t.integer :price, null: false
       t.integer :unit, null: false
-      t.references :provider, index: true
+      t.references :producer, index: true
 
       t.timestamps
     end

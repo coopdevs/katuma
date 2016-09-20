@@ -16,6 +16,8 @@ gemfile:
   - engines/account/Gemfile
   - engines/group/Gemfile
   - engines/shared/Gemfile
+  - engines/producers/Gemfile
+  - engines/suppliers/Gemfile
 
 script:
   - ./script/test.sh

@@ -1,7 +1,40 @@
 PATH
+  remote: ../../engines/account
+  specs:
+    account (0.0.1)
+      bcrypt (= 3.1.11)
+      email_validator (= 1.6.0)
+      pg (= 0.18.3)
+      rails (= 4.2.5)
+
+PATH
+  remote: ../../engines/group
+  specs:
+    group (0.0.1)
+      pg (= 0.18.3)
+      rails (= 4.2.5)
+
+PATH
+  remote: ../../engines/producers
+  specs:
+    producers (0.0.1)
+      pg (= 0.18.3)
+      rails (= 4.2.5)
+
+PATH
+  remote: ../../engines/shared
+  specs:
+    shared (0.0.1)
+      oat (= 0.4.6)
+      pg (= 0.18.3)
+      pundit (= 1.0.1)
+      rails (= 4.2.5)
+
+PATH
   remote: .
   specs:
     suppliers (0.0.1)
+      pg (= 0.18.3)
       rails (= 4.2.5)
 
 GEM
@@ -43,10 +76,13 @@ GEM
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
     arel (6.0.3)
+    bcrypt (3.1.11)
     builder (3.2.2)
-    byebug (8.0.0)
+    byebug (9.0.5)
     concurrent-ruby (1.0.2)
     diff-lcs (1.2.5)
+    email_validator (1.6.0)
+      activemodel
     erubis (2.7.0)
     factory_girl (4.5.0)
       activesupport (>= 3.0.0)
@@ -69,7 +105,12 @@ GEM
     nokogiri (1.6.8)
       mini_portile2 (~> 2.1.0)
       pkg-config (~> 1.1.7)
+    oat (0.4.6)
+      activesupport
+    pg (0.18.3)
     pkg-config (1.1.7)
+    pundit (1.0.1)
+      activesupport (>= 3.0.0)
     rack (1.6.4)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -136,10 +177,14 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  byebug (>= 8)
+  account!
+  byebug (= 9.0.5)
   factory_girl_rails (= 4.5.0)
+  group!
+  producers!
   rspec-its (= 1.2.0)
   rspec-rails (= 3.5.0)
+  shared!
   shoulda-matchers (= 3.0.1)
   suppliers!
 

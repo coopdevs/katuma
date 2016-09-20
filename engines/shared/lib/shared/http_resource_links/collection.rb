@@ -3,8 +3,9 @@ module Shared
     class Collection
 
       # @param objects [Array<ActiveRecord::Base>]
-      def initialize(objects)
-        @collection = objects.map { |object| Item.new(object) }
+      # @param custom_relation [String] optional, e.g. 'created'
+      def initialize(objects, custom_relation=nil)
+        @collection = objects.map { |object| Item.new(object, custom_relation) }
       end
 
       # Returns the resource link header
