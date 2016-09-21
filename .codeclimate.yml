@@ -6,5 +6,7 @@ ratings:
     - "**.rb"
 exclude_paths:
   - ".bundle/"
-  - "vendor/bundle/**/*"
-  - "vendor/cache/**/*"
+  - '**/vendor/cache/**/*'
+  - '**/vendor/bundle/**/*'
+  - 'engines/*/bin/*'
+  - 'engines/*/spec/dummy/**/*'
