@@ -13,16 +13,14 @@ module Account
     validates :username, format: {
       with: /\A[a-zA-Z0-9_\-]+\Z/,
       message: 'Solo puede contener letras, numeros, _ y -. Sin espacios ni otros caracteres como: ;, *, ^, $, ...'
-      }
+    }
 
     def self.find_by_login(login)
-      context = none
-
-      if EmailValidator.valid?(login)
-        context = where(email: login)
-      else
-        context = where(username: login)
-      end
+      context = if EmailValidator.valid?(login)
+                  where(email: login)
+                else
+                  where(username: login)
+                end
 
       context.take
     end
