@@ -6,11 +6,13 @@ describe Group::GroupSerializer do
 
     subject { described_class.new(group).to_hash }
 
-    it { should include(
+    it do
+      is_expected.to include(
         id: group.id,
         name: group.name,
         created_at: group.created_at,
         updated_at: group.updated_at
-    )}
+      )
+    end
   end
 end

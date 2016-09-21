@@ -61,7 +61,7 @@ module Group
       end
 
       describe 'PUT #update' do
-        subject { put :update, { id: group.id, name: 'ciola' } }
+        subject { put :update, id: group.id, name: 'ciola' }
 
         it_behaves_like 'a forbidden request'
       end
@@ -98,14 +98,12 @@ module Group
     end
 
     context 'Group admin user' do
-
       before do
         group.memberships.create(user: user, role: Membership::ROLES[:admin])
         authenticate_as user
       end
 
       describe 'GET #index' do
-
         subject { get :index }
 
         it_behaves_like 'a successful request'
@@ -116,7 +114,6 @@ module Group
       end
 
       describe 'GET #show' do
-
         subject { get :show, id: group.id }
 
         it_behaves_like 'a successful request'
@@ -127,7 +124,6 @@ module Group
       end
 
       describe 'PUT #update' do
-
         subject { put :update, id: group.id, name: 'Pummarola' }
 
         it_behaves_like 'a successful request'
@@ -140,7 +136,6 @@ module Group
       end
 
       describe 'DELETE #destroy' do
-
         subject { delete :destroy, id: group.id }
 
         it_behaves_like 'a successful request'

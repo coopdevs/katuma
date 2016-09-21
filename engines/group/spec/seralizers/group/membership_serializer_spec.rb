@@ -14,14 +14,16 @@ module Group
 
       subject { MembershipSerializer.new(membership).to_hash }
 
-      it { should include(
-        id: membership.id,
-        group_id: group.id,
-        user_id: user.id,
-        role: 1,
-        created_at: group.created_at,
-        updated_at: group.updated_at
-      )}
+      it do
+        is_expected.to include(
+          id: membership.id,
+          group_id: group.id,
+          user_id: user.id,
+          role: 1,
+          created_at: group.created_at,
+          updated_at: group.updated_at
+        )
+      end
     end
   end
 end
