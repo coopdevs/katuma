@@ -1,4 +1,4 @@
-require "landing/engine"
+require 'landing/engine'
 
 module Landing
 end

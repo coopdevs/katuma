@@ -1,8 +1,8 @@
 require 'mina/bundler'
 require 'mina/rails'
 require 'mina/git'
-load File.expand_path("../../lib/tasks/unicorn.rake", __FILE__)
-load File.expand_path("../../lib/tasks/sidekiq.rake", __FILE__)
+load File.expand_path('../../lib/tasks/unicorn.rake', __FILE__)
+load File.expand_path('../../lib/tasks/sidekiq.rake', __FILE__)
 
 set :domain, 'alfa.katuma.org'
 set :deploy_to, '/opt/app/katuma'
@@ -28,8 +28,8 @@ task :environment do
   queue '. /etc/default/katuma'
 end
 
-desc "Deploys the current version to the server."
-task :deploy => :environment do
+desc 'Deploys the current version to the server.'
+task deploy: :environment do
   to :before_hook do
     # Put things to run locally before ssh
   end

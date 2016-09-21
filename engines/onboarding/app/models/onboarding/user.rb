@@ -13,4 +13,3 @@ module Onboarding
       dependent: :destroy # How this works in CBRA?
   end
 end
-

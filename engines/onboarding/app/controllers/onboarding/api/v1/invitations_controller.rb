@@ -102,7 +102,8 @@ module Onboarding
 
         def accept_params
           params.require(:token)
-          params.permit(:token, :username, :first_name, :last_name, :password, :password_confirmation)
+          params.permit :token, :username, :first_name, :last_name, :password,
+            :password_confirmation
         end
 
         # @param group_id [Integer]
@@ -129,10 +130,10 @@ module Onboarding
         def extract_emails(emails)
           return [] if emails.blank?
 
-          emails.
-            split(',').
-            select { |email| ::EmailValidator.valid?(email) }.
-            first(100)
+          emails
+            .split(',')
+            .select { |email| ::EmailValidator.valid?(email) }
+            .first(100)
         end
       end
     end

@@ -1,4 +1,4 @@
-require "group/engine"
+require 'group/engine'
 
 module Group
 end

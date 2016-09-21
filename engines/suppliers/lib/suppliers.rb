@@ -1,4 +1,4 @@
-require "suppliers/engine"
+require 'suppliers/engine'
 
 module Suppliers
 end

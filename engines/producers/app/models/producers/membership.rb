@@ -3,7 +3,7 @@ module Producers
 
     self.table_name = :producers_memberships
 
-    ROLES = { admin: 1, member: 2 }
+    ROLES = { admin: 1, member: 2 }.freeze
 
     belongs_to :producer, class_name: 'Producers::Producer'.freeze
     belongs_to :user, class_name: 'Producers::User'.freeze
@@ -18,9 +18,9 @@ module Producers
     # Validates `user_id` xor `group_id` presence
     #
     def user_or_group_presence
-      unless user.blank? ^ group.blank?
-        errors.add(:base, 'Specify a `group_id` or `user_id`, but not both.')
-      end
+      return if user.blank? ^ group.blank?
+
+      errors.add(:base, 'Specify a `group_id` or `user_id`, but not both.')
     end
   end
 end

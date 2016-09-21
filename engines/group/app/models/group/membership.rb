@@ -3,7 +3,7 @@ module Group
 
     self.table_name = :memberships
 
-    ROLES = { admin: 1, member: 2, waiting: 3 }
+    ROLES = { admin: 1, member: 2, waiting: 3 }.freeze
 
     belongs_to :group
     belongs_to :user, class_name: 'Group::User'.freeze

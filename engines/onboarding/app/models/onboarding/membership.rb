@@ -3,7 +3,7 @@ module Onboarding
 
     self.table_name = :memberships
 
-    ROLES = { admin: 1, member: 2, waiting: 3 }
+    ROLES = { admin: 1, member: 2, waiting: 3 }.freeze
 
     include Shared::Model::ReadOnly
 
