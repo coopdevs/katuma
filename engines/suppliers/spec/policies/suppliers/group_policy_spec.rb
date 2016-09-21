@@ -49,7 +49,7 @@ module Suppliers
       end
     end
 
-    permissions :show? do
+    permissions :show?, :index? do
       context 'when the user is member of the group' do
         let(:group_user) { ::Group::User.find(user.id) }
         before do
