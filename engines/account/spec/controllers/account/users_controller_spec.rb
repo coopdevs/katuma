@@ -14,7 +14,6 @@ describe Account::Api::V1::UsersController do
   let(:membership) { FactoryGirl.create(:membership) }
 
   context 'Not authenticaded user' do
-
     describe 'GET #index' do
       subject { get :index }
 
@@ -51,21 +50,18 @@ describe Account::Api::V1::UsersController do
     end
 
     xdescribe 'PUT #update' do
-
       subject { put :update, id: 666, name: 'ciola' }
 
       it_behaves_like 'an unauthorized request'
     end
 
     xdescribe 'DELETE #destroy' do
-
       subject { delete :destroy, id: 666 }
 
       it_behaves_like 'an unauthorized request'
     end
 
     xdescribe 'GET #account' do
-
       subject { get :account }
 
       it_behaves_like 'an unauthorized request'
@@ -73,11 +69,9 @@ describe Account::Api::V1::UsersController do
   end
 
   context 'Authenticated user' do
-
     before { authenticate_as user }
 
     xdescribe 'GET #index' do
-
       before do
         Group::Membership.create(user: user2, group: group1, role: GrouMembership::ROLES[:admin])
         Group::Membership.create(user: user3, group: group2, role: GrouMembership::ROLES[:admin])
@@ -97,9 +91,7 @@ describe Account::Api::V1::UsersController do
     end
 
     xdescribe 'GET #show' do
-
       context 'when the user is authorized' do
-
         subject { get :show, id: user.id }
 
         it_behaves_like 'a successful request'
@@ -110,7 +102,6 @@ describe Account::Api::V1::UsersController do
       end
 
       context 'when the user is NOT authorized' do
-
         subject { get :show, id: user2.id }
 
         it_behaves_like 'a forbidden request'
@@ -118,18 +109,16 @@ describe Account::Api::V1::UsersController do
     end
 
     xdescribe 'PUT #update' do
-
       context 'when the user is authorized' do
-
         subject { put :update, id: user.id, name: 'ciola' }
 
         it_behaves_like 'a successful request'
 
         it 'updates the attributes' do
-          expect {
+          expect do
             subject
             user.reload
-          }.to change { user.name }.to('ciola')
+          end.to change { user.name }.to('ciola')
         end
 
         it 'returns the user details' do
@@ -138,7 +127,6 @@ describe Account::Api::V1::UsersController do
       end
 
       context 'when the user is NOT authorized' do
-
         subject { put :update, id: user2.id, name: 'ciola' }
 
         it_behaves_like 'a forbidden request'
@@ -146,22 +134,19 @@ describe Account::Api::V1::UsersController do
     end
 
     xdescribe 'DELETE #destroy' do
-
       context 'when the user is authorized' do
-
         subject { delete :destroy, id: user.id }
 
         it_behaves_like 'a successful request'
 
         it 'deletes the user' do
-          expect {
+          expect do
             subject
-          }.to change { User.count }.from(1).to(0)
+          end.to change { User.count }.from(1).to(0)
         end
       end
 
       context 'when the user is NOT authorized' do
-
         subject { delete :destroy, id: user2.id }
 
         it_behaves_like 'a forbidden request'
@@ -169,7 +154,6 @@ describe Account::Api::V1::UsersController do
     end
 
     xdescribe 'GET #account' do
-
       subject { get :account }
 
       it_behaves_like 'a successful request'
