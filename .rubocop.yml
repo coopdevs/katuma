@@ -4,6 +4,7 @@ AllCops:
     - '**/vendor/cache/**/*'
     - '**/vendor/bundle/**/*'
     - 'engines/*/bin/*'
+    - 'engines/*/spec/dummy/**/*'
   TargetRubyVersion: 2.1
 
 Style/Documentation:
