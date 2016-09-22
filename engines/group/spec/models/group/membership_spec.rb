@@ -15,10 +15,10 @@ describe Group::Membership do
     it { should validate_presence_of(:group) }
     it { should validate_presence_of(:user) }
     it { should validate_presence_of(:role) }
-    it {
+    it do
       FactoryGirl.create(:membership, user: user)
       should validate_uniqueness_of(:user_id).scoped_to(:group_id)
-    }
+    end
   end
 
   describe 'Associations' do

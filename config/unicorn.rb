@@ -4,7 +4,7 @@ app_path = File.expand_path(File.dirname(__FILE__) + '/..')
 
 # The number of worker processes you have here should equal the number of CPU
 # cores your server has.
-worker_processes (ENV['RAILS_ENV'] == 'production' ? 4 : 1)
+worker_processes(ENV['RAILS_ENV'] == 'production' ? 4 : 1)
 
 # You can listen on a port or a socket. Listening on a socket is good in a
 # production environment, but listening on a port can be useful for local
@@ -36,13 +36,13 @@ GC.respond_to?(:copy_on_write_friendly=) &&
   GC.copy_on_write_friendly = true
 
 # If using ActiveRecord, disconnect (from the database) before forking.
-before_fork do |server, worker|
+before_fork do |_server, _worker|
   defined?(ActiveRecord::Base) &&
     ActiveRecord::Base.connection.disconnect!
 end
 
 # After forking, restore your ActiveRecord connection.
-after_fork do |server, worker|
+after_fork do |_server, _worker|
   defined?(ActiveRecord::Base) &&
     ActiveRecord::Base.establish_connection
 end

@@ -7,9 +7,13 @@ describe Account::User do
     end
     it { should validate_presence_of(:username) }
     it { should validate_presence_of(:email) }
-    it { FactoryGirl.create :user
-        should validate_uniqueness_of(:username) }
-    it { FactoryGirl.create :user
-         should validate_uniqueness_of(:email) }
+    it do
+      FactoryGirl.create :user
+      is_expected.to validate_uniqueness_of(:username)
+    end
+    it do
+      FactoryGirl.create :user
+      is_expected.to validate_uniqueness_of(:email)
+    end
   end
 end

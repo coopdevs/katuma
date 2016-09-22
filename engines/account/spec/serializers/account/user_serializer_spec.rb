@@ -6,7 +6,8 @@ describe Account::UserSerializer do
 
     subject { described_class.new(user).to_hash }
 
-    it { should include(
+    it do
+      is_expected.to include(
         id: user.id,
         full_name: user.full_name,
         first_name: user.first_name,
@@ -16,8 +17,8 @@ describe Account::UserSerializer do
         created_at: user.created_at,
         updated_at: user.updated_at
       )
-    }
+    end
 
-    it { should_not include :password_digest }
+    it { is_expected.to_not include :password_digest }
   end
 end

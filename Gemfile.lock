@@ -15,12 +15,6 @@ PATH
       rails (= 4.2.5)
 
 PATH
-  remote: engines/landing
-  specs:
-    landing (0.0.1)
-      rails (= 4.2.5)
-
-PATH
   remote: engines/onboarding
   specs:
     onboarding (0.0.1)
@@ -249,7 +243,6 @@ DEPENDENCIES
   factory_girl_rails (= 4.5.0)
   group!
   haml (= 4.0.7)
-  landing!
   mina (= 0.3.7)
   onboarding!
   pg (= 0.18.3)

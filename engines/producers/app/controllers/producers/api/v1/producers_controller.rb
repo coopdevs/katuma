@@ -4,7 +4,9 @@ module Producers
       class ProducersController < ApplicationController
         before_action :authenticate
         before_action :load_producer, only: [:show, :update, :destroy]
-        before_action :load_group, only: [:create], if: -> { !!producer_params.fetch('group_id', nil) }
+        before_action :load_group,
+          only: [:create],
+          if: -> { !!producer_params.fetch('group_id', nil) }
 
         # GET /api/v1/producers
         #

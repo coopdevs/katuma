@@ -1,0 +1,78 @@
+inherit_from: .rubocop_todo.yml
+
+AllCops:
+  Exclude:
+    - 'db/schema.rb'
+    - '**/vendor/cache/**/*'
+    - '**/vendor/bundle/**/*'
+    - 'engines/*/bin/*'
+    - 'engines/*/spec/dummy/**/*'
+  TargetRubyVersion: 2.1
+
+Style/Documentation:
+  Enabled: false
+
+Style/DoubleNegation:
+  Enabled: false
+
+Style/EachWithObject:
+  Enabled: false
+
+Style/EmptyLinesAroundClassBody:
+  Enabled: false
+
+Style/EmptyLinesAroundModuleBody:
+  Enabled: false
+
+Style/BracesAroundHashParameters:
+  EnforcedStyle: context_dependent
+
+Style/SignalException:
+  Enabled: false
+
+Style/NumericLiterals:
+  Enabled: false
+
+Rails/ActionFilter:
+  Enabled: false
+
+Metrics/LineLength:
+  Max: 100
+
+Metrics/ModuleLength:
+  Exclude:
+    - 'spec/**/*_spec.rb'
+    - 'engines/*/spec/**/*_spec.rb'
+
+# This means we want:
+#
+#   attr_reader :attr1,
+#     :attr2,
+#     :attr3,
+#
+# over
+#
+#   attr_reader :attr1,
+#               :attr2,
+#               :attr3
+Style/AlignParameters:
+  EnforcedStyle: 'with_fixed_indentation'
+
+# This means we want:
+#
+#   @relation = ::Chat::Message
+#     .joins(channel: :channel_members)
+#     .where(id: ids)
+#     .where('`chat_channel_members`.`user_id` = ?', user.id)
+#
+# Over:
+#
+#   @relation = ::Chat::Message
+#               .joins(channel: :channel_members)
+#               .where(id: ids)
+#               .where('`chat_channel_members`.`user_id` = ?', user.id)
+Style/MultilineMethodCallIndentation:
+  EnforcedStyle: 'indented'
+
+Style/SingleLineMethods:
+  AllowIfMethodIsEmpty: true

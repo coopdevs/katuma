@@ -1,4 +1,4 @@
-require "account/engine"
+require 'account/engine'
 
 module Account
 end

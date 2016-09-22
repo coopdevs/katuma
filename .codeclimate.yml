@@ -1,0 +1,12 @@
+engines:
+  rubocop:
+    enabled: true
+ratings:
+  paths:
+    - "**.rb"
+exclude_paths:
+  - ".bundle/"
+  - '**/vendor/cache/**/*'
+  - '**/vendor/bundle/**/*'
+  - 'engines/*/bin/*'
+  - 'engines/*/spec/dummy/**/*'
