@@ -11,7 +11,8 @@ module Account
         #
         def index
           user = ::Group::User.find current_user.id
-          users = ::Account::User.where(id: Group::Membership.where(group_id: user.group_ids).pluck(:user_id))
+          user_ids = ::Group::Membership.where(group_id: user.group_ids).pluck(:user_id)
+          users = ::Account::User.where(id: user_ids)
 
           render json: UsersSerializer.new(users)
         end
@@ -51,7 +52,8 @@ module Account
         private
 
         def users_params
-          params.permit(:email, :username, :first_name, :last_name, :password, :password_confirmation)
+          params
+            .permit(:email, :username, :first_name, :last_name, :password, :password_confirmation)
         end
 
         def load_user

@@ -54,7 +54,8 @@ module Account
         end
 
         def signup_complete_params
-          params.permit(:token, :username, :first_name, :last_name, :password, :password_confirmation)
+          params
+            .permit(:token, :username, :first_name, :last_name, :password, :password_confirmation)
         end
 
         def check_email_availability

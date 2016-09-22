@@ -12,7 +12,7 @@ module Account
     validates :username, presence: true, uniqueness: true
     validates :username, format: {
       with: /\A[a-zA-Z0-9_\-]+\Z/,
-      message: 'Solo puede contener letras, numeros, _ y -. Sin espacios ni otros caracteres como: ;, *, ^, $, ...'
+      message: 'Solo puede contener letras, numeros, _ y -. Sin espacios u otros caracteres ; * ^ $'
     }
 
     def self.find_by_login(login)

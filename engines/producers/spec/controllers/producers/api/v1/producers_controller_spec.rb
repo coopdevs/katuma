@@ -197,7 +197,9 @@ module Producers
               before { post :create, params }
 
               describe 'response Link header' do
-                let(:http_resource_links) { ::Shared::HttpResourceLinks.build([created_membership], 'created') }
+                let(:http_resource_links) do
+                  ::Shared::HttpResourceLinks.build([created_membership], 'created')
+                end
                 subject { response['Link'] }
 
                 it { is_expected.to eq(http_resource_links) }

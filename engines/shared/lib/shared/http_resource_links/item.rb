@@ -25,7 +25,13 @@ module Shared
       #
       # @return [String] resource api url
       def api_link
-        "#{::Shared::FrontendUrl.base_url}/api/#{API_VERSION}/#{object.model_name.route_key}/#{object.id}"
+        [
+          ::Shared::FrontendUrl.base_url,
+          "/api/#{API_VERSION}/",
+          object.model_name.route_key,
+          '/',
+          object.id
+        ].join
       end
 
       # @return [String]

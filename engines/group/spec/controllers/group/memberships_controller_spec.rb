@@ -89,8 +89,15 @@ module Group
 
       describe 'POST #create' do
         let(:other_group) { FactoryGirl.create(:group) }
+        let(:params) do
+          {
+            user_id: user.id,
+            group_id: other_group.id,
+            role: Membership::ROLES[:admin]
+          }
+        end
 
-        subject { post :create, user_id: user.id, group_id: other_group.id, role: Membership::ROLES[:admin] }
+        subject { post :create, params }
 
         it_behaves_like 'a successful request'
 
@@ -149,7 +156,15 @@ module Group
       end
 
       describe 'PUT #update' do
-        subject { put :update, user_id: member.id, id: membership.id, role: Membership::ROLES[:admin] }
+        let(:params) do
+          {
+            id: membership.id,
+            user_id: member.id,
+            role: Membership::ROLES[:admin]
+          }
+        end
+
+        subject { put :update, params }
 
         it_behaves_like 'a successful request'
         it 'returns the membership details with updated attributes' do
