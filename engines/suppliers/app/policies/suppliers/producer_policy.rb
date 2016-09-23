@@ -17,7 +17,12 @@ module Suppliers
     end
 
     def show?
-      false
+      group_ids = Membership.where(user: user).pluck(:group_id)
+
+      Supplier.where(
+        group: group_ids,
+        producer: record
+      ).any?
     end
 
     def update?

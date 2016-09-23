@@ -4,6 +4,7 @@ module Suppliers
       class ProvidersController < ApplicationController
         before_action :authenticate
         before_action :load_group, only: [:index]
+        before_action :load_producer, only: [:show]
 
         # GET /api/v1/providers?group_id=
         #
@@ -16,6 +17,12 @@ module Suppliers
           render json: ::Suppliers::ProvidersSerializer.new(providers)
         end
 
+        # GET /api/v1/providers/:id
+        #
+        def show
+          render json: ::Suppliers::ProviderSerializer.new(@producer)
+        end
+
         private
 
         def load_group
@@ -24,6 +31,14 @@ module Suppliers
           return head :not_found unless @group
 
           authorize @group
+        end
+
+        def load_producer
+          @producer = ::Suppliers::Producer.find_by_id(params[:id])
+
+          return head :not_found unless @producer
+
+          authorize @producer
         end
       end
     end

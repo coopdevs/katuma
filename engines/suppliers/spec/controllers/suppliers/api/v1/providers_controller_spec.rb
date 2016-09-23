@@ -14,6 +14,12 @@ module Suppliers
 
             it_behaves_like 'an unauthorized request'
           end
+
+          describe 'GET #show' do
+            subject { get :show, id: 666 }
+
+            it_behaves_like 'an unauthorized request'
+          end
         end
 
         context 'Authenticated user' do
@@ -70,6 +76,28 @@ module Suppliers
 
               its(:size) { is_expected.to eq(1) }
               it { is_expected.to include(JSON.parse(producer.to_json)) }
+            end
+          end
+
+          describe 'GET #show' do
+            let!(:supplier) do
+              FactoryGirl.create(
+                :supplier,
+                group: group,
+                producer: producer
+              )
+            end
+
+            subject { get :show, id: producer.id }
+
+            it_behaves_like 'a successful request'
+
+            describe 'its body' do
+              before { get :show, id: producer.id }
+
+              subject { JSON.parse(response.body) }
+
+              it { is_expected.to eq(JSON.parse(producer.to_json)) }
             end
           end
         end
