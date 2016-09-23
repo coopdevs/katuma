@@ -9,7 +9,7 @@ module Producers
     let(:producer) do
       Producer.new(
         name: 'Proveidor',
-        email: 'proveider@katuma.org',
+        email: 'proveidor@katuma.org',
         address: 'c/ dels Proveidors, 123'
       )
     end
@@ -33,10 +33,9 @@ module Producers
       end
 
       describe 'its attributes' do
-        before { creator.create }
+        subject { creator.create }
 
-        subject { Producer.last }
-
+        its(:persisted?) { is_expected.to be_truthy }
         its(:name) { is_expected.to eq(producer.name) }
         its(:email) { is_expected.to eq(producer.email) }
         its(:address) { is_expected.to eq(producer.address) }
@@ -55,7 +54,6 @@ module Producers
       context 'when the provider is not valid' do
         let(:producer) { Producer.new(name: 'Proveidor') }
 
-        it { is_expected.to be_falsey }
         it 'does not change the Producer.count' do
           expect { subject }.to_not change(Producer, :count)
         end

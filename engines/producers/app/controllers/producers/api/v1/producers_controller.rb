@@ -33,12 +33,11 @@ module Producers
         # When creating a new producer we may pass a `group_id` param
         # to specify which group the producer will be:
         #  - associated with through `::Producers::Membership`
-        #  - associated with as a supplier through `::Suppliers::Supplier`
         #
-        # The generated `Supplier` instance will be treated as a side effect
-        # and returned in the POST response in the `Link` header.
+        # The generated `Membership` instance will be treated as a side effect
+        # and returned with the POST response in the `Link` header.
         #
-        # If no `group_id` is passed the producer will only be associated
+        # If no `group_id` is passed the producer will be associated
         # to the current user through `::Producers::Membership`.
         #
         def create
@@ -49,7 +48,7 @@ module Producers
             group: @current_group
           )
 
-          if producer_creator.create
+          if producer_creator.create && producer.persisted?
             @side_effects << producer_creator.side_effects
             render json: ProducerSerializer.new(producer)
           else
