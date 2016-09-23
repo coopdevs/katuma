@@ -65,7 +65,7 @@ module Group
         def find_and_authorize_group
           @group = ::Group::Group.find_by_id(params[:id])
 
-          head :not_found unless @group
+          return head :not_found unless @group
 
           authorize @group
         end
