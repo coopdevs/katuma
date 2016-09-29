@@ -9,4 +9,11 @@ FactoryGirl.define do
     producer
     role 1
   end
+
+  factory :product, class: Producers::Product do
+    name 'Manzana'
+    price 10
+    unit 0
+    producer
+  end
 end
