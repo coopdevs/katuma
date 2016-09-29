@@ -13,13 +13,7 @@ module Producers
 
     subject { described_class }
 
-    permissions :create? do
-      it 'is set to `false` by default' do
-        expect(subject).to_not permit(instance_double(User), instance_double(Producer))
-      end
-    end
-
-    permissions :show? do
+    permissions :show?, :index? do
       context 'when the user is member of the producer' do
         before do
           Membership.create(
@@ -62,7 +56,7 @@ module Producers
       end
     end
 
-    permissions :update?, :destroy? do
+    permissions :create?, :update?, :destroy? do
       context 'when the user is member of the producer' do
         before do
           Membership.create(

@@ -7,7 +7,7 @@ module Producers
     end
 
     def create?
-      false
+      user_admin_membership_for?(user) || group_admin_membership_for?(user)
     end
 
     def show?
@@ -20,6 +20,10 @@ module Producers
 
     def destroy?
       user_admin_membership_for?(user) || group_admin_membership_for?(user)
+    end
+
+    def index?
+      show?
     end
 
     private
