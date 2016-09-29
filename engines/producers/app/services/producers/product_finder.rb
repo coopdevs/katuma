@@ -6,7 +6,7 @@ module Producers
     # @param producer [Producers::Producer]
     # @return [ActiveRecord::Relation<Producers::Product>]
     def find_by_producer(producer)
-      Product.where(producer: producer)
+      Product.where(producer_id: producer.id)
     end
   end
 end
