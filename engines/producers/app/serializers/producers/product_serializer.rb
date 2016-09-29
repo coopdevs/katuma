@@ -3,7 +3,7 @@ module Producers
     schema do
       type 'product'
 
-      map_properties :id, :name, :price, :unit, :producer_id
+      map_properties :id, :name, :price, :unit, :producer_id, :created_at, :updated_at
     end
   end
 end
