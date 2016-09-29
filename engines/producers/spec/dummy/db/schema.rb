@@ -56,7 +56,7 @@ ActiveRecord::Schema.define(version: 20160901094107) do
     t.string   "name",        null: false
     t.integer  "price",       null: false
     t.integer  "unit",        null: false
-    t.integer  "producer_id"
+    t.integer  "producer_id", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -83,4 +83,5 @@ ActiveRecord::Schema.define(version: 20160901094107) do
   add_foreign_key "producers_memberships", "groups", name: "producers_memberships_group_id_fkey"
   add_foreign_key "producers_memberships", "producers", name: "producers_memberships_producer_id_fkey"
   add_foreign_key "producers_memberships", "users", name: "producers_memberships_user_id_fkey"
+  add_foreign_key "products", "producers"
 end
