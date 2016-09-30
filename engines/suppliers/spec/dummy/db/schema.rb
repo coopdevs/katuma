@@ -76,10 +76,10 @@ ActiveRecord::Schema.define(version: 20160901094107) do
   add_index "producers_memberships", ["producer_id", "user_id"], name: "producers_memberships_producer_id_user_id_idx", unique: true, where: "(user_id IS NOT NULL)", using: :btree
 
   create_table "products", force: :cascade do |t|
-    t.string   "name",        null: false
-    t.integer  "price",       null: false
-    t.integer  "unit",        null: false
-    t.integer  "producer_id"
+    t.string   "name",                                null: false
+    t.decimal  "price",       precision: 5, scale: 2, null: false
+    t.integer  "unit",                                null: false
+    t.integer  "producer_id",                         null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -115,6 +115,7 @@ ActiveRecord::Schema.define(version: 20160901094107) do
   add_foreign_key "producers_memberships", "groups", name: "producers_memberships_group_id_fkey"
   add_foreign_key "producers_memberships", "producers", name: "producers_memberships_producer_id_fkey"
   add_foreign_key "producers_memberships", "users", name: "producers_memberships_user_id_fkey"
+  add_foreign_key "products", "producers"
   add_foreign_key "suppliers", "groups"
   add_foreign_key "suppliers", "producers"
 end

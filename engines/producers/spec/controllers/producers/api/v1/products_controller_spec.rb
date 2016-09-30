@@ -148,7 +148,7 @@ module Producers
               let(:params) do
                 {
                   name: 'Tomatekken',
-                  price: 10,
+                  price: 10.13,
                   unit: Product::UNITS[:kg],
                   producer_id: producer_for_user.id
                 }
@@ -162,7 +162,7 @@ module Producers
                 subject { JSON.parse(response.body) }
 
                 its(['name']) { is_expected.to eq(params[:name]) }
-                its(['price']) { is_expected.to eq(params[:price]) }
+                its(['price']) { is_expected.to eq(params[:price].to_s) }
                 its(['unit']) { is_expected.to eq(params[:unit]) }
                 its(['producer_id']) { is_expected.to eq(params[:producer_id]) }
               end
@@ -185,7 +185,7 @@ module Producers
               let(:params) do
                 {
                   name: 'Tomatekken',
-                  price: 10,
+                  price: 10.13,
                   unit: Product::UNITS[:kg],
                   producer_id: producer_for_group.id
                 }
@@ -199,7 +199,7 @@ module Producers
                 subject { JSON.parse(response.body) }
 
                 its(['name']) { is_expected.to eq(params[:name]) }
-                its(['price']) { is_expected.to eq(params[:price]) }
+                its(['price']) { is_expected.to eq(params[:price].to_s) }
                 its(['unit']) { is_expected.to eq(params[:unit]) }
                 its(['producer_id']) { is_expected.to eq(params[:producer_id]) }
               end
@@ -231,7 +231,7 @@ module Producers
                 subject { JSON.parse(response.body) }
 
                 its(:size) { is_expected.to eq(2) }
-                it { is_expected.to include('price' => ["can't be blank"]) }
+                it { is_expected.to include('price' => ["can't be blank", 'is not a number']) }
                 it { is_expected.to include('unit' => ['is not included in the list']) }
               end
             end

@@ -13,5 +13,6 @@ module Producers
     # TODO: move price to its own table/s
     validates :name, :price, :unit, :producer, presence: true
     validates :unit, inclusion: { in: UNITS.values }
+    validates_numericality_of :price, :unit
   end
 end
