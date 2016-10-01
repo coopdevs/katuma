@@ -4,7 +4,6 @@ FactoryGirl.define do
   end
 
   factory :membership, class: BasicResources::Membership do
-    group
     role 1
   end
 

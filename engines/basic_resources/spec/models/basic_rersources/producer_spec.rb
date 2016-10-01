@@ -3,7 +3,7 @@ require 'rails_helper'
 module BasicResources
   describe Producer do
     it 'has a valid factory' do
-      expect(FactoryGirl.build(:membership, user: user)).to be_valid
+      expect(FactoryGirl.build(:producer)).to be_valid
     end
 
     describe 'Validations' do
