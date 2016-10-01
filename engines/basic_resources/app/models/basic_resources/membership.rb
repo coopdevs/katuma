@@ -6,21 +6,32 @@ module BasicResources
     ROLES = { admin: 1, member: 2 }.freeze
 
     belongs_to :user, class_name: 'BasicResources::User'.freeze
-    belongs_to :group, class_name: 'BasicResources::User'.freeze
+    belongs_to :group, class_name: 'BasicResources::Group'.freeze
 
     validates :role, presence: true
     validates :role, inclusion: { in: ROLES.values }
 
-    validate :user_or_group_presence
+    validate :actor_presence
+    validate :basic_resource_presence
 
     private
 
     # Validates `user_id` xor `group_id` presence
     #
-    def user_or_group_presence
+    def actor_presence
       return if user_id.blank? ^ group_id.blank?
 
       errors.add(:base, 'Specify a `group_id` or `user_id`, but not both.')
+    end
+
+    # Validates `basic_resource_producer_id` xor `basic_resource_group_id` presence
+    #
+    def basic_resource_presence
+      return if basic_resource_producer_id.blank? ^ basic_resource_group_id.blank?
+
+      errors.add(
+        :base, 'Specify a `basic_resource_group_id` or `basic_resource_producer_id`, but not both.'
+      )
     end
   end
 end

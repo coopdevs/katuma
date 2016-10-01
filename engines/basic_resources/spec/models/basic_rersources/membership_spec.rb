@@ -4,7 +4,7 @@ module BasicResources
   describe Membership do
     let(:user) do
       user = FactoryGirl.create(:user)
-      BasicResources::User.find(user.id)
+      User.find(user.id)
     end
 
     it 'has a valid factory' do

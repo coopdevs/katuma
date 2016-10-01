@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :group, class: BasicResources::Group do
-    name 'Group'
+    name 'Cabas'
   end
 
   factory :membership, class: BasicResources::Membership do

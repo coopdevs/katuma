@@ -11,8 +11,6 @@ module BasicResources
     describe 'Associations' do
       it { is_expected.to have_many(:memberships).dependent(:destroy) }
       it { is_expected.to have_many(:users).through(:memberships) }
-      it { is_expected.to have_many(:admins).through(:memberships) }
-      it { is_expected.to have_many(:waiters).through(:memberships) }
     end
   end
 end
