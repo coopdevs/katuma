@@ -44,32 +44,32 @@ module Products
           let(:user) do
             FactoryGirl.create(:user)
           end
-          let(:group_user) { ::Group::User.find(user.id) }
+          let(:group_user) { ::BasicResources::User.find(user.id) }
           let(:producers_user) { User.find(user.id) }
-          let(:group_membership) do
+          let(:group) { FactoryGirl.create(:group) }
+          let!(:group_membership) do
             FactoryGirl.create(
               :membership,
               user: group_user,
-              role: ::Group::Membership::ROLES[:admin]
+              basic_resource_group_id: group.id
             )
-          end
-          let(:group) do
-            ::Products::Group.find(group_membership.group.id)
           end
           let(:producer_for_group) do
             producer = FactoryGirl.build(:producer, name: 'Related to group')
-            ProducerCreator.new(
+            ::BasicResources::ProducerCreator.new(
               producer: producer,
               creator: producers_user,
               group: group
             ).create
+            Producer.find(producer.id)
           end
           let(:producer_for_user) do
             producer = FactoryGirl.build(:producer, name: 'Related to user')
-            ProducerCreator.new(
+            ::BasicResources::ProducerCreator.new(
               producer: producer,
-              creator: producers_user
+              creator: ::BasicResources::User.find(producers_user.id)
             ).create
+            Producer.find(producer.id)
           end
 
           before { authenticate_as producers_user }
@@ -206,7 +206,7 @@ module Products
 
               context 'and the user is not a group admin' do
                 before do
-                  group_membership.role = ::Group::Membership::ROLES[:member]
+                  group_membership.role = ::BasicResources::Membership::ROLES[:member]
                   group_membership.save
                 end
 
@@ -256,10 +256,7 @@ module Products
             context 'updating an existent product' do
               context 'when the producer is directly associated to the user' do
                 let(:product) do
-                  FactoryGirl.create(
-                    :product,
-                    producer: producer_for_user
-                  )
+                  FactoryGirl.create(:product, producer: producer_for_user)
                 end
 
                 context 'when the user is a producer admin' do
@@ -276,12 +273,11 @@ module Products
 
                 context 'when the user is not a producer admin' do
                   before do
-                    producer_membership = Membership.where(
-                      user: producers_user,
-                      producer: producer_for_user
+                    producer_membership = ::BasicResources::Membership.where(
+                      user_id: producers_user,
+                      basic_resource_producer_id: producer_for_user
                     ).first
-                    producer_membership.role = Membership::ROLES[:member]
-                    producer_membership.save
+                    producer_membership.update_attribute(:role, Membership::ROLES[:member])
                   end
 
                   it_behaves_like 'a forbidden request'
@@ -289,11 +285,8 @@ module Products
               end
 
               context 'when the producer is associated to the user through a group' do
-                let(:product) do
-                  FactoryGirl.create(
-                    :product,
-                    producer: producer_for_group
-                  )
+                let!(:product) do
+                  FactoryGirl.create(:product, producer: producer_for_group)
                 end
 
                 it_behaves_like 'a successful request'
@@ -308,8 +301,7 @@ module Products
 
                 context 'when the user is not a group admin' do
                   before do
-                    group_membership.role = ::Group::Membership::ROLES[:member]
-                    group_membership.save
+                    group_membership.update_attribute(:role, Membership::ROLES[:member])
                   end
 
                   it_behaves_like 'a forbidden request'
@@ -370,11 +362,11 @@ module Products
 
                 context 'when the user is not a producer admin' do
                   before do
-                    producer_membership = Membership.where(
+                    producer_membership = ::BasicResources::Membership.where(
                       user: producers_user,
                       producer: producer_for_user
                     ).first
-                    producer_membership.role = Membership::ROLES[:member]
+                    producer_membership.role = ::BasicResources::Membership::ROLES[:member]
                     producer_membership.save
                   end
 
@@ -384,10 +376,7 @@ module Products
 
               context 'when the producer is associated to the user through a group' do
                 let(:product) do
-                  FactoryGirl.create(
-                    :product,
-                    producer: producer_for_group
-                  )
+                  FactoryGirl.create(:product, producer: producer_for_group)
                 end
 
                 context 'when the user is a group admin' do
@@ -396,8 +385,7 @@ module Products
 
                 context 'when the user is not a group admin' do
                   before do
-                    group_membership.role = ::Group::Membership::ROLES[:member]
-                    group_membership.save
+                    group_membership.update_attribute(:role, Membership::ROLES[:member])
                   end
 
                   it_behaves_like 'a forbidden request'
@@ -406,10 +394,7 @@ module Products
 
               context 'when the producer is not associated to the current user' do
                 let(:product) do
-                  FactoryGirl.create(
-                    :product,
-                    producer: producer_for_group
-                  )
+                  FactoryGirl.create(:product, producer: producer_for_group)
                 end
                 let(:another_user) do
                   user = FactoryGirl.create(:user)

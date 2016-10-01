@@ -21,9 +21,9 @@ PATH
       rails (= 4.2.5)
 
 PATH
-  remote: engines/producers
+  remote: engines/products
   specs:
-    producers (0.0.1)
+    products (0.0.1)
       pg (= 0.18.3)
       rails (= 4.2.5)
 
@@ -246,7 +246,7 @@ DEPENDENCIES
   mina (= 0.3.7)
   onboarding!
   pg (= 0.18.3)
-  producers!
+  products!
   pry-byebug (= 3.4.0)
   pundit (= 1.0.1)
   rails (= 4.2.5)

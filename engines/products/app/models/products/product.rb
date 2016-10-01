@@ -8,7 +8,7 @@ module Products
       lt: 2
     }.freeze
 
-    belongs_to :producer, class_name: 'Producers::Producer'.freeze
+    belongs_to :producer, class_name: '::Products::Producer'.freeze
 
     # TODO: move price to its own table/s
     validates :name, :price, :unit, :producer, presence: true

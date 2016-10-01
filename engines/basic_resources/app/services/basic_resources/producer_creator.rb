@@ -31,8 +31,9 @@ module BasicResources
     #
     # @return [Membership]
     def create_membership_for_creator_or_group
-      membership = producer.memberships.build(
-        role: Membership::ROLES[:admin]
+      membership = Membership.new(
+        role: Membership::ROLES[:admin],
+        basic_resource_producer_id: producer.id
       )
       if group
         membership.group = group
