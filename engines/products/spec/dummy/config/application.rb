@@ -6,7 +6,6 @@ require "shared"
 require "account"
 require "basic_resources"
 require "products"
-require "suppliers"
 
 module Dummy
   class Application < Rails::Application

@@ -15,13 +15,6 @@ PATH
       rails (= 4.2.5)
 
 PATH
-  remote: ../../engines/products
-  specs:
-    products (0.0.1)
-      pg (= 0.18.3)
-      rails (= 4.2.5)
-
-PATH
   remote: ../../engines/shared
   specs:
     shared (0.0.1)
@@ -33,7 +26,7 @@ PATH
 PATH
   remote: .
   specs:
-    suppliers (0.0.1)
+    producers (0.0.1)
       pg (= 0.18.3)
       rails (= 4.2.5)
 
@@ -181,12 +174,11 @@ DEPENDENCIES
   basic_resources!
   byebug (= 9.0.5)
   factory_girl_rails (= 4.5.0)
-  products!
+  producers!
   rspec-its (= 1.2.0)
   rspec-rails (= 3.5.0)
   shared!
   shoulda-matchers (= 3.0.1)
-  suppliers!
 
 BUNDLED WITH
    1.12.5

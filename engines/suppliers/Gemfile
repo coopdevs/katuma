@@ -11,5 +11,5 @@ gemspec
 # your gem to rubygems.org.
 gem 'shared', path: '../../engines/shared'
 gem 'account', path: '../../engines/account'
-gem 'group', path: '../../engines/group'
-gem 'producers', path: '../../engines/producers'
+gem 'basic_resources', path: '../../engines/basic_resources'
+gem 'products', path: '../../engines/products'

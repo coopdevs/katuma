@@ -37,29 +37,6 @@ ActiveRecord::Schema.define(version: 20161001134751) do
   add_index "memberships", ["basic_resource_producer_id", "group_id"], name: "memberships_basic_resource_producer_id_group_id_idx", unique: true, where: "(group_id IS NOT NULL)", using: :btree
   add_index "memberships", ["basic_resource_producer_id", "user_id"], name: "memberships_basic_resource_producer_id_user_id_idx", unique: true, where: "(user_id IS NOT NULL)", using: :btree
 
-  create_table "order_lines", force: :cascade do |t|
-    t.integer  "unit",       default: 1, null: false
-    t.integer  "price",                  null: false
-    t.integer  "quantity",               null: false
-    t.integer  "order_id",               null: false
-    t.integer  "product_id",             null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "order_lines", ["order_id"], name: "index_order_lines_on_order_id", using: :btree
-  add_index "order_lines", ["product_id"], name: "index_order_lines_on_product_id", using: :btree
-
-  create_table "orders", force: :cascade do |t|
-    t.integer  "user_id",    null: false
-    t.integer  "group_id",   null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "orders", ["group_id"], name: "index_orders_on_group_id", using: :btree
-  add_index "orders", ["user_id"], name: "index_orders_on_user_id", using: :btree
-
   create_table "producers", force: :cascade do |t|
     t.string   "name",       null: false
     t.string   "email",      null: false
@@ -86,15 +63,6 @@ ActiveRecord::Schema.define(version: 20161001134751) do
     t.datetime "updated_at"
   end
 
-  create_table "suppliers", force: :cascade do |t|
-    t.integer  "group_id",    null: false
-    t.integer  "producer_id", null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "suppliers", ["group_id", "producer_id"], name: "index_suppliers_on_group_id_and_producer_id", unique: true, using: :btree
-
   create_table "users", force: :cascade do |t|
     t.string   "email",           null: false
     t.string   "first_name",      null: false
@@ -110,6 +78,4 @@ ActiveRecord::Schema.define(version: 20161001134751) do
   add_foreign_key "memberships", "producers", column: "basic_resource_producer_id", name: "memberships_basic_resource_producer_id_fkey"
   add_foreign_key "memberships", "users", name: "memberships_user_id_fkey"
   add_foreign_key "products", "producers"
-  add_foreign_key "suppliers", "groups"
-  add_foreign_key "suppliers", "producers"
 end
