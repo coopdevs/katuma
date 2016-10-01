@@ -15,8 +15,8 @@ module BasicResources
     # @return [Group, Membership]
     def create
       ::ActiveRecord::Base.transaction do
-        if group.save
-          membership = add_creator_as_group_admin
+        if group.save!
+          membership = add_creator_as_group_admin!
           @side_effects << membership
         end
       end
@@ -27,8 +27,9 @@ module BasicResources
     # Creates a new Membership for the creator as admin
     #
     # @return [Membership]
-    def add_creator_as_group_admin
-      group.memberships.create(
+    def add_creator_as_group_admin!
+      Membership.create!(
+        basic_resource_group_id: group.id,
         user: creator,
         role: ::BasicResources::Membership::ROLES[:admin]
       )

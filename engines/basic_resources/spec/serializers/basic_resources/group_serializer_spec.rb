@@ -3,11 +3,11 @@ require 'rails_helper'
 module BasicResources
   describe GroupSerializer do
     context 'passing a Group instance' do
-      let(:group) { FactoryGirl.build(:group) }
+      let(:group) { FactoryGirl.create(:group) }
 
       subject { described_class.new(group).to_hash }
 
-      it do
+      it 'returns the expected attributes' do
         is_expected.to include(
           id: group.id,
           name: group.name,

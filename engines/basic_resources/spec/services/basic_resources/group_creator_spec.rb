@@ -20,14 +20,8 @@ module BasicResources
     end
 
     describe '#create' do
-      it 'uses an ActiveRecord transaction' do
-        expect(Group).to receive(:transaction)
-
-        gc.create
-      end
-
       it 'creates a new group' do
-        expect(group).to receive(:save)
+        expect(group).to receive(:save!)
 
         gc.create
       end
@@ -35,7 +29,13 @@ module BasicResources
       it 'adds creator as a group admin' do
         gc.create
 
-        expect(group.admins).to include creator
+        is_admin = Membership.where(
+          basic_resource_group_id: group.id,
+          user: creator,
+          role: ::BasicResources::Membership::ROLES[:admin]
+        ).any?
+
+        expect(is_admin).to be_truthy
       end
     end
   end
