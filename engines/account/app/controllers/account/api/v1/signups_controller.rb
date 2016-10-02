@@ -15,7 +15,7 @@ module Account
           else
             render(
               status: :bad_request,
-              json: { errors: signup.errors.full_messages }
+              json: { errors: signup.errors.messages }
             )
           end
         end
