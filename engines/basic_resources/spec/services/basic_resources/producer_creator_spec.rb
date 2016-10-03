@@ -13,7 +13,7 @@ module BasicResources
         address: 'c/ dels Proveidors, 123'
       )
     end
-    let(:creator) do
+    let(:producer_creator) do
       described_class.new(
         producer: producer,
         creator: user,
@@ -21,79 +21,92 @@ module BasicResources
       )
     end
 
-    describe '#create' do
-      before(:all) { ActiveRecord::Base.connection }
+    describe '#create!' do
+      # before(:all) { ActiveRecord::Base.connection }
 
-      let(:group) { nil }
+      subject { producer_creator.create! }
 
-      subject { creator.create }
+      context 'Without passing a `group`' do
+        let(:group) { nil }
 
-      it 'does not change the Producer.count' do
-        expect { subject }.to change(Producer, :count)
-      end
-
-      describe 'its attributes' do
-        subject { creator.create }
-
+        it 'changes a new producer' do
+          expect { subject }.to change(Producer, :count).from(0).to(1)
+        end
         its(:persisted?) { is_expected.to be_truthy }
         its(:name) { is_expected.to eq(producer.name) }
         its(:email) { is_expected.to eq(producer.email) }
         its(:address) { is_expected.to eq(producer.address) }
-      end
 
-      context 'when something fails' do
-        before { allow(creator).to receive(:create_membership_for_creator_or_group).and_raise }
+        context 'when the producer is not valid' do
+          let(:producer) { Producer.new(name: 'Proveidor') }
 
-        xit 'rollbacks the transaction' do
-          expect do
-            subject
-          end.to raise_error(ActiveRecord::Rollback)
+          it 'does not change the Producer.count' do
+            expect { subject }.to_not change(Producer, :count)
+          end
         end
       end
 
-      context 'when the provider is not valid' do
-        let(:producer) { Producer.new(name: 'Proveidor') }
+      context 'Passing a `group`' do
+        let(:group) { FactoryGirl.create(:group) }
 
-        it 'does not change the Producer.count' do
-          expect { subject }.to_not change(Producer, :count)
+        it 'changes a new producer' do
+          expect { subject }.to change(Producer, :count).from(0).to(1)
+        end
+        its(:persisted?) { is_expected.to be_truthy }
+        its(:name) { is_expected.to eq(producer.name) }
+        its(:email) { is_expected.to eq(producer.email) }
+        its(:address) { is_expected.to eq(producer.address) }
+
+        context 'when the producer is not valid' do
+          let(:producer) { Producer.new(name: 'Proveidor') }
+
+          it 'does not change the Producer.count' do
+            expect { subject }.to_not change(Producer, :count)
+          end
         end
       end
 
       describe '@side_effects' do
-        before { creator.create }
+        before { producer_creator.create! }
 
-        subject { creator.side_effects }
+        subject { producer_creator.side_effects }
 
-        it { is_expected.to be_kind_of(Array) }
-        its(:length) { is_expected.to eq(1) }
-        its(:first) { is_expected.to be_kind_of(::Producers::Membership)}
-
-        context 'not passing a `group`' do
+        context 'Without passing a `group`' do
           let(:group) { nil }
+
+          it { is_expected.to be_kind_of(Array) }
+          its(:length) { is_expected.to eq(1) }
+          its(:first) { is_expected.to be_kind_of(Membership)}
 
           it 'includes a membership between the producer and the creator' do
             membership = subject.first
 
             expect(membership.persisted?).to be_truthy
-            expect(membership.producer).to be(producer)
+            expect(membership.basic_resource_producer_id).to be(producer.id)
             expect(membership.user).to be(user)
             expect(membership.group).to be_nil
-            expect(membership.role).to be(::Producers::Membership::ROLES[:admin])
+            expect(membership.role).to be(Membership::ROLES[:admin])
           end
         end
 
-        context 'passing a `group`' do
-          let(:membership) { FactoryGirl.create(:membership, user: ::Group::User.find(user.id)) }
-          let(:group) { ::Producers::Group.find(membership.group_id) }
+        context 'Passing a `group`' do
+          let(:group) { FactoryGirl.create(:group) }
+          let(:membership) do
+            FactoryGirl.create(
+              :membership,
+              basic_resource_group_id: group.id,
+              user: user
+            )
+          end
 
           it 'includes a membership between the producer and the group' do
             membership = subject.first
 
             expect(membership.persisted?).to be_truthy
-            expect(membership.producer).to be(producer)
+            expect(membership.basic_resource_producer_id).to be(producer.id)
             expect(membership.group).to be(group)
             expect(membership.user).to be_nil
-            expect(membership.role).to be(::Producers::Membership::ROLES[:admin])
+            expect(membership.role).to be(Membership::ROLES[:admin])
           end
         end
       end

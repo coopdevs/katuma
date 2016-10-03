@@ -15,10 +15,10 @@ module BasicResources
     # Creates a new Producer
     #
     # @return [Producer]
-    def create
+    def create!
       ::ActiveRecord::Base.transaction do
         if producer.save
-          create_membership_for_creator_or_group
+          create_membership_for_creator_or_group!
         end
       end
 
@@ -30,10 +30,10 @@ module BasicResources
     # Creates a new Membership for the creator as admin
     #
     # @return [Membership]
-    def create_membership_for_creator_or_group
+    def create_membership_for_creator_or_group!
       membership = Membership.new(
-        role: Membership::ROLES[:admin],
-        basic_resource_producer_id: producer.id
+        basic_resource_producer_id: producer.id,
+        role: Membership::ROLES[:admin]
       )
       if group
         membership.group = group
