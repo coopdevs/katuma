@@ -11,44 +11,40 @@ module BasicResources
 
     subject { GroupPolicy.new(user, group) }
 
-    context 'A user that does not pertain to the group' do
-      it { should     permit_to :create }
-      it { should_not permit_to :show }
-      it { should_not permit_to :update }
-      it { should_not permit_to :destroy }
+    context 'When the user does not pertain to the group' do
+      it { is_expected.to permit_to :create }
+      it { is_expected.to_not permit_to :show }
+      it { is_expected.to_not permit_to :update }
+      it { is_expected.to_not permit_to :destroy }
     end
 
-    context 'A group admin' do
-      before do
-        FactoryGirl.create(:membership, user: user, group: group, role: Membership::ROLES[:admin])
+    context 'When the user pertains to the group' do
+      let!(:membership) do
+        FactoryGirl.create(
+          :membership,
+          user: user,
+          basic_resource_group_id: group.id,
+          role: role
+        )
       end
 
-      it { should permit_to :create }
-      it { should permit_to :show }
-      it { should permit_to :update }
-      it { should permit_to :destroy }
-    end
+      context 'as a group admin' do
+        let(:role) { Membership::ROLES[:admin] }
 
-    context 'A group member' do
-      before do
-        FactoryGirl.create(:membership, user: user, group: group, role: Membership::ROLES[:member])
+        it { is_expected.to permit_to :create }
+        it { is_expected.to permit_to :show }
+        it { is_expected.to permit_to :update }
+        it { is_expected.to permit_to :destroy }
       end
 
-      it { should permit_to :create }
-      it { should permit_to :show }
-      it { should_not permit_to :update }
-      it { should_not permit_to :destroy }
-    end
+      context 'A group member' do
+        let(:role) { Membership::ROLES[:member] }
 
-    context 'A group waiter' do
-      before do
-        FactoryGirl.create(:membership, user: user, group: group, role: Membership::ROLES[:waiting])
+        it { is_expected.to permit_to :create }
+        it { is_expected.to permit_to :show }
+        it { is_expected.to_not permit_to :update }
+        it { is_expected.to_not permit_to :destroy }
       end
-
-      it { should permit_to :create }
-      it { should_not permit_to :show }
-      it { should_not permit_to :update }
-      it { should_not permit_to :destroy }
     end
   end
 end

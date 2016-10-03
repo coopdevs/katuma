@@ -12,7 +12,7 @@ module BasicResources
 
     def show?
       Membership.where(
-        group: record,
+        basic_resource_group_id: record.id,
         user: user,
         role: [Membership::ROLES[:admin], Membership::ROLES[:member]]
       ).any?
@@ -20,7 +20,7 @@ module BasicResources
 
     def update?
       Membership.where(
-        group: record,
+        basic_resource_group_id: record.id,
         user: user,
         role: Membership::ROLES[:admin]
       ).any?
@@ -28,7 +28,7 @@ module BasicResources
 
     def destroy?
       Membership.where(
-        group: record,
+        basic_resource_group_id: record.id,
         user: user,
         role: Membership::ROLES[:admin]
       ).any?
