@@ -3,7 +3,7 @@ module Products
     schema do
       type 'products'
 
-      collection :products, item, Producers::ProductSerializer
+      collection :products, item, ProductSerializer
     end
   end
 end
