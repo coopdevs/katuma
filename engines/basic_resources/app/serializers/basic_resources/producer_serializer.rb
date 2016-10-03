@@ -1,4 +1,4 @@
-module Products
+module BasicResources
   class ProducerSerializer < Shared::BaseSerializer
     schema do
       type 'producer'

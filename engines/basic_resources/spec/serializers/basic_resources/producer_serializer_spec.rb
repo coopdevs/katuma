@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-module Products
+module BasicResources
   describe ProducerSerializer do
     let(:producer) { FactoryGirl.build(:producer) }
     let(:attributes) do
