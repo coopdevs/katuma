@@ -2,13 +2,9 @@ module Products
   class Product < ActiveRecord::Base
     self.table_name = :products
 
-    UNITS = {
-      kg: 0,
-      pc: 1,
-      lt: 2
-    }.freeze
+    UNITS = { kg: 0, pc: 1, lt: 2 }.freeze
 
-    belongs_to :producer, class_name: '::Products::Producer'.freeze
+    belongs_to :producer, class_name: ::BasicResources::Producer
 
     # TODO: move price to its own table/s
     validates :name, :price, :unit, :producer, presence: true
