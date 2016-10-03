@@ -31,31 +31,31 @@ module Products
     def user_membership_for?(user)
       Membership.where(
         user_id: user.id,
-        producer_id: record.id
+        basic_resource_producer_id: record.id
       ).any?
     end
 
     def user_admin_membership_for?(user)
       Membership.where(
         user_id: user.id,
-        producer_id: record.id,
+        basic_resource_producer_id: record.id,
         role: Membership::ROLES[:admin]
       ).any?
     end
 
     def group_membership_for?(user)
-      group_ids = ::Group::Membership.where(
+      group_ids = ::BasicResources::Membership.where(
         user_id: user.id
-      ).pluck(:group_id)
+      ).pluck(:basic_resource_group_id)
 
       producer_membership_for_groups?(group_ids)
     end
 
     def group_admin_membership_for?(user)
-      group_ids = ::Group::Membership.where(
+      group_ids = ::BasicResources::Membership.where(
         user_id: user.id,
-        role: ::Group::Membership::ROLES[:admin]
-      ).pluck(:group_id)
+        role: Membership::ROLES[:admin]
+      ).pluck(:basic_resource_group_id)
 
       producer_membership_for_groups?(group_ids)
     end
@@ -63,7 +63,7 @@ module Products
     def producer_membership_for_groups?(group_ids)
       Membership.where(
         group_id: group_ids,
-        producer_id: record.id,
+        basic_resource_producer_id: record.id,
         role: Membership::ROLES[:admin]
       ).any?
     end
