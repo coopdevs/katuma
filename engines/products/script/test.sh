@@ -1,7 +1,7 @@
 #!/bin/bash
 
 exit_code=0
-engine_name=$(pwd | cut -f6 -d '/')
+engine_name=$(pwd | rev | cut -d'/' -f1 | rev)
 
 echo "Running tests for $engine_name engine..."
 
