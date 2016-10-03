@@ -1,4 +1,5 @@
 module Products
+  # TODO: Looks like it has no tests
   class ProductPolicy < Shared::ApplicationPolicy
     def destroy?
       producer_admin_for?(user) || group_admin_for?(user)
@@ -14,7 +15,7 @@ module Products
     def user_membership_for?(user)
       Membership.where(
         user_id: user.id,
-        producer_id: record.producer_id
+        basic_resource_producer_id: record.producer_id
       ).any?
     end
 
@@ -28,9 +29,9 @@ module Products
     end
 
     def group_membership_for?(user)
-      group_ids = ::Group::Membership.where(
+      group_ids = Membership.where(
         user_id: user.id
-      ).pluck(:group_id)
+      ).pluck(:basic_resource_group_id)
 
       producers_created_by?(group_ids)
     end

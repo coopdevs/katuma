@@ -61,7 +61,6 @@ module Products
               creator: producers_user,
               group: group
             ).create
-            Producer.find(producer.id)
           end
           let(:producer_for_user) do
             producer = FactoryGirl.build(:producer, name: 'Related to user')
@@ -69,7 +68,6 @@ module Products
               producer: producer,
               creator: ::BasicResources::User.find(producers_user.id)
             ).create
-            Producer.find(producer.id)
           end
 
           before { authenticate_as producers_user }
@@ -169,12 +167,11 @@ module Products
 
               context 'and the user is not a producer admin' do
                 before do
-                  producer_membership = Membership.where(
-                    user: producers_user,
-                    producer: producer_for_user
+                  producer_membership = ::BasicResources::Membership.where(
+                    user_id: producers_user.id,
+                    basic_resource_producer_id: producer_for_user.id
                   ).first
-                  producer_membership.role = Membership::ROLES[:member]
-                  producer_membership.save
+                  producer_membership.update_attribute(:role, Membership::ROLES[:member])
                 end
 
                 it_behaves_like 'a forbidden request'
@@ -364,7 +361,7 @@ module Products
                   before do
                     producer_membership = ::BasicResources::Membership.where(
                       user: producers_user,
-                      producer: producer_for_user
+                      basic_resource_producer_id: producer_for_user.id
                     ).first
                     producer_membership.role = ::BasicResources::Membership::ROLES[:member]
                     producer_membership.save

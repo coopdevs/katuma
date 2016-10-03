@@ -67,12 +67,12 @@ module Products
 
           describe 'GET #index' do
             before do
-              ProducerCreator.new(
+              ::BasicResources::ProducerCreator.new(
                 producer: producer_for_group,
                 creator: producers_user,
                 group: group
               ).create
-              ProducerCreator.new(
+              ::BasicResources::ProducerCreator.new(
                 producer: producer_for_user,
                 creator: producers_user
               ).create
@@ -102,7 +102,7 @@ module Products
 
             context 'requesting a producer directly associated to the user' do
               let(:producer) do
-                ProducerCreator.new(
+                ::BasicResources::ProducerCreator.new(
                   producer: producer_for_user,
                   creator: producers_user
                 ).create
@@ -125,7 +125,7 @@ module Products
 
             context 'requesting a producer associated to the user through a group' do
               let(:producer) do
-                ProducerCreator.new(
+                ::BasicResources::ProducerCreator.new(
                   creator: user,
                   group: group,
                   producer: producer_for_group
@@ -153,7 +153,7 @@ module Products
                 User.find(user.id)
               end
               let(:producer) do
-                ProducerCreator.new(
+                ::BasicResources::ProducerCreator.new(
                   producer: producer_for_user,
                   creator: another_user
                 ).create
@@ -281,7 +281,7 @@ module Products
 
             context 'updating a producer directly associated to the user' do
               let(:producer) do
-                ProducerCreator.new(
+                ::BasicResources::ProducerCreator.new(
                   producer: producer_for_user,
                   creator: producers_user
                 ).create
@@ -324,7 +324,7 @@ module Products
 
             context 'updating a producer associated to the user through a group' do
               let(:producer) do
-                ProducerCreator.new(
+                ::BasicResources::ProducerCreator.new(
                   creator: user,
                   group: group,
                   producer: producer_for_group
@@ -370,7 +370,7 @@ module Products
                 User.find(user.id)
               end
               let(:producer) do
-                ProducerCreator.new(
+                ::BasicResources::ProducerCreator.new(
                   producer: producer_for_user,
                   creator: another_user
                 ).create
@@ -397,7 +397,7 @@ module Products
 
             context 'destroying a producer directly associated to the user' do
               let(:producer) do
-                ProducerCreator.new(
+                ::BasicResources::ProducerCreator.new(
                   producer: producer_for_user,
                   creator: producers_user
                 ).create
@@ -430,7 +430,7 @@ module Products
 
             context 'destroying a producer associated to the user through a group' do
               let(:producer) do
-                ProducerCreator.new(
+                ::BasicResources::ProducerCreator.new(
                   creator: user,
                   group: group,
                   producer: producer_for_group
@@ -466,7 +466,7 @@ module Products
                 User.find(user.id)
               end
               let(:producer) do
-                ProducerCreator.new(
+                ::BasicResources::ProducerCreator.new(
                   producer: producer_for_user,
                   creator: another_user
                 ).create

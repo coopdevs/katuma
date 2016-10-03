@@ -11,9 +11,9 @@ module Products
         # You must pass `producer_id` param as filter
         #
         def index
-          products = ::Producers::ProductFinder.new.find_by_producer(@producer)
+          products = ProductFinder.new.find_by_producer(@producer)
 
-          render json: ::Producers::ProductsSerializer.new(products)
+          render json: ProductsSerializer.new(products)
         end
 
         # GET /api/v1/products/:id

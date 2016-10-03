@@ -15,7 +15,7 @@ module BasicResources
     # Creates a new Producer
     #
     # @return [Producer]
-    def create!
+    def create
       ::ActiveRecord::Base.transaction do
         if producer.save
           create_membership_for_creator_or_group!
