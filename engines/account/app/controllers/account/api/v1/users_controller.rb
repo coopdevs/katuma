@@ -10,8 +10,10 @@ module Account
         # TODO: review this
         #
         def index
-          user = ::Group::User.find current_user.id
-          user_ids = ::Group::Membership.where(group_id: user.group_ids).pluck(:user_id)
+          user = ::BasicResources::User.find current_user.id
+          user_ids = ::BasicResources::Membership
+            .where(basic_resource_group_id: user.group_ids)
+            .pluck(:user_id)
           users = ::Account::User.where(id: user_ids)
 
           render json: UsersSerializer.new(users)
