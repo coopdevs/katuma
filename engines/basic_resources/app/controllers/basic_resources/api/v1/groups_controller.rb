@@ -2,7 +2,6 @@ module BasicResources
   module Api
     module V1
       class GroupsController < ApplicationController
-
         before_action :authenticate
         before_action :find_and_authorize_group, only: [:show, :update, :destroy]
 
