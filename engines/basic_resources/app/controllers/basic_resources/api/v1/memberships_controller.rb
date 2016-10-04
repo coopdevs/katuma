@@ -3,13 +3,12 @@ module BasicResources
     module V1
       class MembershipsController < ApplicationController
         before_action :authenticate
-        before_action :find_and_authorize_membership, only: [:show, :update, :destroy]
+        before_action :load_membership, only: [:show, :update, :destroy]
 
         # GET /api/v1/memberships
         #
         def index
-          group_ids = ::BasicResources::Membership.where(user_id: current_user.id).pluck(:group_id)
-          memberships = ::BasicResources::Membership.where(group_id: group_ids)
+          memberships = ::BasicResources::Membership.where(user_id: current_user.id)
 
           render json: MembershipsSerializer.new(memberships)
         end
@@ -24,6 +23,7 @@ module BasicResources
         #
         def create
           membership = Membership.new(membership_params)
+
           if membership.save
             render json: MembershipSerializer.new(membership)
           else
@@ -65,10 +65,10 @@ module BasicResources
           params.permit(:group_id, :user_id, :role)
         end
 
-        def find_and_authorize_membership
+        def load_membership
           @membership = Membership.find_by_id(params[:id])
 
-          head :not_found unless @membership
+          return head :not_found unless @membership
 
           authorize @membership
         end
