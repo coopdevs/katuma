@@ -144,13 +144,13 @@ module BasicResources
             end
 
             context 'requesting a group where the user is a member' do
-              let!(:membership) {
+              let!(:membership) do
                 Membership.create!(
                   user: user,
                   basic_resource_group_id: group.id,
                   role: role
                 )
-              }
+              end
 
               context 'as an `admin`' do
                 let(:role) { Membership::ROLES[:admin] }
@@ -190,13 +190,13 @@ module BasicResources
             end
 
             context 'destroying a group where the user is a member' do
-              let!(:membership) {
+              let!(:membership) do
                 Membership.create!(
                   user: user,
                   basic_resource_group_id: group.id,
                   role: role
                 )
-              }
+              end
 
               context 'as an `admin`' do
                 let(:role) { Membership::ROLES[:admin] }

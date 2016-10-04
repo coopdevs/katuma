@@ -76,7 +76,7 @@ module BasicResources
 
           it { is_expected.to be_kind_of(Array) }
           its(:length) { is_expected.to eq(1) }
-          its(:first) { is_expected.to be_kind_of(Membership)}
+          its(:first) { is_expected.to be_kind_of(Membership) }
 
           it 'includes a membership between the producer and the creator' do
             membership = subject.first

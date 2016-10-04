@@ -1,11 +1,5 @@
 module BasicResources
   class ProducerPolicy < Shared::ApplicationPolicy
-    class Scope < Struct.new(:user, :scope)
-      def resolve
-        scope
-      end
-    end
-
     def update?
       user_admin_membership_for?(user) || group_admin_membership_for?(user)
     end

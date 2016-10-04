@@ -171,9 +171,7 @@ module BasicResources
 
             it_behaves_like 'a successful request'
             it 'deletes the membership' do
-              expect {
-                subject
-              }.to change { Membership.count }.from(2).to(1)
+              expect { subject }.to change { Membership.count }.from(2).to(1)
             end
           end
         end

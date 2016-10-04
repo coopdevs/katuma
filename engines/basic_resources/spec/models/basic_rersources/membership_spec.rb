@@ -28,7 +28,7 @@ module BasicResources
           subject do
             FactoryGirl.build(
               :membership,
-              basic_resource_producer_id: producer.id,
+              basic_resource_producer_id: producer.id
             )
           end
 
@@ -162,7 +162,7 @@ module BasicResources
               :membership,
               user: user,
               basic_resource_group_id: group.id,
-              basic_resource_producer_id: producer.id,
+              basic_resource_producer_id: producer.id
             )
           end
 

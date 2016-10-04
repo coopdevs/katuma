@@ -1,9 +1,9 @@
 class CreateGroups < ActiveRecord::Migration
   def change
     create_table :groups do |t|
-     t.string :name, null: false
+      t.string :name, null: false
 
-     t.timestamps
+      t.timestamps
     end
   end
 end
