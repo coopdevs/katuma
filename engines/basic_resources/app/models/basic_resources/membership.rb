@@ -5,8 +5,16 @@ module BasicResources
 
     ROLES = { admin: 1, member: 2 }.freeze
 
-    belongs_to :user, class_name: 'BasicResources::User'.freeze
-    belongs_to :group, class_name: 'BasicResources::Group'.freeze
+    belongs_to :basic_resource_group,
+      class_name: 'BasicResources::Group'.freeze,
+      foreign_key: :basic_resource_group_id
+    belongs_to :basic_resource_producer,
+      class_name: 'BasicResources::Producer'.freeze,
+      foreign_key: :basic_resource_producer_id
+    belongs_to :user,
+      class_name: 'BasicResources::User'.freeze
+    belongs_to :group,
+      class_name: 'BasicResources::Group'.freeze
 
     validates :role, presence: true
     validates :role, inclusion: { in: ROLES.values }

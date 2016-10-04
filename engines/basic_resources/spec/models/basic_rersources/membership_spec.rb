@@ -259,8 +259,15 @@ module BasicResources
     end
 
     describe 'Associations' do
-      it { should belong_to(:group) }
-      it { should belong_to(:user) }
+      describe 'actors' do
+        it { is_expected.to belong_to(:group) }
+        it { is_expected.to belong_to(:user) }
+      end
+
+      describe 'basic resources' do
+        it { is_expected.to belong_to(:basic_resource_group) }
+        it { is_expected.to belong_to(:basic_resource_producer) }
+      end
     end
   end
 end
