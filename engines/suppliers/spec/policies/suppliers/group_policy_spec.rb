@@ -18,65 +18,59 @@ module Suppliers
     end
 
     permissions :create?, :destroy? do
-      context 'when the user is member of the group' do
-        let(:group_user) { ::Group::User.find(user.id) }
-        before do
-          ::Group::Membership.create(
-            group: group,
-            user: group_user,
-            role: Membership::ROLES[:member]
+      context 'when the user is associated to the group' do
+        let(:group_user) { ::BasicResources::User.find(user.id) }
+        let!(:membership) do
+          ::BasicResources::Membership.create(
+            basic_resource_group_id: group.id,
+            user_id: group_user.id,
+            role: role
           )
         end
 
-        it 'denies access' do
-          expect(subject).to_not permit(user, group)
-        end
-      end
+        context 'as `admin`' do
+          let(:role) { Membership::ROLES[:admin] }
 
-      context 'when the user is admin of the group' do
-        let(:group_user) { ::Group::User.find(user.id) }
-        before do
-          ::Group::Membership.create(
-            group: group,
-            user: group_user,
-            role: Membership::ROLES[:admin]
-          )
+          it 'grants access' do
+            expect(subject).to permit(user, group)
+          end
         end
 
-        it 'grants access' do
-          expect(subject).to permit(user, group)
+        context 'as `member`' do
+          let(:role) { Membership::ROLES[:member] }
+
+          it 'denies access' do
+            expect(subject).to_not permit(user, group)
+          end
         end
       end
     end
 
     permissions :show?, :index? do
-      context 'when the user is member of the group' do
-        let(:group_user) { ::Group::User.find(user.id) }
-        before do
-          ::Group::Membership.create(
-            group: group,
-            user: group_user,
-            role: Membership::ROLES[:member]
+      context 'when the user is associated to the group' do
+        let(:group_user) { ::BasicResources::User.find(user.id) }
+        let!(:membership) do
+          ::BasicResources::Membership.create(
+            basic_resource_group_id: group.id,
+            user_id: group_user.id,
+            role: role
           )
         end
 
-        it 'grants access' do
-          expect(subject).to permit(user, group)
-        end
-      end
+        context 'as `admin`' do
+          let(:role) { Membership::ROLES[:admin] }
 
-      context 'when the user is admin of the group' do
-        let(:group_user) { ::Group::User.find(user.id) }
-        before do
-          ::Group::Membership.create(
-            group: group,
-            user: group_user,
-            role: Membership::ROLES[:admin]
-          )
+          it 'grants access' do
+            expect(subject).to permit(user, group)
+          end
         end
 
-        it 'grants access' do
-          expect(subject).to permit(user, group)
+        context 'as `member`' do
+          let(:role) { Membership::ROLES[:member] }
+
+          it 'grants access' do
+            expect(subject).to permit(user, group)
+          end
         end
       end
     end

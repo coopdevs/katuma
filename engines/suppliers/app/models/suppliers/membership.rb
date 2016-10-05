@@ -4,9 +4,6 @@ module Suppliers
 
     self.table_name = :memberships
 
-    ROLES = ::Group::Membership::ROLES
-
-    belongs_to :group
-    belongs_to :user
+    ROLES = ::BasicResources::Membership::ROLES
   end
 end
