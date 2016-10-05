@@ -17,7 +17,7 @@ module Suppliers
     end
 
     def show?
-      group_ids = Membership.where(user: user).pluck(:group_id)
+      group_ids = Membership.where(user_id: user.id).pluck(:basic_resource_group_id)
 
       Supplier.where(
         group: group_ids,

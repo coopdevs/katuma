@@ -26,23 +26,36 @@ module Suppliers
         producer = FactoryGirl.create(:producer)
         Producer.find(producer.id)
       end
+      let(:group) do
+        g = FactoryGirl.create(:group)
+        Group.find(g.id)
+      end
+      let!(:supplier) { Supplier.create(group: group, producer: producer) }
 
       context 'when the user pertains to a group associated to the producer' do
-        let(:group) { FactoryGirl.create(:group) }
-        let(:group_user) { ::Group::User.find(user.id) }
-        let(:supplier_group) { ::Suppliers::Group.find(group.id) }
-
-        before do
-          ::Group::Membership.create(
-            group: group,
+        let(:group_user) { ::BasicResources::User.find(user.id) }
+        let!(:membership) do
+          ::BasicResources::Membership.create(
+            basic_resource_group_id: group.id,
             user: group_user,
             role: Membership::ROLES[:member]
           )
-          Supplier.create(group: supplier_group, producer: producer)
         end
 
-        it 'grants access' do
-          expect(subject).to permit(user, producer)
+        context 'as `admin`' do
+          let(:role) { Membership::ROLES[:admin] }
+
+          it 'grants access' do
+            expect(subject).to permit(user, producer)
+          end
+        end
+
+        context 'as `member`' do
+          let(:role) { Membership::ROLES[:member] }
+
+          it 'grants access' do
+            expect(subject).to permit(user, producer)
+          end
         end
       end
 
