@@ -1,9 +1,6 @@
 module Account
   class SignupService
 
-    def initialize
-    end
-
     # @param email [String]
     # @return [Account::Signup]
     def create!(email)
@@ -23,7 +20,7 @@ module Account
     # @return [Account::User]
     def complete!(signup, options)
       ::ActiveRecord::Base.transaction do
-        user = ::Account::User.create(
+        user = ::Account::User.create!(
           email: signup.email,
           username: options[:username],
           password: options[:password],
