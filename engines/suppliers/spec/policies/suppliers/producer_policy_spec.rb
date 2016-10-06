@@ -5,63 +5,88 @@ module Suppliers
   describe ProducerPolicy do
     subject { described_class }
 
-    permissions :create? do
-      it 'is set to `true` by default' do
-        expect(subject).to permit(instance_double(User), instance_double(Producer))
-      end
-    end
-
-    permissions :update?, :destroy? do
+    permissions :create?, :update?, :destroy? do
       it 'is set to `false` by default' do
         expect(subject).to_not permit(instance_double(User), instance_double(Producer))
       end
     end
 
     permissions :show? do
-      let(:user) do
+      let(:group_admin) do
         user = FactoryGirl.create(:user)
-        User.find(user.id)
+        ::BasicResources::User.find(user.id)
       end
-      let(:producer) do
-        producer = FactoryGirl.create(:producer)
-        Producer.find(producer.id)
+      let(:group) { FactoryGirl.create(:group) }
+      let!(:group_membership) do
+        FactoryGirl.create(
+          :membership,
+          basic_resource_group_id: group.id,
+          user: group_admin,
+          role: Membership::ROLES[:admin]
+        )
       end
-      let(:group) do
-        g = FactoryGirl.create(:group)
-        Group.find(g.id)
+      let!(:producer_for_group) do
+        producer = FactoryGirl.build(:producer, name: 'Related to group')
+        ::BasicResources::ProducerCreator.new(
+          producer: producer,
+          creator: group_admin,
+          group: group
+        ).create!
       end
-      let!(:supplier) { Supplier.create(group: group, producer: producer) }
+      let!(:test_producer_for_group) do
+        producer = FactoryGirl.build(:producer, name: 'Related to group but test')
+        ::BasicResources::ProducerCreator.new(
+          producer: producer,
+          creator: group_admin,
+          group: group
+        ).create!
+      end
+      let(:producer_admin) do
+        user = FactoryGirl.create(:user)
+        ::BasicResources::User.find(user.id)
+      end
+      let!(:producer_for_user) do
+        producer = FactoryGirl.build(:producer, name: 'Related to user')
+        ::BasicResources::ProducerCreator.new(
+          producer: producer,
+          creator: producer_admin
+        ).create!
+      end
 
-      context 'when the user pertains to a group associated to the producer' do
-        let(:group_user) { ::BasicResources::User.find(user.id) }
-        let!(:membership) do
-          ::BasicResources::Membership.create(
-            basic_resource_group_id: group.id,
-            user: group_user,
-            role: Membership::ROLES[:member]
+      context 'when the user is member of the producer directly' do
+        it 'grants access' do
+          expect(subject).to permit(producer_admin, producer_for_user)
+        end
+      end
+
+      context 'when the user is member of the producer through a group' do
+        it 'grants access' do
+          expect(subject).to permit(group_admin, producer_for_group)
+        end
+      end
+
+      context 'when the user is member of a group which the producer is provider' do
+        before do
+          FactoryGirl.create(
+            :supplier,
+            group_id: group.id,
+            producer_id: producer_for_user.id
           )
         end
 
-        context 'as `admin`' do
-          let(:role) { Membership::ROLES[:admin] }
-
-          it 'grants access' do
-            expect(subject).to permit(user, producer)
-          end
-        end
-
-        context 'as `member`' do
-          let(:role) { Membership::ROLES[:member] }
-
-          it 'grants access' do
-            expect(subject).to permit(user, producer)
-          end
+        it 'grants access' do
+          expect(subject).to permit(group_admin, producer_for_user)
         end
       end
 
-      context 'when the user does not pertain to a group associated to the producer' do
+      context 'when the user is not related to the producer' do
+        let(:other_user) do
+          user = FactoryGirl.create(:user)
+          User.find(user.id)
+        end
+
         it 'denies access' do
-          expect(subject).to_not permit(user, producer)
+          expect(subject).to_not permit(other_user, producer_for_group)
         end
       end
     end
