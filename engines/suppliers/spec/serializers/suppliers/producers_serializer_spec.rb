@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 module Suppliers
-  describe ProvidersSerializer do
+  describe ProducersSerializer do
     let(:first_producer) do
       instance_double(
         Producer,

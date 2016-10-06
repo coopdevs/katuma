@@ -1,7 +1,7 @@
 module Suppliers
-  class ProviderSerializer < Shared::BaseSerializer
+  class ProducerSerializer < Shared::BaseSerializer
     schema do
-      type 'provider'
+      type 'producer'
 
       map_properties :id, :name, :email, :address, :created_at, :updated_at
     end

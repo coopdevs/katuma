@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 module Suppliers
-  describe ProviderSerializer do
+  describe ProducerSerializer do
     let(:producer) do
       producer = FactoryGirl.create(:producer)
       ::Suppliers::Producer.find(producer.id)
