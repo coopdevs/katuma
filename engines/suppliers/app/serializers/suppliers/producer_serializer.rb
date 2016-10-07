@@ -3,7 +3,7 @@ module Suppliers
     schema do
       type 'producer'
 
-      map_properties :id, :name, :email, :address, :created_at, :updated_at
+      map_properties :id, :name, :email, :address, :can_edit, :created_at, :updated_at
     end
   end
 end

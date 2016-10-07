@@ -88,8 +88,15 @@ module Suppliers
 
                 it_behaves_like 'a successful request'
 
-                its(:body) do
-                  is_expected.to eq(ProducersSerializer.new([producer_for_user]).to_json)
+                describe 'its body' do
+                  before { get :index }
+
+                  describe 'first element' do
+                    subject { JSON.parse(response.body).first }
+
+                    its(['id']) { is_expected.to eq(producer_for_user.id) }
+                    its(['can_edit']) { is_expected.to be_truthy }
+                  end
                 end
               end
 
@@ -106,13 +113,6 @@ module Suppliers
 
               context 'when the user pertains to the group' do
                 let(:suppliers_user) { User.find(group_admin.id) }
-                let(:expected_producers) do
-                  [
-                    producer_for_user,
-                    producer_for_group,
-                    test_producer_for_group
-                  ]
-                end
 
                 it_behaves_like 'a successful request'
 
@@ -121,12 +121,27 @@ module Suppliers
 
                   subject { JSON.parse(response.body) }
 
-                  it do
-                    is_expected.to contain_exactly(
-                      *expected_producers.map do |p|
-                        JSON.parse(ProducerSerializer.new(p).to_json)
-                      end
-                    )
+                  its(:size) { is_expected.to eq(3) }
+
+                  describe 'first element' do
+                    subject { JSON.parse(response.body).first }
+
+                    its(['id']) { is_expected.to eq(producer_for_group.id) }
+                    its(['can_edit']) { is_expected.to be_truthy }
+                  end
+
+                  describe 'second element' do
+                    subject { JSON.parse(response.body).second }
+
+                    its(['id']) { is_expected.to eq(test_producer_for_group.id) }
+                    its(['can_edit']) { is_expected.to be_truthy }
+                  end
+
+                  describe 'third element' do
+                    subject { JSON.parse(response.body).third }
+
+                    its(['id']) { is_expected.to eq(producer_for_user.id) }
+                    its(['can_edit']) { is_expected.to be_falsey }
                   end
                 end
               end
@@ -161,9 +176,8 @@ module Suppliers
 
                 subject { JSON.parse(response.body) }
 
-                it do
-                  is_expected.to eq(JSON.parse(ProducerSerializer.new(producer_for_user).to_json))
-                end
+                its(['id']) { is_expected.to eq(producer_for_user.id) }
+                its(['can_edit']) { is_expected.to be_truthy }
               end
             end
 
@@ -179,9 +193,8 @@ module Suppliers
 
                 subject { JSON.parse(response.body) }
 
-                it do
-                  is_expected.to eq(JSON.parse(ProducerSerializer.new(producer_for_group).to_json))
-                end
+                its(['id']) { is_expected.to eq(producer_for_group.id) }
+                its(['can_edit']) { is_expected.to be_truthy }
               end
             end
 
@@ -211,9 +224,8 @@ module Suppliers
 
                 subject { JSON.parse(response.body) }
 
-                it do
-                  is_expected.to eq(JSON.parse(ProducerSerializer.new(producer_for_user).to_json))
-                end
+                its(['id']) { is_expected.to eq(producer_for_user.id) }
+                its(['can_edit']) { is_expected.to be_falsey }
               end
             end
 

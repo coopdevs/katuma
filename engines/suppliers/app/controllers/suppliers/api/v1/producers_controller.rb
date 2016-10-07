@@ -18,14 +18,17 @@ module Suppliers
           load_group if params[:group_id]
 
           producers = ProducersCollection.new(user: current_user, group: @group).build
+          presenters = ProducersPresenter.new(producers, current_user).build
 
-          render json: ProducersSerializer.new(producers)
+          render json: ProducersSerializer.new(presenters)
         end
 
         # GET /api/v1/providers/:id
         #
         def show
-          render json: ProducerSerializer.new(@producer)
+          presenter = ProducerPresenter.new(@producer, current_user)
+
+          render json: ProducerSerializer.new(presenter)
         end
 
         private
