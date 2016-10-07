@@ -22,6 +22,7 @@ module Suppliers
         creator: group_admin,
         group: group
       ).create!
+      Producer.find(producer.id)
     end
     let!(:test_producer_for_group) do
       producer = FactoryGirl.build(:producer, name: 'Related to group but test')
@@ -30,6 +31,7 @@ module Suppliers
         creator: group_admin,
         group: group
       ).create!
+      Producer.find(producer.id)
     end
     let(:producer_admin) do
       user = FactoryGirl.create(:user)
@@ -41,6 +43,7 @@ module Suppliers
         producer: producer,
         creator: producer_admin
       ).create!
+      Producer.find(producer.id)
     end
 
     before do
@@ -61,13 +64,13 @@ module Suppliers
         subject { described_class.new(user: user, group: nil).build }
 
         context 'when the user is `admin` of some producer' do
-          let(:user) { producer_admin }
+          let(:user) { User.find(producer_admin.id) }
 
           it { is_expected.to contain_exactly(producer_for_user) }
         end
 
         context 'when the user is not `admin` of any producer' do
-          let(:user) { group_admin }
+          let(:user) { User.find(group_admin.id) }
 
           it { is_expected.to be_empty }
         end
@@ -79,13 +82,13 @@ module Suppliers
         subject { described_class.new(user: user, group: suppliers_group).build }
 
         context 'when the user does not pertain to the group' do
-          let(:user) { producer_admin }
+          let(:user) { User.find(producer_admin.id) }
 
           it { is_expected.to be_empty }
         end
 
         context 'when the user pertains to the group' do
-          let(:user) { group_admin }
+          let(:user) { User.find(group_admin.id) }
 
           it do
             is_expected.to contain_exactly(

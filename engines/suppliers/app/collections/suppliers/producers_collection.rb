@@ -4,7 +4,7 @@ module Suppliers
     # @param user [Suppliers::User]
     # @param group [Suppliers::Group]
     def initialize(user:, group:)
-      @user = ::BasicResources::User.find(user.id)
+      @user = user
       @group = group
     end
 
