@@ -88,7 +88,9 @@ module Suppliers
 
                 it_behaves_like 'a successful request'
 
-                its(:body) { is_expected.to eq(ProducersSerializer.new([producer_for_user]).to_json) }
+                its(:body) do
+                  is_expected.to eq(ProducersSerializer.new([producer_for_user]).to_json)
+                end
               end
 
               context 'when the user does not pertain to any producer' do
@@ -159,7 +161,9 @@ module Suppliers
 
                 subject { JSON.parse(response.body) }
 
-                it { is_expected.to eq(JSON.parse(ProducerSerializer.new(producer_for_user).to_json)) }
+                it do
+                  is_expected.to eq(JSON.parse(ProducerSerializer.new(producer_for_user).to_json))
+                end
               end
             end
 
@@ -175,7 +179,9 @@ module Suppliers
 
                 subject { JSON.parse(response.body) }
 
-                it { is_expected.to eq(JSON.parse(ProducerSerializer.new(producer_for_group).to_json)) }
+                it do
+                  is_expected.to eq(JSON.parse(ProducerSerializer.new(producer_for_group).to_json))
+                end
               end
             end
 
@@ -205,7 +211,9 @@ module Suppliers
 
                 subject { JSON.parse(response.body) }
 
-                it { is_expected.to eq(JSON.parse(ProducerSerializer.new(producer_for_user).to_json)) }
+                it do
+                  is_expected.to eq(JSON.parse(ProducerSerializer.new(producer_for_user).to_json))
+                end
               end
             end
 

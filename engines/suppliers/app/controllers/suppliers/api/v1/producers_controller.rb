@@ -3,9 +3,6 @@ module Suppliers
     module V1
       class ProducersController < ApplicationController
         before_action :authenticate
-        before_action :load_group,
-          only: [:index],
-          if: -> { !!params.fetch('group_id', nil) }
         before_action :load_producer, only: [:show]
 
         # GET /api/v1/producers
@@ -18,21 +15,23 @@ module Suppliers
         #  - the producers associated to the group through `Supplier`
         #
         def index
+          load_group if params[:group_id]
+
           producers = ProducersCollection.new(user: current_user, group: @group).build
 
-          render json: ::Suppliers::ProducersSerializer.new(producers)
+          render json: ProducersSerializer.new(producers)
         end
 
         # GET /api/v1/providers/:id
         #
         def show
-          render json: ::Suppliers::ProducerSerializer.new(@producer)
+          render json: ProducerSerializer.new(@producer)
         end
 
         private
 
         def load_group
-          @group = ::Suppliers::Group.find_by_id(params[:group_id])
+          @group = Group.find_by_id(params[:group_id])
 
           return head :not_found unless @group
 
@@ -40,7 +39,7 @@ module Suppliers
         end
 
         def load_producer
-          @producer = ::Suppliers::Producer.find_by_id(params[:id])
+          @producer = Producer.find_by_id(params[:id])
 
           return head :not_found unless @producer
 
