@@ -12,7 +12,7 @@ module Suppliers
 
     has_many :memberships, foreign_key: :basic_resource_group_id
 
-    def has_admin?(user)
+    def admin?(user)
       memberships.where(
         role: Membership::ROLES[:admin],
         user_id: user.id

@@ -7,14 +7,14 @@ module Suppliers
       it { is_expected.to have_many(:groups).through(:memberships) }
     end
 
-    describe '#has_admin?' do
+    describe '#admin?' do
       let(:user) { FactoryGirl.create(:user) }
       let(:producer) do
         producer = FactoryGirl.create(:producer)
         described_class.find(producer.id)
       end
 
-      subject { producer.has_admin?(user) }
+      subject { producer.admin?(user) }
 
       context 'when the user is not associated to the producer' do
         it { is_expected.to be_falsey }

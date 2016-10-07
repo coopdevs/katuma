@@ -9,7 +9,7 @@ module Suppliers
     has_many :groups, through: :memberships
 
     # @return [Boolean]
-    def has_admin?(user)
+    def admin?(user)
       memberships.where(
         user_id: user.id,
         role: Membership::ROLES[:admin]

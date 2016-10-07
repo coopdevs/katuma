@@ -8,14 +8,14 @@ module Suppliers
       it { is_expected.to have_many(:memberships).with_foreign_key(:basic_resource_group_id) }
     end
 
-    describe '#has_admin?' do
+    describe '#admin?' do
       let(:user) { FactoryGirl.create(:user) }
       let(:group) do
         group = FactoryGirl.create(:group)
         described_class.find(group.id)
       end
 
-      subject { group.has_admin?(user) }
+      subject { group.admin?(user) }
 
       context 'when the user is not associated to the group' do
         it { is_expected.to be_falsey }

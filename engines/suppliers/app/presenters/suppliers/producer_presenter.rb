@@ -11,7 +11,7 @@ module Suppliers
     #
     # @return [Boolean]
     def can_edit
-      producer.has_admin?(user) || group_admin?
+      producer.admin?(user) || group_admin?
     end
 
     delegate :id, :name, :email, :address, :created_at, :updated_at, to: :producer
@@ -27,7 +27,7 @@ module Suppliers
     def group_admin?
       return false unless group
 
-      group.has_admin?(user)
+      group.admin?(user)
     end
 
     # Retrieves the group associated to the producer
