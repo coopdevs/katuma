@@ -1,17 +1,18 @@
 module Onboarding
   class GroupPolicy < ::Shared::ApplicationPolicy
-    class Scope < Struct.new(:user, :scope)
-      def resolve
-        scope
-      end
-    end
-
     def show?
-      Membership.where(group: record, user: user).any?
+      Membership.where(
+        basic_resource_group_id: record.id,
+        user: user
+      ).any?
     end
 
     def invite?
-      Membership.where(group: record, user: user, role: Membership::ROLES[:admin]).any?
+      Membership.where(
+        basic_resource_group_id: record.id,
+        user: user,
+        role: Membership::ROLES[:admin]
+      ).any?
     end
   end
 end
