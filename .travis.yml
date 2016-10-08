@@ -13,10 +13,10 @@ before_script:
   - cd $(dirname $BUNDLE_GEMFILE)
 
 gemfile:
-  - engines/account/Gemfile
-  - engines/group/Gemfile
   - engines/shared/Gemfile
-  - engines/producers/Gemfile
+  - engines/account/Gemfile
+  - engines/basic_resources/Gemfile
+  - engines/products/Gemfile
   - engines/suppliers/Gemfile
 
 script:

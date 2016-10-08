@@ -17,8 +17,8 @@ gem 'sidekiq', '4.0.1'
 
 gemspec path: 'engines/shared'
 gemspec path: 'engines/account'
-gemspec path: 'engines/group'
-gemspec path: 'engines/producers'
+gemspec path: 'engines/basic_resources'
+gemspec path: 'engines/products'
 gemspec path: 'engines/suppliers'
 gemspec path: 'engines/onboarding'
 

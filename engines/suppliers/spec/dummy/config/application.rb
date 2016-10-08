@@ -4,8 +4,8 @@ require 'rails/all'
 
 require "shared"
 require "account"
-require "group"
-require "producers"
+require "basic_resources"
+require "products"
 require "suppliers"
 
 module Dummy

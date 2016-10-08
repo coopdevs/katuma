@@ -8,9 +8,9 @@ PATH
       rails (= 4.2.5)
 
 PATH
-  remote: engines/group
+  remote: engines/basic_resources
   specs:
-    group (0.0.1)
+    basic_resources (0.0.1)
       pg (= 0.18.3)
       rails (= 4.2.5)
 
@@ -21,9 +21,9 @@ PATH
       rails (= 4.2.5)
 
 PATH
-  remote: engines/producers
+  remote: engines/products
   specs:
-    producers (0.0.1)
+    products (0.0.1)
       pg (= 0.18.3)
       rails (= 4.2.5)
 
@@ -237,16 +237,16 @@ PLATFORMS
 DEPENDENCIES
   account!
   autoprefixer-rails (= 6.1.0.1)
+  basic_resources!
   bootstrap-sass (= 3.3.5.1)
   byebug (= 9.0.5)
   doorkeeper (= 3.0.1)
   factory_girl_rails (= 4.5.0)
-  group!
   haml (= 4.0.7)
   mina (= 0.3.7)
   onboarding!
   pg (= 0.18.3)
-  producers!
+  products!
   pry-byebug (= 3.4.0)
   pundit (= 1.0.1)
   rails (= 4.2.5)

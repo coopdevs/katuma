@@ -8,16 +8,16 @@ PATH
       rails (= 4.2.5)
 
 PATH
-  remote: ../../engines/group
+  remote: ../../engines/basic_resources
   specs:
-    group (0.0.1)
+    basic_resources (0.0.1)
       pg (= 0.18.3)
       rails (= 4.2.5)
 
 PATH
-  remote: ../../engines/producers
+  remote: ../../engines/products
   specs:
-    producers (0.0.1)
+    products (0.0.1)
       pg (= 0.18.3)
       rails (= 4.2.5)
 
@@ -178,10 +178,10 @@ PLATFORMS
 
 DEPENDENCIES
   account!
+  basic_resources!
   byebug (= 9.0.5)
   factory_girl_rails (= 4.5.0)
-  group!
-  producers!
+  products!
   rspec-its (= 1.2.0)
   rspec-rails (= 3.5.0)
   shared!

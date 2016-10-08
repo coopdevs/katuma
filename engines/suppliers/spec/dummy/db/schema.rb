@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160901094107) do
+ActiveRecord::Schema.define(version: 20161001134751) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,14 +23,19 @@ ActiveRecord::Schema.define(version: 20160901094107) do
   end
 
   create_table "memberships", force: :cascade do |t|
-    t.integer  "user_id",    null: false
-    t.integer  "group_id",   null: false
-    t.integer  "role",       null: false
+    t.integer  "basic_resource_producer_id"
+    t.integer  "basic_resource_group_id"
+    t.integer  "user_id"
+    t.integer  "group_id"
+    t.integer  "role",                       null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "memberships", ["user_id", "group_id"], name: "index_memberships_on_user_id_and_group_id", unique: true, using: :btree
+  add_index "memberships", ["basic_resource_group_id", "group_id"], name: "memberships_basic_resource_group_id_group_id_idx", unique: true, where: "(group_id IS NOT NULL)", using: :btree
+  add_index "memberships", ["basic_resource_group_id", "user_id"], name: "memberships_basic_resource_group_id_user_id_idx", unique: true, where: "(user_id IS NOT NULL)", using: :btree
+  add_index "memberships", ["basic_resource_producer_id", "group_id"], name: "memberships_basic_resource_producer_id_group_id_idx", unique: true, where: "(group_id IS NOT NULL)", using: :btree
+  add_index "memberships", ["basic_resource_producer_id", "user_id"], name: "memberships_basic_resource_producer_id_user_id_idx", unique: true, where: "(user_id IS NOT NULL)", using: :btree
 
   create_table "order_lines", force: :cascade do |t|
     t.integer  "unit",       default: 1, null: false
@@ -63,23 +68,11 @@ ActiveRecord::Schema.define(version: 20160901094107) do
     t.datetime "updated_at"
   end
 
-  create_table "producers_memberships", force: :cascade do |t|
-    t.integer  "producer_id", null: false
-    t.integer  "user_id"
-    t.integer  "group_id"
-    t.integer  "role",        null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "producers_memberships", ["producer_id", "group_id"], name: "producers_memberships_producer_id_group_id_idx", unique: true, where: "(group_id IS NOT NULL)", using: :btree
-  add_index "producers_memberships", ["producer_id", "user_id"], name: "producers_memberships_producer_id_user_id_idx", unique: true, where: "(user_id IS NOT NULL)", using: :btree
-
   create_table "products", force: :cascade do |t|
-    t.string   "name",        null: false
-    t.integer  "price",       null: false
-    t.integer  "unit",        null: false
-    t.integer  "producer_id"
+    t.string   "name",                                null: false
+    t.decimal  "price",       precision: 5, scale: 2, null: false
+    t.integer  "unit",                                null: false
+    t.integer  "producer_id",                         null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -112,9 +105,11 @@ ActiveRecord::Schema.define(version: 20160901094107) do
     t.datetime "updated_at"
   end
 
-  add_foreign_key "producers_memberships", "groups", name: "producers_memberships_group_id_fkey"
-  add_foreign_key "producers_memberships", "producers", name: "producers_memberships_producer_id_fkey"
-  add_foreign_key "producers_memberships", "users", name: "producers_memberships_user_id_fkey"
+  add_foreign_key "memberships", "groups", column: "basic_resource_group_id", name: "memberships_basic_resource_group_id_fkey"
+  add_foreign_key "memberships", "groups", name: "memberships_group_id_fkey"
+  add_foreign_key "memberships", "producers", column: "basic_resource_producer_id", name: "memberships_basic_resource_producer_id_fkey"
+  add_foreign_key "memberships", "users", name: "memberships_user_id_fkey"
+  add_foreign_key "products", "producers"
   add_foreign_key "suppliers", "groups"
   add_foreign_key "suppliers", "producers"
 end
