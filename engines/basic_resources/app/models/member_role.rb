@@ -13,8 +13,10 @@ class MemberRole
 
   def index_from(role)
     case role
-    when :member
+    when :admin
       1
+    when :member
+      2
     end
   end
 end

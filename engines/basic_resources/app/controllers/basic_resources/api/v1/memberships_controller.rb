@@ -65,7 +65,7 @@ module BasicResources
         end
 
         def membership_params
-          params.permit(:group_id, :user_id, :role)
+          params.permit(:basic_resource_group_id, :user_id, :role)
         end
 
         def load_membership

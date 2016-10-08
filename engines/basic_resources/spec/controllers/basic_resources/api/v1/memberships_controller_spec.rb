@@ -13,6 +13,13 @@ module BasicResources
           User.find(user.id)
         end
         let(:group) { FactoryGirl.create(:group) }
+        let!(:membership) do
+          Membership.create!(
+            basic_resource_group_id: group.id,
+            user_id: user.id,
+            role: MemberRole.new(:member)
+          )
+        end
 
         context 'Not authenticaded user' do
           describe 'GET #index' do
@@ -50,14 +57,6 @@ module BasicResources
           before { authenticate_as user }
 
           describe 'GET #index' do
-            let!(:group_membership) do
-              Membership.create!(
-                basic_resource_group_id: group.id,
-                user_id: user.id,
-                role: MemberRole.new(:member)
-              )
-            end
-
             context 'when no params are passed' do
               subject { get :index }
 
@@ -70,7 +69,7 @@ module BasicResources
 
                 it do
                   is_expected.to contain_exactly(
-                    JSON.parse(MembershipSerializer.new(group_membership).to_json)
+                    JSON.parse(MembershipSerializer.new(membership).to_json)
                   )
                 end
               end
@@ -96,63 +95,74 @@ module BasicResources
 
                 it do
                   is_expected.to contain_exactly(
-                    JSON.parse(MembershipSerializer.new(group_membership).to_json)
+                    JSON.parse(MembershipSerializer.new(membership).to_json)
                   )
                 end
               end
             end
           end
 
-          xdescribe 'GET #show' do
+          describe 'GET #show' do
             subject { get :show, id: membership.id }
 
             it_behaves_like 'a successful request'
+
             it 'returns the membership details' do
               expect(JSON.parse(subject.body)).to eq JSON.parse(membership.to_json)
             end
           end
 
-          xdescribe 'PUT #update' do
+          describe 'PUT #update' do
             subject { put :update, id: membership.id }
 
-            it_behaves_like 'a forbidden request'
+            context 'when the user is not the owner of the membership' do
+              before do
+                membership.update_attribute(:user_id, FactoryGirl.create(:user).id)
+              end
+
+              it_behaves_like 'a forbidden request'
+            end
           end
 
-          xdescribe 'DELETE #destroy' do
+          describe 'DELETE #destroy' do
             subject { delete :destroy, id: membership.id }
 
-            it_behaves_like 'a forbidden request'
+            context 'when the user is not the owner of the membership' do
+              before do
+                membership.update_attribute(:user_id, FactoryGirl.create(:user).id)
+              end
+
+              it_behaves_like 'a forbidden request'
+            end
           end
 
-          xdescribe 'POST #create' do
+          describe 'POST #create' do
+            subject { post :create, params }
+
             let(:other_group) { FactoryGirl.create(:group) }
             let(:params) do
               {
                 user_id: user.id,
-                group_id: other_group.id,
-                role: Membership::ROLES[:admin]
+                basic_resource_group_id: other_group.id,
+                role: MemberRole.new(:admin).to_i
               }
             end
 
-            subject { post :create, params }
-
             it_behaves_like 'a successful request'
 
-            it 'returns membership details' do
-              membership = JSON.parse(subject.body)
+            describe 'body' do
+              before { post :create, params }
 
-              expect(membership['group_id']).to eq other_group.id
-              expect(membership['user_id']).to eq user.id
-              expect(membership['role']).to eq Membership::ROLES[:admin]
-            end
+              subject { JSON.parse(response.body) }
 
-            it 'creates a new Membership' do
-              subject
-
-              membership = Membership.last
-              expect(membership.group).to eq other_group
-              expect(membership.user).to eq user
-              expect(membership.role).to eq Membership::ROLES[:admin]
+              it do
+                is_expected.to include(
+                  'user_id' => user.id,
+                  'basic_resource_group_id' => other_group.id,
+                  'group_id' => nil,
+                  'role' => MemberRole.new(:admin).to_i
+                )
+              end
             end
           end
         end
@@ -204,6 +214,7 @@ module BasicResources
             subject { put :update, params }
 
             it_behaves_like 'a successful request'
+
             it 'returns the membership details with updated attributes' do
               membership = JSON.parse(subject.body)
 
