@@ -8,7 +8,7 @@ module BasicResources
         # GET /api/v1/memberships
         #
         def index
-          memberships = Membership.where(user_id: current_user.id)
+          memberships = MembershipsCollection.new(current_user, group).build
           render json: MembershipsSerializer.new(memberships)
         end
 
@@ -59,6 +59,10 @@ module BasicResources
         end
 
         private
+
+        def group
+          Group.find(params[:group_id]) if params.key?(:group_id)
+        end
 
         def membership_params
           params.permit(:group_id, :user_id, :role)
