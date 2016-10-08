@@ -21,14 +21,15 @@ module BasicResources
         #
         def create
           group = ::BasicResources::Group.new(group_params)
-          group_creator = GroupCreator.new(group, current_user)
-          if group_creator.create
+          group_creator = GroupCreator.new(group, current_user).create
+
+          if group.persisted?
             @side_effects << group_creator.side_effects
             render json: GroupSerializer.new(group)
           else
             render(
               status: :bad_request,
-              json: group.errors.to_json
+              json: { errors: group.errors.messages }
             )
           end
         end

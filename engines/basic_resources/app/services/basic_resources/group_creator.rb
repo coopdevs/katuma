@@ -12,7 +12,7 @@ module BasicResources
 
     # Creates a new Group and adds creator as group admin
     #
-    # @return [Group, Membership]
+    # @return [Group]
     def create
       ::ActiveRecord::Base.transaction do
         if group.save!
@@ -20,6 +20,9 @@ module BasicResources
           @side_effects << membership
         end
       end
+    rescue ActiveRecord::RecordInvalid => _exception
+      raise if group.valid?
+      group
     end
 
     private
