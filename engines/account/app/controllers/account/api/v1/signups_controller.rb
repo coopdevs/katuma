@@ -31,14 +31,15 @@ module Account
         # POST /api/v1/signups/complete/:token
         #
         def complete
-          user = SignupService.new().complete!(@signup, signup_complete_params)
+          user = SignupService.new.complete!(@signup, signup_complete_params)
 
-          if user.valid? && user.persisted?
+          if user.persisted?
             render json: UserSerializer.new(user)
           else
+            # TODO: Errors serializers
             render(
               status: :bad_request,
-              json: user.errors.to_json
+              json: { errors: user.errors.messages }
             )
           end
         end
