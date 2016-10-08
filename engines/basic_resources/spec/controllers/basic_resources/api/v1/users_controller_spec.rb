@@ -28,25 +28,28 @@ module BasicResources
             subject { get :index, group_id: group.id }
 
             let(:group) { FactoryGirl.create(:group) }
+            let(:member) { FactoryGirl.create(:user) }
+
+            before do
+              Membership.create!(
+                basic_resource_group_id: group.id,
+                user_id: member.id,
+                role: Membership::ROLES[:member]
+              )
+            end
 
             it_behaves_like 'a successful request'
 
             describe 'body' do
               before { get :index, group_id: group.id }
 
-              let(:user_in_group) { FactoryGirl.create(:user) }
-
-              before do
-                Membership.create(
-                  basic_resource_group_id: group.id,
-                  user_id: user_in_group,
-                  role: Membership::ROLES[:member]
-                )
-              end
-
               subject { JSON.parse(response.body) }
 
-              it { is_expected.to contain_exactly(user_in_group) }
+              it do
+                is_expected.to contain_exactly(
+                  JSON.parse(UserSerializer.new(member).to_json)
+                )
+              end
             end
           end
         end

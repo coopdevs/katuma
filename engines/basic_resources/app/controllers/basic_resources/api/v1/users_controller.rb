@@ -5,7 +5,7 @@ module BasicResources
         before_action :authenticate
 
         def index
-          users = UsersCollection.new
+          users = UsersCollection.new(group).build
           render json: UsersSerializer.new(users)
         end
 

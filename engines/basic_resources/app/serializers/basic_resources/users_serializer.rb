@@ -3,7 +3,7 @@ module BasicResources
     schema do
       type 'users'
 
-      collection :users, item, BasicResources::UserSerializer
+      collection :users, item, UserSerializer
     end
   end
 end
