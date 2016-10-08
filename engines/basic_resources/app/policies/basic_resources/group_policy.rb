@@ -27,5 +27,13 @@ module BasicResources
         role: Membership::ROLES[:admin]
       ).any?
     end
+
+    def index?
+      Membership.where(
+        basic_resource_group_id: record.id,
+        user: user,
+        role: [Membership::ROLES[:admin], Membership::ROLES[:member]]
+      ).any?
+    end
   end
 end
