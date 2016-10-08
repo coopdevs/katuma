@@ -38,16 +38,42 @@ describe Account::SignupService do
 
     let!(:signup) { FactoryGirl.create(:signup) }
 
+    before do
+      allow(Account::User)
+        .to receive(:new)
+        .with({ email: signup.email }.merge(options))
+        .and_return(user)
+    end
+
     context 'when the user cannot be created' do
-      let(:options) { {} }
+      let(:user) { FactoryGirl.build(:user) }
+      let(:options) do
+        {
+          username: nil,
+          password: nil,
+          password_confirmation: nil,
+          first_name: nil,
+          last_name: nil
+        }
+      end
+
+      before { allow(user).to receive(:save).and_return(false) }
+
+      it 'does not persist the user' do
+        expect { described_class.new.complete!(signup, options) }
+          .not_to change(Account::User, :count)
+      end
 
       it 'does not remove the signup' do
         expect { described_class.new.complete!(signup, options) }
-          .to raise_error(ActiveRecord::RecordInvalid)
+          .not_to change(Account::Signup, :count)
       end
+
+      it { is_expected.to eq(user) }
     end
 
     context 'when the user can be created' do
+      let(:user) { FactoryGirl.build(:user) }
       let(:options) do
         {
           username: 'pep23',
@@ -57,13 +83,12 @@ describe Account::SignupService do
           last_name: 'palau'
         }
       end
-      let(:user) { FactoryGirl.build(:user) }
 
-      before do
-        allow(Account::User)
-          .to receive(:create!)
-          .with({ email: signup.email }.merge(options))
-          .and_return(user)
+      before { allow(user).to receive(:save).and_return(true) }
+
+      it 'persists the user' do
+        expect { described_class.new.complete!(signup, options) }
+          .not_to change(Account::User, :count)
       end
 
       it 'removes te signup' do
