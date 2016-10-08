@@ -7,8 +7,6 @@ module Account
 
         # GET /api/v1/users
         #
-        # TODO: review this
-        #
         def index
           user = ::BasicResources::User.find current_user.id
           user_ids = ::BasicResources::Membership
