@@ -46,16 +46,33 @@ module BasicResources
           end
         end
 
-        xcontext 'Authenticated user' do
+        context 'Authenticated user' do
           before { authenticate_as user }
 
           describe 'GET #index' do
-            before { membership }
-
             subject { get :index }
 
+            let!(:group_membership) do
+              Membership.create!(
+                basic_resource_group_id: group.id,
+                user_id: user.id,
+                role: MemberRole.new(:member)
+              )
+            end
+
             it_behaves_like 'a successful request'
-            its(:body) { is_expected.to_not eq('[]') }
+
+            describe 'body' do
+              subject { JSON.parse(response.body) }
+
+              before { get :index }
+
+              it do
+                is_expected.to contain_exactly(
+                  JSON.parse(MembershipSerializer.new(group_membership).to_json)
+                )
+              end
+            end
           end
 
           describe 'GET #show' do

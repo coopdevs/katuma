@@ -8,8 +8,7 @@ module BasicResources
         # GET /api/v1/memberships
         #
         def index
-          memberships = ::BasicResources::Membership.where(user_id: current_user.id)
-
+          memberships = Membership.where(user_id: current_user.id)
           render json: MembershipsSerializer.new(memberships)
         end
 
