@@ -307,17 +307,9 @@ module Products
 
               context 'with wrong parameters' do
                 let(:product) do
-                  FactoryGirl.create(
-                    :product,
-                    producer: producer_for_user
-                  )
+                  FactoryGirl.create(:product, producer: producer_for_user)
                 end
-                let(:params) do
-                  {
-                    id: product.id,
-                    unit: 42
-                  }
-                end
+                let(:params) { { id: product.id, unit: 42 } }
 
                 it_behaves_like 'a bad request'
 

@@ -1,16 +1,30 @@
 module Products
   # TODO: Looks like it has no tests
   class ProductPolicy < Shared::ApplicationPolicy
-    def destroy?
-      producer_admin_for?(user) || group_admin_for?(user)
+    def create?
+      edit?
     end
-    alias :create? :update?
+
+    def update?
+      edit?
+    end
+
+    def destroy?
+      edit?
+    end
 
     def show?
       user_membership_for?(user) || group_membership_for?(user)
     end
 
     private
+
+    # Checks whether the user can edit the product
+    #
+    # @return [Boolean]
+    def edit?
+      producer_admin_for?(user) || group_admin_for?(user)
+    end
 
     def user_membership_for?(user)
       Membership.where(
