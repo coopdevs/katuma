@@ -17,12 +17,6 @@ module Account
         let(:membership) { FactoryGirl.create(:membership) }
 
         context 'Not authenticaded user' do
-          describe 'GET #index' do
-            subject { get :index }
-
-            it_behaves_like 'an unauthorized request'
-          end
-
           xdescribe 'GET #show' do
             subject { get :show, id: 666 }
 
@@ -73,25 +67,6 @@ module Account
 
         context 'Authenticated user' do
           before { authenticate_as user }
-
-          xdescribe 'GET #index' do
-            before do
-              Group::Membership.create(user: user2, group: group1, role: GrouMembership::ROLES[:admin])
-              Group::Membership.create(user: user3, group: group2, role: GrouMembership::ROLES[:admin])
-              Group::Membership.create(user: user, group: group1, role: Membership::ROLES[:admin])
-              Group::Membership.create(user: user, group: group2, role: Membership::ROLES[:admin])
-            end
-
-            let(:user_network) { [user, user2, user3] }
-
-            subject { get :index }
-
-            it_behaves_like 'a successful request'
-
-            it 'returns a collection of users in the current_user network' do
-              expect(subject.body).to eq UsersSerializer.new(user_network).to_json
-            end
-          end
 
           xdescribe 'GET #show' do
             context 'when the user is authorized' do
