@@ -1,11 +1,4 @@
 PATH
-  remote: ../../engines/basic_resources
-  specs:
-    basic_resources (0.0.1)
-      pg (= 0.18.3)
-      rails (= 4.2.5)
-
-PATH
   remote: ../../engines/shared
   specs:
     shared (0.0.1)
@@ -164,7 +157,6 @@ PLATFORMS
 
 DEPENDENCIES
   account!
-  basic_resources!
   byebug (= 9.0.5)
   factory_girl_rails (= 4.5.0)
   rspec-its (= 1.2.0)
