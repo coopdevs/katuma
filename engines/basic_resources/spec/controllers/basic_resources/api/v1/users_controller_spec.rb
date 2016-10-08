@@ -28,28 +28,33 @@ module BasicResources
             subject { get :index, group_id: group.id }
 
             let(:group) { FactoryGirl.create(:group) }
-            let(:member) { FactoryGirl.create(:user) }
 
-            before do
-              Membership.create!(
-                basic_resource_group_id: group.id,
-                user_id: member.id,
-                role: Membership::ROLES[:member]
-              )
-            end
-
-            it_behaves_like 'a successful request'
-
-            describe 'body' do
-              before { get :index, group_id: group.id }
-
-              subject { JSON.parse(response.body) }
-
-              it do
-                is_expected.to contain_exactly(
-                  JSON.parse(UserSerializer.new(member).to_json)
+            context 'when the user belongs to the provided group' do
+              before do
+                Membership.create!(
+                  basic_resource_group_id: group.id,
+                  user_id: user.id,
+                  role: Membership::ROLES[:member]
                 )
               end
+
+              it_behaves_like 'a successful request'
+
+              describe 'body' do
+                before { get :index, group_id: group.id }
+
+                subject { JSON.parse(response.body) }
+
+                it do
+                  is_expected.to contain_exactly(
+                    JSON.parse(UserSerializer.new(user).to_json)
+                  )
+                end
+              end
+            end
+
+            context 'when the user does not belong to the provided group' do
+              it_behaves_like 'a forbidden request'
             end
           end
         end
