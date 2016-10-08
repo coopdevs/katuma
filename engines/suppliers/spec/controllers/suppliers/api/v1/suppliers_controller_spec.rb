@@ -36,44 +36,37 @@ module Suppliers
 
         context 'Authenticated user' do
           let(:user) do
-            FactoryGirl.create(:user)
+            u = FactoryGirl.create(:user)
+            User.find(u.id)
           end
-          let(:group_user) { ::Group::User.find(user.id) }
-          let(:suppliers_user) { User.find(user.id) }
-          let(:group_membership) do
+          let(:group) { FactoryGirl.create(:group) }
+          let!(:group_membership) do
             FactoryGirl.create(
               :membership,
-              user: group_user,
-              role: ::Group::Membership::ROLES[:admin]
+              basic_resource_group_id: group.id,
+              user_id: user.id,
+              role: ::BasicResources::Membership::ROLES[:admin]
             )
-          end
-          let(:group) do
-            ::Suppliers::Group.find(group_membership.group.id)
           end
           let(:producer_for_group) do
             FactoryGirl.build(:producer, name: 'Related to group')
           end
-          let(:producer_for_user) do
-            FactoryGirl.build(:producer, name: 'Related to user')
-          end
           let(:producer) do
-            ::Producers::ProducerCreator.new(
+            ::BasicResources::ProducerCreator.new(
               producer: producer_for_group,
-              creator: suppliers_user,
-              group: ::Producers::Group.find(group.id)
-            ).create
-
-            Producer.last
+              creator: user,
+              group: group
+            ).create!
           end
 
-          before { authenticate_as suppliers_user }
+          before { authenticate_as user }
 
           describe 'GET #index' do
             let!(:supplier) do
               FactoryGirl.create(
                 :supplier,
-                group: group,
-                producer: producer
+                group_id: group.id,
+                producer_id: producer.id
               )
             end
 
@@ -95,8 +88,8 @@ module Suppliers
             let(:supplier) do
               FactoryGirl.create(
                 :supplier,
-                producer: producer,
-                group: group
+                producer_id: producer.id,
+                group_id: group.id
               )
             end
             let(:params) { { id: supplier.id } }
@@ -109,37 +102,24 @@ module Suppliers
               it_behaves_like 'a not found request'
             end
 
-            xcontext 'requesting a supplier which producer is associated to a user' do
-            end
-
-            context 'requesting a supplier which producer is associated to a group' do
-              it_behaves_like 'a successful request'
-
-              describe 'its body' do
-                before { get :show, params }
-
-                subject { JSON.parse(response.body) }
-
-                it { is_expected.to include(JSON.parse(supplier.to_json)) }
-              end
-
-              context 'when the user is not a group admin' do
-                before do
-                  group_membership.role = ::Group::Membership::ROLES[:member]
-                  group_membership.save!
-                end
-
+            context 'requesting a supplier associated to a group' do
+              context 'when the user is associated to the group' do
                 it_behaves_like 'a successful request'
-              end
-            end
 
-            context 'requesting a supplier not associated to the current user' do
-              let(:suppliers_user) do
-                user = FactoryGirl.create(:user)
-                User.find(user.id)
+                describe 'its body' do
+                  before { get :show, params }
+
+                  subject { JSON.parse(response.body) }
+
+                  it { is_expected.to include(JSON.parse(supplier.to_json)) }
+                end
               end
 
-              it_behaves_like 'a forbidden request'
+              context 'when the user is not associated to the group' do
+                before { group_membership.destroy! }
+
+                it_behaves_like 'a forbidden request'
+              end
             end
           end
 
@@ -153,15 +133,34 @@ module Suppliers
 
             subject { post :create, params }
 
-            it_behaves_like 'a successful request'
+            context 'when the user is associated to the group' do
+              context 'as an `admin`' do
+                it_behaves_like 'a successful request'
 
-            describe 'its body' do
-              before { post :create, params }
+                describe 'its body' do
+                  before { post :create, params }
 
-              subject { JSON.parse(response.body) }
+                  subject { JSON.parse(response.body) }
 
-              its(['group_id']) { is_expected.to eq(params[:group_id]) }
-              its(['producer_id']) { is_expected.to eq(params[:producer_id]) }
+                  its(['group_id']) { is_expected.to eq(params[:group_id]) }
+                  its(['producer_id']) { is_expected.to eq(params[:producer_id]) }
+                end
+              end
+
+              context 'as a `member`' do
+                before do
+                  group_membership.role = ::BasicResources::Membership::ROLES[:member]
+                  group_membership.save!
+                end
+
+                it_behaves_like 'a forbidden request'
+              end
+            end
+
+            context 'when the user is not associated to the group' do
+              before { group_membership.destroy! }
+
+              it_behaves_like 'a forbidden request'
             end
 
             context 'with wrong parameters' do
@@ -174,32 +173,14 @@ module Suppliers
 
               it_behaves_like 'a not found request'
             end
-
-            xcontext 'when the producer is related to a user' do
-            end
-
-            context 'when the producer is related to a group' do
-              context 'and the user is an admin of the group' do
-                it_behaves_like 'a successful request'
-              end
-
-              context 'and the user is not an admin of the group' do
-                before do
-                  group_membership.role = ::Group::Membership::ROLES[:member]
-                  group_membership.save!
-                end
-
-                it_behaves_like 'a forbidden request'
-              end
-            end
           end
 
           describe 'DELETE #destroy' do
             let(:supplier) do
               FactoryGirl.create(
                 :supplier,
-                producer: producer,
-                group: group
+                producer_id: producer.id,
+                group_id: group.id
               )
             end
             let(:params) { { id: supplier.id } }
@@ -212,15 +193,14 @@ module Suppliers
               it_behaves_like 'a not found request'
             end
 
-            xcontext 'destroying a supplier which producer is associated to a user' do
-            end
+            context 'when the user is associated to the group' do
+              context 'as an `admin`' do
+                it_behaves_like 'a successful request (204)'
+              end
 
-            context 'destroying a supplier which producer is associated to a group' do
-              it_behaves_like 'a successful request (204)'
-
-              context 'when the user is not a group admin' do
+              context 'as a `member`' do
                 before do
-                  group_membership.role = ::Group::Membership::ROLES[:member]
+                  group_membership.role = ::BasicResources::Membership::ROLES[:member]
                   group_membership.save!
                 end
 
@@ -228,11 +208,8 @@ module Suppliers
               end
             end
 
-            context 'destroying a supplier not associated to the current user' do
-              let(:suppliers_user) do
-                user = FactoryGirl.create(:user)
-                User.find(user.id)
-              end
+            context 'when the user is not associated to the group' do
+              before { group_membership.destroy! }
 
               it_behaves_like 'a forbidden request'
             end

@@ -7,22 +7,20 @@ module Suppliers
         before_action :load_group, only: [:index, :create]
         before_action :load_producer, only: [:create]
 
-        # GET /api/v1/suppliers
+        # GET /api/v1/suppliers?group_id=
         #
         # You must pass `group_id` param as filter
         #
-        # TODO: Deal better with finders, filters and collections
-        #
         def index
-          suppliers = ::Suppliers::Supplier.where(group_id: @group.id)
+          suppliers = Supplier.where(group_id: @group.id)
 
-          render json: ::Suppliers::SuppliersSerializer.new(suppliers)
+          render json: SuppliersSerializer.new(suppliers)
         end
 
         # GET /api/v1/suppliers/:id
         #
         def show
-          render json: ::Suppliers::SupplierSerializer.new(@supplier)
+          render json: SupplierSerializer.new(@supplier)
         end
 
         # POST /api/v1/suppliers
@@ -33,7 +31,7 @@ module Suppliers
             producer: @producer
           )
 
-          if supplier.valid? && supplier.save
+          if supplier.save
             render json: SupplierSerializer.new(supplier)
           else
             render(
@@ -68,7 +66,7 @@ module Suppliers
         end
 
         def load_group
-          @group = ::Suppliers::Group.find_by_id(supplier_params[:group_id])
+          @group = Group.find_by_id(supplier_params[:group_id])
 
           return head :not_found unless @group
 
@@ -76,7 +74,7 @@ module Suppliers
         end
 
         def load_producer
-          @producer = ::Suppliers::Producer.find_by_id(supplier_params[:producer_id])
+          @producer = Producer.find_by_id(supplier_params[:producer_id])
 
           return head :not_found unless @producer
 

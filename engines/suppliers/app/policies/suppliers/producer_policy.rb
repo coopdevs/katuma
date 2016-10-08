@@ -6,8 +6,11 @@ module Suppliers
         producer_is_provider_of_any_group?
     end
 
+    # You don't need permissions at Producer level to
+    # add a Producer as a Supplier to a Group, for now...
+    #
     def create?
-      false
+      true
     end
 
     def update?

@@ -5,9 +5,18 @@ module Suppliers
   describe ProducerPolicy do
     subject { described_class }
 
-    permissions :create?, :update?, :destroy? do
+    permissions :update?, :destroy? do
       it 'is set to `false` by default' do
         expect(subject).to_not permit(instance_double(User), instance_double(Producer))
+      end
+    end
+
+    # You don't need permissions at Producer level to
+    # add a Producer as a Supplier to a Group, for now...
+    #
+    permissions :create? do
+      it 'grants access in any case' do
+        expect(subject).to permit(instance_double(User), instance_double(Producer))
       end
     end
 
