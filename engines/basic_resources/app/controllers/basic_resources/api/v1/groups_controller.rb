@@ -21,7 +21,8 @@ module BasicResources
         #
         def create
           group = ::BasicResources::Group.new(group_params)
-          group_creator = GroupCreator.new(group, current_user).create
+          group_creator = GroupCreator.new(group, current_user)
+          group_creator.create
 
           if group.persisted?
             @side_effects << group_creator.side_effects
