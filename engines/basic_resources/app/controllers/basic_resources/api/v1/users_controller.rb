@@ -8,12 +8,14 @@ module BasicResources
           authorize(group)
           users = UsersCollection.new(group).build
           render json: UsersSerializer.new(users)
+        rescue ActiveRecord::RecordNotFound
+          head :not_found
         end
 
         private
 
         def group
-          Group.find_by_id(params[:group_id])
+          Group.find(params[:group_id])
         end
       end
     end

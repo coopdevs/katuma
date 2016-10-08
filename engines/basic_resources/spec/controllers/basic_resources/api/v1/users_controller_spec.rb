@@ -56,6 +56,12 @@ module BasicResources
             context 'when the user does not belong to the provided group' do
               it_behaves_like 'a forbidden request'
             end
+
+            context 'when the group does not exist' do
+              let(:group) { double(:group, id: 0) }
+
+              it_behaves_like 'a not found request'
+            end
           end
         end
       end
