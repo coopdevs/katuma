@@ -60,14 +60,14 @@ module Products
               producer: producer,
               creator: producers_user,
               group: group
-            ).create
+            ).create!
           end
           let(:producer_for_user) do
             producer = FactoryGirl.build(:producer, name: 'Related to user')
             ::BasicResources::ProducerCreator.new(
               producer: producer,
               creator: ::BasicResources::User.find(producers_user.id)
-            ).create
+            ).create!
           end
 
           before { authenticate_as producers_user }
