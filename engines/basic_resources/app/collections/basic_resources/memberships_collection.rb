@@ -14,7 +14,7 @@ module BasicResources
     end
 
     # Returns the memberships of the user either scoped by the given group or
-    # all of them. Not however, that if the user is admin of a group, all
+    # all of them. Note however, that if the user is admin of a group, all
     # memberships of his groups will be returned.
     #
     # @return [ActiveRecord::Relation<Membership>]
