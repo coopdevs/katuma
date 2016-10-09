@@ -167,33 +167,41 @@ module BasicResources
           end
         end
 
-        xcontext 'Group admin user' do
+        context 'Group admin user' do
           let(:member) do
             user = FactoryGirl.create(:user)
             User.find(user.id)
           end
           let!(:membership) do
-            group.memberships.create(user: member, role: Membership::ROLES[:member])
+            group.memberships.create(user: member, role: MemberRole.new(:member))
           end
 
           before do
-            group.memberships.create(user: user, role: Membership::ROLES[:admin])
+            group.memberships.create(user: user, role: MemberRole.new(:admin))
             authenticate_as user
           end
 
           describe 'GET #index' do
             subject { get :index }
 
-            let(:memberships) { Membership.where(group_id: member.group_ids) }
-
             it_behaves_like 'a successful request'
 
-            it 'returns an array of memberships of the user groups' do
-              expect(JSON.parse(subject.body)).to eq JSON.parse(memberships.to_json)
+            describe 'body' do
+              before { get :index }
+
+              subject { JSON.parse(response.body) }
+
+              let(:memberships_of_his_groups) do
+                Membership.where(basic_resource_group_id: user.group_ids)
+              end
+
+              it do
+                is_expected.to eq(JSON.parse(memberships_of_his_groups.to_json))
+              end
             end
           end
 
-          describe 'GET #show' do
+          xdescribe 'GET #show' do
             subject { get :show, user_id: member.id, id: membership.id }
 
             it_behaves_like 'a successful request'
@@ -202,7 +210,7 @@ module BasicResources
             end
           end
 
-          describe 'PUT #update' do
+          xdescribe 'PUT #update' do
             let(:params) do
               {
                 id: membership.id,
@@ -222,7 +230,7 @@ module BasicResources
             end
           end
 
-          describe 'DELETE #destroy' do
+          xdescribe 'DELETE #destroy' do
             subject { delete :destroy, user_id: member.id, id: membership.id }
 
             it_behaves_like 'a successful request'
