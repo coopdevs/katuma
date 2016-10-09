@@ -31,7 +31,11 @@ module Onboarding
           else
             render(
               status: :bad_request,
-              json: { errors: { emails: t('onboarding.invitation.bulk.errors.invalid') } }
+              json: {
+                errors: {
+                  emails: [t('onboarding.invitation.bulk.errors.invalid')]
+                }
+              }
             )
           end
         end
@@ -53,7 +57,11 @@ module Onboarding
           else
             render(
               status: :bad_request,
-              json: { errors: { emails: t('onboarding.invitation.bulk.errors.invalid') } }
+              json: {
+                errors: {
+                  emails: [t('onboarding.invitation.bulk.errors.invalid')]
+                }
+              }
             )
           end
         end

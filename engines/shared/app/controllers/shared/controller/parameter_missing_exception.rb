@@ -18,11 +18,13 @@ module Shared
 
       def error_message_for_required_field(field)
         {
-          field => t("#{controller_name}.#{action_name}.#{field}",
-            field: field,
-            default: [:generic],
-            scope: :missing_param
-          )
+          field => [
+            t("#{controller_name}.#{action_name}.#{field}",
+              field: field,
+              default: [:generic],
+              scope: :missing_param
+             )
+          ]
         }
       end
     end
