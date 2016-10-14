@@ -5,15 +5,22 @@ module BasicResources
     end
 
     def show?
-      Membership.where(group: record.group, user: user).any?
+      Membership.where(
+        basic_resource_group_id: record.basic_resource_group_id,
+        user_id: user.id
+      ).any?
     end
 
     def create?
-      Membership.where(group: record.group, user: user, role: Membership::ROLES[:admin]).any?
+      false
     end
 
     def update?
-      Membership.where(group: record.group, user: user, role: Membership::ROLES[:admin]).any?
+      Membership.where(
+        basic_resource_group_id: record.basic_resource_group_id,
+        user_id: user.id,
+        role: Membership::ROLES[:admin]
+      ).any?
     end
 
     def destroy?
