@@ -82,7 +82,7 @@ module Onboarding
           else
             render(
               status: :bad_request,
-              json: user.errors.to_json
+              json: { errors: user.errors.messages }
             )
           end
         end
