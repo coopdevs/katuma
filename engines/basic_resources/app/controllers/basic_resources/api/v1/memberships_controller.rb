@@ -36,10 +36,7 @@ module BasicResources
           else
             render(
               status: :bad_request,
-              json: {
-                model: membership.class.name,
-                errors: membership.errors
-              }
+              json: { errors: membership.errors.messages }
             )
           end
         end
@@ -52,10 +49,7 @@ module BasicResources
           else
             render(
               status: :bad_request,
-              json: {
-                model: @membership.class.name,
-                errors: @membership.errors
-              }
+              json: { errors: @membership.errors.messages }
             )
           end
         end

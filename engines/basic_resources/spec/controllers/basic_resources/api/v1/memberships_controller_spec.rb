@@ -154,7 +154,13 @@ module BasicResources
           end
 
           describe 'PUT #update' do
-            subject { put :update, id: membership.id }
+            let(:params) do
+              {
+                id: membership.id,
+                role: MemberRole.new(:member).to_i
+              }
+            end
+            subject { put :update, params }
 
             context 'when the membership does not exist' do
               let(:membership) { instance_double(Membership, id:666) }
@@ -176,7 +182,48 @@ module BasicResources
 
             context 'when the membership is associated to the user' do
               context 'and the user is admin' do
-                it_behaves_like 'a successful request'
+                context 'with valid params' do
+                  it_behaves_like 'a successful request'
+
+                  describe 'body' do
+                    before { put :update, params }
+
+                    subject { JSON.parse(response.body) }
+
+                    it do
+                      is_expected.to include(
+                        'user_id' => user.id,
+                        'basic_resource_group_id' => group.id,
+                        'basic_resource_producer_id' => nil,
+                        'group_id' => nil,
+                        'role' => MemberRole.new(:member).to_i
+                      )
+                    end
+                  end
+                end
+
+                context 'with not valid params' do
+                  let(:params) do
+                    {
+                      id: membership.id,
+                      role: 'hola'
+                    }
+                  end
+
+                  it_behaves_like 'a bad request'
+
+                  describe 'body' do
+                    before { put :update, params }
+
+                    subject { JSON.parse(response.body) }
+
+                    it do
+                      is_expected.to include(
+                        'errors' => { 'role' => ['is not included in the list'] }
+                      )
+                    end
+                  end
+                end
               end
 
               context 'and the user is not an admin' do
@@ -282,6 +329,21 @@ module BasicResources
                     let(:params) { { basic_resource_group_id: group.id } }
 
                     it_behaves_like 'a bad request'
+
+                    describe 'body' do
+                      before { post :create, params }
+
+                      subject { JSON.parse(response.body) }
+
+                      it do
+                        is_expected.to include(
+                          'errors' => {
+                            'role' => ["can't be blank", 'is not included in the list'],
+                            'base' => ["Specify a `group_id` or `user_id`, but not both."]
+                          }
+                        )
+                      end
+                    end
                   end
                 end
               end
