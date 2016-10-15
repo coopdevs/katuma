@@ -127,7 +127,7 @@ module BasicResources
             subject { get :show, id: membership.id }
 
             context 'when the membership does not exist' do
-              let(:membership) { instance_double(Membership, id:666) }
+              let(:membership) { instance_double(Membership, id: 666) }
 
               it_behaves_like 'a not found request'
             end
@@ -163,7 +163,7 @@ module BasicResources
             subject { put :update, params }
 
             context 'when the membership does not exist' do
-              let(:membership) { instance_double(Membership, id:666) }
+              let(:membership) { instance_double(Membership, id: 666) }
 
               it_behaves_like 'a not found request'
             end
@@ -244,7 +244,7 @@ module BasicResources
             subject { delete :destroy, id: membership.id }
 
             context 'when the membership does not exist' do
-              let(:membership) { instance_double(Membership, id:666) }
+              let(:membership) { instance_double(Membership, id: 666) }
 
               it_behaves_like 'a not found request'
             end
