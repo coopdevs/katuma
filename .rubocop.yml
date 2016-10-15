@@ -44,6 +44,11 @@ Metrics/ModuleLength:
     - 'spec/**/*_spec.rb'
     - 'engines/*/spec/**/*_spec.rb'
 
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*_spec.rb'
+    - 'engines/*/spec/**/*_spec.rb'
+
 # This means we want:
 #
 #   attr_reader :attr1,

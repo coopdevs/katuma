@@ -12,7 +12,6 @@ module BasicResources
           user = FactoryGirl.create(:user)
           User.find(user.id)
         end
-        let(:group) { FactoryGirl.create(:group) }
 
         context 'Not authenticaded user' do
           describe 'GET #index' do
@@ -46,104 +45,111 @@ module BasicResources
           end
         end
 
-        xcontext 'Authenticated user' do
+        context 'Authenticated user' do
+          let(:group) { FactoryGirl.create(:group) }
+          let(:membership) do
+            Membership.create!(
+              basic_resource_group_id: group.id,
+              user_id: user.id,
+              role: MemberRole.new(:admin)
+            )
+          end
+
           before { authenticate_as user }
 
           describe 'GET #index' do
             before { membership }
 
-            subject { get :index }
+            context 'when no params are passed' do
+              subject { get :index }
 
-            it_behaves_like 'a successful request'
-            its(:body) { is_expected.to_not eq('[]') }
+              it_behaves_like 'a successful request'
+
+              describe 'body' do
+                subject { JSON.parse(response.body) }
+
+                before { get :index }
+
+                it do
+                  is_expected.to contain_exactly(
+                    JSON.parse(MembershipSerializer.new(membership).to_json)
+                  )
+                end
+              end
+            end
+
+            context 'when basic_resource_group_id is passed' do
+              subject { get :index, basic_resource_group_id: group_id }
+
+              context 'but the group does not exists' do
+                let(:group_id) { 666 }
+
+                it_behaves_like 'a not found request'
+              end
+
+              context 'and the user does not pertain to the group' do
+                let(:other_group) { FactoryGirl.create(:group) }
+                let(:group_id) { other_group.id }
+
+                it_behaves_like 'a forbidden request'
+              end
+
+              context 'and the user pertains to the group' do
+                let(:group_id) { group.id }
+                let(:other_user) { FactoryGirl.create(:user) }
+                let!(:membership_other_user) do
+                  Membership.create!(
+                    basic_resource_group_id: group.id,
+                    user_id: other_user.id,
+                    role: MemberRole.new(:member)
+                  )
+                end
+
+                it_behaves_like 'a successful request'
+
+                describe 'body' do
+                  subject { JSON.parse(response.body) }
+
+                  before { get :index, basic_resource_group_id: group_id }
+
+                  it do
+                    is_expected.to contain_exactly(
+                      JSON.parse(MembershipSerializer.new(membership).to_json),
+                      JSON.parse(MembershipSerializer.new(membership_other_user).to_json)
+                    )
+                  end
+                end
+              end
+            end
           end
 
           describe 'GET #show' do
             subject { get :show, id: membership.id }
 
-            it_behaves_like 'a successful request'
-            it 'returns the membership details' do
-              expect(JSON.parse(subject.body)).to eq JSON.parse(membership.to_json)
-            end
-          end
+            context 'when the membership does not exist' do
+              let(:membership) { instance_double(Membership, id: 666) }
 
-          describe 'PUT #update' do
-            subject { put :update, id: membership.id }
-
-            it_behaves_like 'a forbidden request'
-          end
-
-          describe 'DELETE #destroy' do
-            subject { delete :destroy, id: membership.id }
-
-            it_behaves_like 'a forbidden request'
-          end
-
-          describe 'POST #create' do
-            let(:other_group) { FactoryGirl.create(:group) }
-            let(:params) do
-              {
-                user_id: user.id,
-                group_id: other_group.id,
-                role: Membership::ROLES[:admin]
-              }
+              it_behaves_like 'a not found request'
             end
 
-            subject { post :create, params }
+            context 'when the membership is not associated to the user' do
+              let(:membership) do
+                Membership.create!(
+                  basic_resource_group_id: group.id,
+                  user_id: FactoryGirl.create(:user).id,
+                  role: MemberRole.new(:member)
+                )
+              end
 
-            it_behaves_like 'a successful request'
-
-            it 'returns membership details' do
-              membership = JSON.parse(subject.body)
-
-              expect(membership['group_id']).to eq other_group.id
-              expect(membership['user_id']).to eq user.id
-              expect(membership['role']).to eq Membership::ROLES[:admin]
+              it_behaves_like 'a forbidden request'
             end
 
-            it 'creates a new Membership' do
-              subject
+            context 'when the membership is associated to the user' do
+              it_behaves_like 'a successful request'
 
-              membership = Membership.last
-              expect(membership.group).to eq other_group
-              expect(membership.user).to eq user
-              expect(membership.role).to eq Membership::ROLES[:admin]
-            end
-          end
-        end
-
-        xcontext 'Group admin user' do
-          let(:member) do
-            user = FactoryGirl.create(:user)
-            User.find(user.id)
-          end
-          let!(:membership) do
-            group.memberships.create(user: member, role: Membership::ROLES[:member])
-          end
-
-          before do
-            group.memberships.create(user: user, role: Membership::ROLES[:admin])
-            authenticate_as user
-          end
-
-          describe 'GET #index' do
-            subject { get :index }
-
-            let(:memberships) { Membership.where(group_id: member.group_ids) }
-
-            it_behaves_like 'a successful request'
-
-            it 'returns an array of memberships of the user groups' do
-              expect(JSON.parse(subject.body)).to eq JSON.parse(memberships.to_json)
-            end
-          end
-
-          describe 'GET #show' do
-            subject { get :show, user_id: member.id, id: membership.id }
-
-            it_behaves_like 'a successful request'
-            it 'returns the membership details' do
-              expect(JSON.parse(subject.body)).to eq JSON.parse(membership.to_json)
+              it 'returns the membership details' do
+                expect(JSON.parse(subject.body)).to eq JSON.parse(membership.to_json)
+              end
             end
           end
 
@@ -151,28 +157,203 @@ module BasicResources
             let(:params) do
               {
                 id: membership.id,
-                user_id: member.id,
-                role: Membership::ROLES[:admin]
+                role: MemberRole.new(:member).to_i
               }
             end
-
             subject { put :update, params }
 
-            it_behaves_like 'a successful request'
-            it 'returns the membership details with updated attributes' do
-              membership = JSON.parse(subject.body)
+            context 'when the membership does not exist' do
+              let(:membership) { instance_double(Membership, id: 666) }
 
-              expect(membership['role']).to eq Membership::ROLES[:admin]
+              it_behaves_like 'a not found request'
+            end
+
+            context 'when the membership is not associated to the user' do
+              let(:membership) do
+                Membership.create!(
+                  basic_resource_group_id: group.id,
+                  user_id: FactoryGirl.create(:user).id,
+                  role: MemberRole.new(:member)
+                )
+              end
+
+              it_behaves_like 'a forbidden request'
+            end
+
+            context 'when the membership is associated to the user' do
+              context 'and the user is admin' do
+                context 'with valid params' do
+                  it_behaves_like 'a successful request'
+
+                  describe 'body' do
+                    before { put :update, params }
+
+                    subject { JSON.parse(response.body) }
+
+                    it do
+                      is_expected.to include(
+                        'user_id' => user.id,
+                        'basic_resource_group_id' => group.id,
+                        'basic_resource_producer_id' => nil,
+                        'group_id' => nil,
+                        'role' => MemberRole.new(:member).to_i
+                      )
+                    end
+                  end
+                end
+
+                context 'with not valid params' do
+                  let(:params) do
+                    {
+                      id: membership.id,
+                      role: 'hola'
+                    }
+                  end
+
+                  it_behaves_like 'a bad request'
+
+                  describe 'body' do
+                    before { put :update, params }
+
+                    subject { JSON.parse(response.body) }
+
+                    it do
+                      is_expected.to include(
+                        'errors' => { 'role' => ['is not included in the list'] }
+                      )
+                    end
+                  end
+                end
+              end
+
+              context 'and the user is not an admin' do
+                let(:membership) do
+                  Membership.create!(
+                    basic_resource_group_id: group.id,
+                    user_id: user.id,
+                    role: MemberRole.new(:member)
+                  )
+                end
+
+                it_behaves_like 'a forbidden request'
+              end
             end
           end
 
           describe 'DELETE #destroy' do
-            subject { delete :destroy, user_id: member.id, id: membership.id }
+            subject { delete :destroy, id: membership.id }
 
-            it_behaves_like 'a successful request'
-            it 'deletes the membership' do
-              expect { subject }.to change { Membership.count }.from(2).to(1)
+            context 'when the membership does not exist' do
+              let(:membership) { instance_double(Membership, id: 666) }
+
+              it_behaves_like 'a not found request'
             end
+
+            context 'when the membership is not associated to the user' do
+              let(:membership) do
+                Membership.create!(
+                  basic_resource_group_id: group.id,
+                  user_id: FactoryGirl.create(:user).id,
+                  role: MemberRole.new(:member)
+                )
+              end
+
+              it_behaves_like 'a forbidden request'
+            end
+
+            context 'when the membership is associated to the user' do
+              context 'and the user is admin' do
+                it_behaves_like 'a successful request'
+              end
+
+              context 'and the user is not an admin' do
+                let(:membership) do
+                  Membership.create!(
+                    basic_resource_group_id: group.id,
+                    user_id: user.id,
+                    role: MemberRole.new(:member)
+                  )
+                end
+
+                it_behaves_like 'a forbidden request'
+              end
+            end
+          end
+
+          describe 'POST #create' do
+            subject { post :create, params }
+
+            context 'associating a user to a group' do
+              let(:merce) { FactoryGirl.create(:user) }
+              let(:params) do
+                {
+                  user_id: merce.id,
+                  basic_resource_group_id: group.id,
+                  role: MemberRole.new(:admin).to_i
+                }
+              end
+
+              context 'when the user does not pertain to the group' do
+                it_behaves_like 'a forbidden request'
+              end
+
+              context 'when the user pertain to the group' do
+                context 'as a not admin' do
+                  it_behaves_like 'a forbidden request'
+                end
+
+                context 'as an admin' do
+                  before { membership }
+
+                  context 'with valid params' do
+                    it_behaves_like 'a successful request'
+
+                    describe 'body' do
+                      before { post :create, params }
+
+                      subject { JSON.parse(response.body) }
+
+                      it do
+                        is_expected.to include(
+                          'user_id' => merce.id,
+                          'basic_resource_group_id' => group.id,
+                          'basic_resource_producer_id' => nil,
+                          'group_id' => nil,
+                          'role' => MemberRole.new(:admin).to_i
+                        )
+                      end
+                    end
+                  end
+
+                  context 'with not valid params' do
+                    let(:params) { { basic_resource_group_id: group.id } }
+
+                    it_behaves_like 'a bad request'
+
+                    describe 'body' do
+                      before { post :create, params }
+
+                      subject { JSON.parse(response.body) }
+
+                      it do
+                        is_expected.to include(
+                          'errors' => {
+                            'role' => ["can't be blank", 'is not included in the list'],
+                            'base' => ["Specify a `group_id` or `user_id`, but not both."]
+                          }
+                        )
+                      end
+                    end
+                  end
+                end
+              end
+            end
+          end
+
+          xcontext 'associating a user to a producer' do
+          end
+
+          xcontext 'associating a group to a producer' do
           end
         end
       end

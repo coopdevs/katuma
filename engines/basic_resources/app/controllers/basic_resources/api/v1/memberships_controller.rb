@@ -3,12 +3,13 @@ module BasicResources
     module V1
       class MembershipsController < ApplicationController
         before_action :authenticate
+        before_action :load_group, only: :index
         before_action :load_membership, only: [:show, :update, :destroy]
 
         # GET /api/v1/memberships
         #
         def index
-          memberships = ::BasicResources::Membership.where(user_id: current_user.id)
+          memberships = MembershipsCollection.new(current_user, @group).build
 
           render json: MembershipsSerializer.new(memberships)
         end
@@ -22,6 +23,12 @@ module BasicResources
         # POST /api/v1/memberships
         #
         def create
+          group = Group.find_by_id(membership_params[:basic_resource_group_id])
+
+          head :bad_request unless group
+
+          authorize group, :update?
+
           membership = Membership.new(membership_params)
 
           if membership.save
@@ -29,10 +36,7 @@ module BasicResources
           else
             render(
               status: :bad_request,
-              json: {
-                model: membership.class.name,
-                errors: membership.errors
-              }
+              json: { errors: membership.errors.messages }
             )
           end
         end
@@ -45,10 +49,7 @@ module BasicResources
           else
             render(
               status: :bad_request,
-              json: {
-                model: @membership.class.name,
-                errors: @membership.errors
-              }
+              json: { errors: @membership.errors.messages }
             )
           end
         end
@@ -61,8 +62,18 @@ module BasicResources
 
         private
 
+        def load_group
+          return unless params.key?(:basic_resource_group_id)
+
+          @group = Group.find_by_id(params[:basic_resource_group_id])
+
+          return head :not_found unless @group
+
+          authorize @group
+        end
+
         def membership_params
-          params.permit(:group_id, :user_id, :role)
+          params.permit(:basic_resource_group_id, :user_id, :role)
         end
 
         def load_membership
