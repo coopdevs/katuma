@@ -13,7 +13,11 @@ module Suppliers
     end
 
     def create?
-      false
+      Membership.where(
+        basic_resource_group_id: record.id,
+        user_id: user.id,
+        role: Membership::ROLES[:admin]
+      ).any?
     end
 
     def update?
@@ -21,7 +25,7 @@ module Suppliers
     end
 
     def destroy?
-      false
+      create?
     end
   end
 end

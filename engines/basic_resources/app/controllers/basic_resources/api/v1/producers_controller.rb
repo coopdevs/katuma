@@ -34,7 +34,7 @@ module BasicResources
           else
             render(
               status: :bad_request,
-              json: producer.errors.to_json
+              json: { errors: producer.errors.messages }
             )
           end
         end
@@ -47,7 +47,7 @@ module BasicResources
           else
             render(
               status: :bad_request,
-              json: producer.errors.to_json
+              json: { errors: @producer.errors.messages }
             )
           end
         end
