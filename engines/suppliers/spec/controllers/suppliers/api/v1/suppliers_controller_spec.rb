@@ -163,15 +163,40 @@ module Suppliers
               it_behaves_like 'a forbidden request'
             end
 
-            context 'with wrong parameters' do
+            context 'with wrong `producer_id` parameter' do
               let(:params) do
                 {
-                  group_id: 'hola',
-                  provider_id: 666
+                  group_id: 666,
+                  producer_id: producer.id
                 }
               end
 
               it_behaves_like 'a not found request'
+            end
+
+            context 'with wrong `producer_id` parameter' do
+              let(:params) do
+                {
+                  group_id: group.id,
+                  producer_id: 666
+                }
+              end
+
+              it_behaves_like 'a bad request'
+
+              describe 'its body' do
+                before { post :create, params }
+
+                subject { JSON.parse(response.body) }
+
+                it do
+                  is_expected.to include(
+                    'errors' => {
+                      'producer' => ["can't be blank"]
+                    }
+                  )
+                end
+              end
             end
           end
 

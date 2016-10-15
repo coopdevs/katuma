@@ -5,7 +5,6 @@ module Suppliers
         before_action :authenticate
         before_action :load_supplier, only: [:show, :update, :destroy]
         before_action :load_group, only: [:index, :create]
-        before_action :load_producer, only: [:create]
 
         # GET /api/v1/suppliers?group_id=
         #
@@ -28,7 +27,7 @@ module Suppliers
         def create
           supplier = Supplier.new(
             group: @group,
-            producer: @producer
+            producer_id: supplier_params[:producer_id]
           )
 
           if supplier.save
@@ -36,7 +35,7 @@ module Suppliers
           else
             render(
               status: :bad_request,
-              json: supplier.errors
+              json: { errors: supplier.errors.messages }
             )
           end
         end
@@ -71,14 +70,6 @@ module Suppliers
           return head :not_found unless @group
 
           authorize @group
-        end
-
-        def load_producer
-          @producer = Producer.find_by_id(supplier_params[:producer_id])
-
-          return head :not_found unless @producer
-
-          authorize @producer
         end
       end
     end
