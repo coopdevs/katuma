@@ -132,9 +132,14 @@ module BasicResources
 
                 subject { JSON.parse(response.body) }
 
-                its(:size) { is_expected.to eq(2) }
-                it { is_expected.to include('email' => ["can't be blank"]) }
-                it { is_expected.to include('address' => ["can't be blank"]) }
+                it do
+                  is_expected.to include(
+                    'errors' => {
+                      'email' => ["can't be blank"],
+                      'address' => ["can't be blank"]
+                    }
+                  )
+                end
               end
             end
 
@@ -181,14 +186,41 @@ module BasicResources
               end
 
               context 'when the user is a producer admin' do
-                it_behaves_like 'a successful request'
+                context 'with valid parameters' do
+                  it_behaves_like 'a successful request'
 
-                describe 'its body' do
-                  before { put :update, params }
+                  describe 'its body' do
+                    before { put :update, params }
 
-                  subject { JSON.parse(response.body) }
+                    subject { JSON.parse(response.body) }
 
-                  it { is_expected.to include(JSON.parse(params.to_json)) }
+                    it { is_expected.to include(JSON.parse(params.to_json)) }
+                  end
+                end
+
+                context 'with not valid parameters' do
+                  let(:params) do
+                    {
+                      id: producer.id,
+                      email: nil
+                    }
+                  end
+
+                  it_behaves_like 'a bad request'
+
+                  describe 'its body' do
+                    before { put :update, params }
+
+                    subject { JSON.parse(response.body) }
+
+                    it do
+                      is_expected.to include(
+                        'errors' => {
+                          'email' => ["can't be blank"]
+                        }
+                      )
+                    end
+                  end
                 end
               end
 

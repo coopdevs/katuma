@@ -47,7 +47,7 @@ module BasicResources
           else
             render(
               status: :bad_request,
-              json: { errors: producer.errors.messages }
+              json: { errors: @producer.errors.messages }
             )
           end
         end
