@@ -11,7 +11,7 @@ module Onboarding
           group = load_group(invitations_params[:group_id])
           authorize group, :show?
 
-          invitations = Invitation.where(group_id: group.id)
+          invitations = Invitation.where(group_id: group.id, accepted: false)
 
           render json: InvitationsSerializer.new(invitations)
         end
