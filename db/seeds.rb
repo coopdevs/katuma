@@ -5,7 +5,7 @@ joanin = ::Account::User.create!(
   first_name: 'Joanin',
   last_name: 'Cerea',
   username: 'joanin',
-  password: 'kakaka22'
+  password: 'papapa22'
 )
 
 frida = ::Account::User.create!(
@@ -13,7 +13,7 @@ frida = ::Account::User.create!(
   first_name: 'Frida',
   last_name: 'Fola',
   username: 'frida',
-  password: 'kakaka22'
+  password: 'papapa22'
 )
 
 # Groups
