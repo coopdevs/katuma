@@ -88,10 +88,10 @@ module Onboarding
       return if membership
 
       # TODO: use #find_by_id and raise custom exception
-      group = ::Group::Group.find(group_id)
+      group = ::BasicResources::Group.find(group_id)
       group.memberships.create(
         user_id: user_id,
-        role: ::Group::Membership::ROLES[:member]
+        role: ::BasicResources::Membership::ROLES[:member]
       )
     end
 
