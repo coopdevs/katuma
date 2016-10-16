@@ -71,3 +71,18 @@ prueba = ::BasicResources::Producer.new(
   creator: joanin,
   group: tomatika
 ).create!
+
+# Products
+
+::Products::Product.create!(
+  producer_id: jaume.id,
+  name: 'Poma fuji',
+  unit: ::Products::Product::UNITS[:kg],
+  price: 2.99
+)
+::Products::Product.create!(
+  producer_id: jaume.id,
+  name: 'Bledas al manat',
+  unit: ::Products::Product::UNITS[:pc],
+  price: 1.85
+)
