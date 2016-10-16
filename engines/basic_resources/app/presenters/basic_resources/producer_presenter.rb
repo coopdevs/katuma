@@ -1,4 +1,4 @@
-module Suppliers
+module BasicResources
   class ProducerPresenter
     # @param producer [Producer]
     # @param user [User]
@@ -36,7 +36,7 @@ module Suppliers
     # there is only one group in the `groups` collection. That's why
     # we blindly pick the first one.
     #
-    # @return [Suppliers::Group]
+    # @return [Group]
     def group
       @group ||= producer.groups.first
     end
