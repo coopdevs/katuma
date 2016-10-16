@@ -4,7 +4,7 @@ module Suppliers
   describe ProducersSerializer do
     let(:first_presenter) do
       instance_double(
-        ProducerPresenter,
+        ::BasicResources::ProducerPresenter,
         id: 666,
         name: 'Producer #1',
         email: 'producer+1@katuma.org',
@@ -16,7 +16,7 @@ module Suppliers
     end
     let(:second_presenter) do
       instance_double(
-        ProducerPresenter,
+        ::BasicResources::ProducerPresenter,
         id: 667,
         name: 'Producer #2',
         email: 'producer+2@katuma.org',
@@ -51,6 +51,11 @@ module Suppliers
 
     subject { described_class.new([first_presenter, second_presenter]).to_hash }
 
-    it { is_expected.to include(first_presenter_attributes, second_presenter_attributes) }
+    it do
+      is_expected.to contain_exactly(
+        match(first_presenter_attributes),
+        match(second_presenter_attributes)
+      )
+    end
   end
 end
