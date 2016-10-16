@@ -17,6 +17,8 @@ module BasicResources
     # @return [Producer]
     def create!
       ::ActiveRecord::Base.transaction do
+        producer.email = creator.email unless producer.email? && group
+
         if producer.save
           create_membership_for_creator_or_group!
         end
