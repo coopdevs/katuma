@@ -70,7 +70,7 @@ module BasicResources
               subject { JSON.parse(response.body) }
 
               its(['name']) { is_expected.to eq(params[:name]) }
-              its(['email']) { is_expected.to eq(params[:email]) }
+              its(['email']) { is_expected.to eq(user.email) }
               its(['address']) { is_expected.to eq(params[:address]) }
             end
 
@@ -105,7 +105,6 @@ module BasicResources
                   let(:params) do
                     {
                       name: 'Tomatekken 3',
-                      email: 'tomatekken3@katuma.org',
                       address: 'c/ dels tomatekkens, 3',
                       group_id: group.id
                     }
@@ -135,7 +134,6 @@ module BasicResources
                 it do
                   is_expected.to include(
                     'errors' => {
-                      'email' => ["can't be blank"],
                       'address' => ["can't be blank"]
                     }
                   )
