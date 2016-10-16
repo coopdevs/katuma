@@ -26,7 +26,7 @@ module Suppliers
         # GET /api/v1/providers/:id
         #
         def show
-          presenter = ProducerPresenter.new(@producer, current_user)
+          presenter = ::BasicResources::ProducerPresenter.new(@producer, current_user)
 
           render json: ProducerSerializer.new(presenter)
         end
