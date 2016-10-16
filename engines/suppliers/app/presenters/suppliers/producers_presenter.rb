@@ -9,7 +9,7 @@ module Suppliers
 
     # @return [Array<ProducerPresenter>]
     def build
-      producers.map { |producer| ProducerPresenter.new(producer, user) }
+      producers.map { |producer| ::BasicResources::ProducerPresenter.new(producer, user) }
     end
 
     private
