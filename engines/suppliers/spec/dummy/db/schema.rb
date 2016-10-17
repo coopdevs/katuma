@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161001134751) do
+ActiveRecord::Schema.define(version: 20161017174520) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -59,6 +59,16 @@ ActiveRecord::Schema.define(version: 20161001134751) do
 
   add_index "orders", ["group_id"], name: "index_orders_on_group_id", using: :btree
   add_index "orders", ["user_id"], name: "index_orders_on_user_id", using: :btree
+
+  create_table "orders_frequencies", force: :cascade do |t|
+    t.integer  "group_id",       null: false
+    t.text     "frequency",      null: false
+    t.integer  "frequency_type", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "orders_frequencies", ["group_id", "frequency_type"], name: "index_orders_frequencies_on_group_id_and_frequency_type", unique: true, using: :btree
 
   create_table "producers", force: :cascade do |t|
     t.string   "name",       null: false
@@ -109,6 +119,7 @@ ActiveRecord::Schema.define(version: 20161001134751) do
   add_foreign_key "memberships", "groups", name: "memberships_group_id_fkey"
   add_foreign_key "memberships", "producers", column: "basic_resource_producer_id", name: "memberships_basic_resource_producer_id_fkey"
   add_foreign_key "memberships", "users", name: "memberships_user_id_fkey"
+  add_foreign_key "orders_frequencies", "groups"
   add_foreign_key "products", "producers"
   add_foreign_key "suppliers", "groups"
   add_foreign_key "suppliers", "producers"
