@@ -30,7 +30,9 @@ module BasicResources
 
           if producer_creator.create! && producer.persisted?
             @side_effects << producer_creator.side_effects
-            render json: ProducerSerializer.new(producer)
+            presenter = ProducerPresenter.new(producer, current_user)
+
+            render json: ProducerSerializer.new(presenter)
           else
             render(
               status: :bad_request,
@@ -43,7 +45,9 @@ module BasicResources
         #
         def update
           if @producer.update_attributes(producer_params)
-            render json: ProducerSerializer.new(@producer)
+            presenter = ProducerPresenter.new(@producer, current_user)
+
+            render json: ProducerSerializer.new(presenter)
           else
             render(
               status: :bad_request,

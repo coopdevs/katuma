@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-module Suppliers
+module BasicResources
   describe ProducerPresenter do
     let(:user) { instance_double(User) }
     let(:producer) { instance_double(Producer) }

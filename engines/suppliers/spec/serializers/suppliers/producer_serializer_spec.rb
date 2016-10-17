@@ -7,7 +7,7 @@ module Suppliers
       producer = FactoryGirl.create(:producer)
       Producer.find(producer.id)
     end
-    let(:presenter) { ProducerPresenter.new(producer, user) }
+    let(:presenter) { ::BasicResources::ProducerPresenter.new(producer, user) }
     let(:attributes) do
       {
         id: producer.id,
@@ -24,6 +24,6 @@ module Suppliers
 
     subject { described_class.new(presenter).to_hash }
 
-    it { is_expected.to include(attributes) }
+    it { is_expected.to match(attributes) }
   end
 end

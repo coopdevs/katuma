@@ -72,6 +72,7 @@ module BasicResources
               its(['name']) { is_expected.to eq(params[:name]) }
               its(['email']) { is_expected.to eq(user.email) }
               its(['address']) { is_expected.to eq(params[:address]) }
+              its(['can_edit']) { is_expected.to be_truthy }
             end
 
             describe 'side effects' do
@@ -193,6 +194,7 @@ module BasicResources
                     subject { JSON.parse(response.body) }
 
                     it { is_expected.to include(JSON.parse(params.to_json)) }
+                    its(['can_edit']) { is_expected.to be_truthy }
                   end
                 end
 
@@ -254,6 +256,7 @@ module BasicResources
                 subject { JSON.parse(response.body) }
 
                 it { is_expected.to include(JSON.parse(params.to_json)) }
+                its(['can_edit']) { is_expected.to be_truthy }
               end
 
               context 'when the user is not a group admin' do

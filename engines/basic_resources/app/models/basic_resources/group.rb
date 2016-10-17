@@ -7,5 +7,12 @@ module BasicResources
     has_many :users, through: :memberships
 
     validates :name, presence: true
+
+    def admin?(user)
+      memberships.where(
+        role: Membership::ROLES[:admin],
+        user_id: user.id
+      ).any?
+    end
   end
 end

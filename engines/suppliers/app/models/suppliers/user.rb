@@ -5,6 +5,9 @@ module Suppliers
     self.table_name = :users
 
     has_many :memberships
-    has_many :producers, through: :memberships, source: :basic_resource_producer
+    has_many :producers,
+      through: :memberships,
+      source: :basic_resource_producer,
+      class_name: 'Producer'
   end
 end
