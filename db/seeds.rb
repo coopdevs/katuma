@@ -1,4 +1,7 @@
+require 'ice_cube'
+
 # Users
+puts 'Creating users...'
 
 joanin = ::Account::User.create!(
   email: 'joanin@katuma.org',
@@ -17,6 +20,7 @@ frida = ::Account::User.create!(
 )
 
 # Groups
+puts 'Creating groups...'
 
 tomatika = ::BasicResources::Group.create!(
   name: 'Tomatika'
@@ -45,6 +49,7 @@ cabas = ::BasicResources::Group.create!(
 )
 
 # Producers
+puts 'Creating producers...'
 
 jaume = ::BasicResources::Producer.new(
   name: 'El Jaume',
@@ -73,6 +78,7 @@ prueba = ::BasicResources::Producer.new(
 ).create!
 
 # Products
+puts 'Creating products...'
 
 ::Products::Product.create!(
   producer_id: jaume.id,
@@ -85,4 +91,25 @@ prueba = ::BasicResources::Producer.new(
   name: 'Bledas al manat',
   unit: ::Products::Product::UNITS[:pc],
   price: 1.85
+)
+
+# OrdersFrequencies
+puts 'Creating order_frequencies...'
+
+confirmation_schedule = IceCube::Schedule.new do |f|
+  f.add_recurrence_rule IceCube::Rule.weekly.day(:saturday)
+end
+::Suppliers::OrdersFrequency.create!(
+  group_id: tomatika.id,
+  ical: confirmation_schedule.to_ical,
+  frequency_type: ::Suppliers::OrdersFrequency::FREQUENCY_TYPES[:confirmation]
+)
+
+delivery_schedule = IceCube::Schedule.new do |f|
+  f.add_recurrence_rule IceCube::Rule.weekly.day(:wednesday)
+end
+::Suppliers::OrdersFrequency.create!(
+  group_id: tomatika.id,
+  ical: delivery_schedule.to_ical,
+  frequency_type: ::Suppliers::OrdersFrequency::FREQUENCY_TYPES[:delivery]
 )

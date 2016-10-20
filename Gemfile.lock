@@ -40,6 +40,7 @@ PATH
   remote: engines/suppliers
   specs:
     suppliers (0.0.1)
+      ice_cube (= 0.14.0)
       pg (= 0.18.3)
       rails (= 4.2.5)
 
@@ -111,6 +112,7 @@ GEM
     haml (4.0.7)
       tilt
     i18n (0.7.0)
+    ice_cube (0.14.0)
     json (1.8.3)
     kgio (2.10.0)
     loofah (2.0.3)
@@ -262,4 +264,4 @@ DEPENDENCIES
   unicorn (= 5.0.0)
 
 BUNDLED WITH
-   1.12.5
+   1.13.3

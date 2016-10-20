@@ -21,7 +21,7 @@ module Suppliers
     end
 
     def update?
-      false
+      create?
     end
 
     def destroy?

@@ -11,12 +11,6 @@ module Suppliers
 
     subject { described_class }
 
-    permissions :update? do
-      it 'is set to `false` by default' do
-        expect(subject).to_not permit(instance_double(User), instance_double(Producer))
-      end
-    end
-
     permissions :show?, :index? do
       context 'when the user is associated to the group' do
         let!(:membership) do
@@ -45,7 +39,7 @@ module Suppliers
       end
     end
 
-    permissions :create?, :destroy? do
+    permissions :create?, :update?, :destroy? do
       context 'when the user is associated to the group' do
         let!(:membership) do
           ::BasicResources::Membership.create(
