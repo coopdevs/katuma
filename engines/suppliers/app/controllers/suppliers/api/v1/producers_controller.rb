@@ -17,7 +17,7 @@ module Suppliers
         def index
           load_group if params[:group_id]
 
-          producers = ProducersCollection.new(user: current_user, group: @group).build
+          producers = ProducersCollection.new(user: current_user, group: @group).relation
           presenters = ProducersPresenter.new(producers, current_user).build
 
           render json: ProducersSerializer.new(presenters)

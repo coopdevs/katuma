@@ -1,9 +1,9 @@
-module Products
+module Suppliers
   class ProductsSerializer < Shared::BaseSerializer
     schema do
       type 'products'
 
-      collection :products, item, ProductSerializer
+      collection :products, item, ::Products::ProductSerializer
     end
   end
 end

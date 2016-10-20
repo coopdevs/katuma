@@ -51,14 +51,17 @@ ActiveRecord::Schema.define(version: 20161017174520) do
   add_index "order_lines", ["product_id"], name: "index_order_lines_on_product_id", using: :btree
 
   create_table "orders", force: :cascade do |t|
-    t.integer  "user_id",    null: false
-    t.integer  "group_id",   null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.integer  "from_user_id"
+    t.integer  "from_group_id"
+    t.integer  "to_group_id"
+    t.integer  "to_producer_id"
+    t.datetime "confirm_before", null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
   end
 
-  add_index "orders", ["group_id"], name: "index_orders_on_group_id", using: :btree
-  add_index "orders", ["user_id"], name: "index_orders_on_user_id", using: :btree
+  add_index "orders", ["from_group_id", "to_producer_id"], name: "orders_from_group_id_to_producer_id_idx", using: :btree
+  add_index "orders", ["from_user_id", "to_group_id"], name: "orders_from_user_id_to_group_id_idx", using: :btree
 
   create_table "orders_frequencies", force: :cascade do |t|
     t.integer  "group_id",       null: false
@@ -119,6 +122,10 @@ ActiveRecord::Schema.define(version: 20161017174520) do
   add_foreign_key "memberships", "groups", name: "memberships_group_id_fkey"
   add_foreign_key "memberships", "producers", column: "basic_resource_producer_id", name: "memberships_basic_resource_producer_id_fkey"
   add_foreign_key "memberships", "users", name: "memberships_user_id_fkey"
+  add_foreign_key "orders", "groups", column: "from_group_id", name: "orders_from_group_id_fkey"
+  add_foreign_key "orders", "groups", column: "to_group_id", name: "orders_to_group_id_fkey"
+  add_foreign_key "orders", "producers", column: "to_producer_id", name: "orders_to_producer_id_fkey"
+  add_foreign_key "orders", "users", column: "from_user_id", name: "orders_from_user_id_fkey"
   add_foreign_key "orders_frequencies", "groups"
   add_foreign_key "products", "producers"
   add_foreign_key "suppliers", "groups"

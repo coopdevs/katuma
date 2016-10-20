@@ -4,17 +4,7 @@ module Products
       class ProductsController < ApplicationController
         before_action :authenticate
         before_action :load_product, only: [:show, :update, :destroy]
-        before_action :load_producer, only: [:index, :create]
-
-        # GET /api/v1/products?producer_id=
-        #
-        # You must pass `producer_id` param as filter
-        #
-        def index
-          products = ProductFinder.new.find_by_producer(@producer)
-
-          render json: ProductsSerializer.new(products)
-        end
+        before_action :load_producer, only: [:create]
 
         # GET /api/v1/products/:id
         #
