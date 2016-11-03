@@ -32,7 +32,7 @@ module Products
           else
             render(
               status: :bad_request,
-              json: product.errors.to_json
+              json: { errors: product.errors.messages }
             )
           end
         end
@@ -45,7 +45,7 @@ module Products
           else
             render(
               status: :bad_request,
-              json: @product.errors.to_json
+              json: { errors: @product.errors.messages }
             )
           end
         end
