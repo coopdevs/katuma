@@ -3,7 +3,9 @@ module Products
     schema do
       type 'product'
 
-      map_properties :id, :name, :price, :unit, :producer_id, :created_at, :updated_at
+      map_properties :id, :name, :price, :unit, :producer_id
+      property :updated_at, item.updated_at.to_i
+      property :created_at, item.created_at.to_i
     end
   end
 end
