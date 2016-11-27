@@ -4,5 +4,8 @@ module Suppliers
 
     belongs_to :order, class_name: 'Suppliers::Order'
     belongs_to :product, class_name: 'Suppliers::Product'
+
+    validates :quantity, :price, presence: true
+    validates_numericality_of :price
   end
 end

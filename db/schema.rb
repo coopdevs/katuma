@@ -92,11 +92,11 @@ ActiveRecord::Schema.define(version: 20161017174520) do
   add_index "oauth_applications", ["uid"], name: "index_oauth_applications_on_uid", unique: true, using: :btree
 
   create_table "order_lines", force: :cascade do |t|
-    t.integer  "unit",       default: 1, null: false
-    t.integer  "price",                  null: false
-    t.integer  "quantity",               null: false
-    t.integer  "order_id",               null: false
-    t.integer  "product_id",             null: false
+    t.integer  "unit",                               default: 1, null: false
+    t.decimal  "price",      precision: 5, scale: 2,             null: false
+    t.integer  "quantity",                                       null: false
+    t.integer  "order_id",                                       null: false
+    t.integer  "product_id",                                     null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
