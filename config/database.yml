@@ -1,12 +1,14 @@
-development:
+development: &default
   adapter: postgresql
   encoding: unicode
   database: katuma_development
   pool: 5
   username: <%= ENV['DB_USERNAME'] || 'postgres' %>
   password: <%= ENV['DB_PASSWORD'] %>
+  host: db
 
 test:
+  <<: *default
   adapter: postgresql
   encoding: unicode
   database: katuma_test
