@@ -59,9 +59,9 @@ module Suppliers
       )
     end
 
-    describe '#build' do
+    describe '#relation' do
       context 'when `group` is `nil`' do
-        subject { described_class.new(user: user, group: nil).build }
+        subject { described_class.new(user: user, group: nil).relation }
 
         context 'when the user is `admin` of some producer' do
           let(:user) { User.find(producer_admin.id) }
@@ -79,7 +79,7 @@ module Suppliers
       context 'when `group` is not `nil`' do
         let(:suppliers_group) { Group.find(group.id) }
 
-        subject { described_class.new(user: user, group: suppliers_group).build }
+        subject { described_class.new(user: user, group: suppliers_group).relation }
 
         context 'when the user does not pertain to the group' do
           let(:user) { User.find(producer_admin.id) }

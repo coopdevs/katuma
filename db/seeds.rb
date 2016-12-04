@@ -80,13 +80,13 @@ prueba = ::BasicResources::Producer.new(
 # Products
 puts 'Creating products...'
 
-::Products::Product.create!(
+poma = ::Products::Product.create!(
   producer_id: jaume.id,
   name: 'Poma fuji',
   unit: ::Products::Product::UNITS[:kg],
   price: 2.99
 )
-::Products::Product.create!(
+bledas = ::Products::Product.create!(
   producer_id: jaume.id,
   name: 'Bledas al manat',
   unit: ::Products::Product::UNITS[:pc],
@@ -112,4 +112,33 @@ end
   group_id: tomatika.id,
   ical: delivery_schedule.to_ical,
   frequency_type: ::Suppliers::OrdersFrequency::FREQUENCY_TYPES[:delivery]
+)
+
+# Orders
+puts 'Creating orders...'
+
+first_order = ::Suppliers::Order.create!(
+  from_user_id: joanin.id,
+  to_group_id: tomatika.id,
+  confirm_before: 2.days.ago.utc
+)
+::Suppliers::Order.create!(
+  from_user_id: frida.id,
+  to_group_id: tomatika.id,
+  confirm_before: 2.days.ago.utc
+)
+::Suppliers::Order.create!(
+  from_user_id: frida.id,
+  to_group_id: cabas.id,
+  confirm_before: 3.days.ago.utc
+)
+
+# Order lines
+puts 'Creating order lines...'
+
+::Suppliers::OrderLine.create!(
+  order: first_order,
+  product_id: poma.id,
+  price: 2.57,
+  quantity: 1
 )

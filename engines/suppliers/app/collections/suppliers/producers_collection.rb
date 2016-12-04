@@ -9,7 +9,7 @@ module Suppliers
     end
 
     # @return [ActiveRecord::Relation<Producer>]
-    def build
+    def relation
       if group
         return Producer.none unless user_member_of_group?
 
