@@ -19,6 +19,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'rails', '4.2.5'
   s.add_dependency 'pg', '0.18.3'
   s.add_dependency 'ice_cube', '0.14.0'
+  s.add_dependency 'paranoia', '2.2.0'
 
   s.add_development_dependency 'rspec-rails', '3.5.0'
   s.add_development_dependency 'byebug', '9.0.5'
