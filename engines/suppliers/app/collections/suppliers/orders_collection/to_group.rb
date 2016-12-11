@@ -1,5 +1,5 @@
 module Suppliers
-  class OrdersCollection
+  module OrdersCollection
     class ToGroup
 
       # @param user [Suppliers::User]
@@ -12,7 +12,7 @@ module Suppliers
       end
 
       # @return [ActiveRecord::Relation<Order>]
-      def build
+      def relation
         context = Order
         context = context.where(from_user_id: user.id) unless all && to_group_id
         context = context.where(to_group_id: to_group_id) if to_group_id
