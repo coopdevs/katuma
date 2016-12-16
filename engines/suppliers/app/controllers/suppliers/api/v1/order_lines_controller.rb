@@ -3,6 +3,7 @@ module Suppliers
     module V1
       class OrderLinesController < ApplicationController
         before_action :authenticate
+        before_action :load_order_line, only: [:update, :destroy]
         before_action :load_order, only: [:index]
 
         # GET /api/v1/order_lines
@@ -16,10 +17,41 @@ module Suppliers
           render json: OrderLinesSerializer.new(order_lines)
         end
 
+        # PUT /api/v1/order_lines/:id
+        #
+        def update
+          if @order_line.update_attributes(order_line_params)
+            render json: OrderLineSerializer.new(@order_line)
+          else
+            render(
+              status: :bad_request,
+              json: { errors: @order_line.errors.messages }
+            )
+          end
+        end
+
+        # DELETE /api/v1/order_lines/:id
+        #
+        def destroy
+          if @order_line.destroy
+            head :no_content
+          else
+            head :bad_request
+          end
+        end
+
         private
 
-        def order_lines_params
-          params.permit(:order_id)
+        def order_line_params
+          params.permit(:order_id, :product_id, :quantity)
+        end
+
+        def load_order_line
+          @order_line = OrderLine.find_by_id(params[:id])
+
+          return head :not_found unless @order_line
+
+          authorize @order_line.order
         end
 
         def load_order

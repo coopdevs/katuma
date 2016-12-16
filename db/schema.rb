@@ -101,8 +101,7 @@ ActiveRecord::Schema.define(version: 20161017174520) do
     t.datetime "updated_at"
   end
 
-  add_index "order_lines", ["order_id"], name: "index_order_lines_on_order_id", using: :btree
-  add_index "order_lines", ["product_id"], name: "index_order_lines_on_product_id", using: :btree
+  add_index "order_lines", ["order_id", "product_id"], name: "index_order_lines_on_order_id_and_product_id", unique: true, using: :btree
 
   create_table "orders", force: :cascade do |t|
     t.integer  "from_user_id"
@@ -156,10 +155,12 @@ ActiveRecord::Schema.define(version: 20161017174520) do
   create_table "suppliers", force: :cascade do |t|
     t.integer  "group_id",    null: false
     t.integer  "producer_id", null: false
+    t.datetime "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
+  add_index "suppliers", ["deleted_at"], name: "index_suppliers_on_deleted_at", using: :btree
   add_index "suppliers", ["group_id", "producer_id"], name: "index_suppliers_on_group_id_and_producer_id", unique: true, using: :btree
 
   create_table "users", force: :cascade do |t|

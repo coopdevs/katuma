@@ -35,6 +35,7 @@ PATH
   specs:
     suppliers (0.0.1)
       ice_cube (= 0.14.0)
+      paranoia (= 2.2.0)
       pg (= 0.18.3)
       rails (= 4.2.5)
 
@@ -109,6 +110,8 @@ GEM
       pkg-config (~> 1.1.7)
     oat (0.4.6)
       activesupport
+    paranoia (2.2.0)
+      activerecord (>= 4.0, < 5.1)
     pg (0.18.3)
     pkg-config (1.1.7)
     pundit (1.0.1)
@@ -191,4 +194,4 @@ DEPENDENCIES
   suppliers!
 
 BUNDLED WITH
-   1.13.3
+   1.13.6

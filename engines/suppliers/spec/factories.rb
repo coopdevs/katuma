@@ -7,4 +7,7 @@ FactoryGirl.define do
 
   factory :order, class: Suppliers::Order do
   end
+
+  factory :order_line, class: Suppliers::OrderLine do
+  end
 end

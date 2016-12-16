@@ -38,17 +38,16 @@ ActiveRecord::Schema.define(version: 20161017174520) do
   add_index "memberships", ["basic_resource_producer_id", "user_id"], name: "memberships_basic_resource_producer_id_user_id_idx", unique: true, where: "(user_id IS NOT NULL)", using: :btree
 
   create_table "order_lines", force: :cascade do |t|
-    t.integer  "unit",       default: 1, null: false
-    t.integer  "price",                  null: false
-    t.integer  "quantity",               null: false
-    t.integer  "order_id",               null: false
-    t.integer  "product_id",             null: false
+    t.integer  "unit",                               default: 1, null: false
+    t.decimal  "price",      precision: 5, scale: 2,             null: false
+    t.integer  "quantity",                                       null: false
+    t.integer  "order_id",                                       null: false
+    t.integer  "product_id",                                     null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "order_lines", ["order_id"], name: "index_order_lines_on_order_id", using: :btree
-  add_index "order_lines", ["product_id"], name: "index_order_lines_on_product_id", using: :btree
+  add_index "order_lines", ["order_id", "product_id"], name: "index_order_lines_on_order_id_and_product_id", unique: true, using: :btree
 
   create_table "orders", force: :cascade do |t|
     t.integer  "from_user_id"
@@ -102,10 +101,12 @@ ActiveRecord::Schema.define(version: 20161017174520) do
   create_table "suppliers", force: :cascade do |t|
     t.integer  "group_id",    null: false
     t.integer  "producer_id", null: false
+    t.datetime "deleted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
+  add_index "suppliers", ["deleted_at"], name: "index_suppliers_on_deleted_at", using: :btree
   add_index "suppliers", ["group_id", "producer_id"], name: "index_suppliers_on_group_id_and_producer_id", unique: true, using: :btree
 
   create_table "users", force: :cascade do |t|

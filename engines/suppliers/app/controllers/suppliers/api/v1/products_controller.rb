@@ -15,7 +15,7 @@ module Suppliers
           load_group if products_params[:group_id]
           load_producer if products_params[:producer_id]
 
-          products = ProductsCollection.new(user: current_user, group: @group, producer: @producer).relation
+          products = ProductsCollection.new(group: @group, producer: @producer).relation
 
           render json: ProductsSerializer.new(products)
         end

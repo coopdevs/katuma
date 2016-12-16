@@ -1,5 +1,7 @@
 module Suppliers
-  class OrdersCollection
+  module OrdersCollection
+
+    module_function
 
     # @param user [Suppliers::User]
     # @param params [Hash]

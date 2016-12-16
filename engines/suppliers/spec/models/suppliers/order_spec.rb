@@ -30,7 +30,6 @@ module Suppliers
     describe 'Associations' do
       it { is_expected.to belong_to(:user) }
       it { is_expected.to belong_to(:group) }
-      it { is_expected.to have_many(:order_lines) }
     end
   end
 end

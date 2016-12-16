@@ -1,5 +1,9 @@
+require 'paranoia'
+
 module Suppliers
   class Supplier < ActiveRecord::Base
+    acts_as_paranoid
+
     self.table_name = :suppliers
 
     belongs_to :group, class_name: 'Suppliers::Group'.freeze

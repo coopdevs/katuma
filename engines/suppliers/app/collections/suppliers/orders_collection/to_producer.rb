@@ -1,5 +1,5 @@
 module Suppliers
-  class OrdersCollection
+  module OrdersCollection
     class ToProducer
 
       # @param user [Suppliers::User]
@@ -11,8 +11,10 @@ module Suppliers
         @confirm_before = params[:confirm_before]
       end
 
+      # TODO: maybe scope to user's producers when no params are passed in
+      #
       # @return [ActiveRecord::Relation<Order>]
-      def build
+      def relation
         context = Order
         context = context.where(from_group_id: from_group_id) if from_group_id
         context = context.where(to_producer_id: to_producer_id) if to_producer_id
