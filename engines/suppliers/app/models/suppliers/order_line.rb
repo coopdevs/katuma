@@ -7,5 +7,6 @@ module Suppliers
 
     validates :quantity, :price, presence: true
     validates_numericality_of :price
+    validates_uniqueness_of :product_id, scope: :order_id
   end
 end

@@ -47,8 +47,7 @@ ActiveRecord::Schema.define(version: 20161017174520) do
     t.datetime "updated_at"
   end
 
-  add_index "order_lines", ["order_id"], name: "index_order_lines_on_order_id", using: :btree
-  add_index "order_lines", ["product_id"], name: "index_order_lines_on_product_id", using: :btree
+  add_index "order_lines", ["order_id", "product_id"], name: "index_order_lines_on_order_id_and_product_id", unique: true, using: :btree
 
   create_table "orders", force: :cascade do |t|
     t.integer  "from_user_id"

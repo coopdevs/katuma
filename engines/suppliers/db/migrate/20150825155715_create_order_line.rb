@@ -11,7 +11,6 @@ class CreateOrderLine < ActiveRecord::Migration
       t.timestamps
     end
 
-    add_index :order_lines, [:order_id]
-    add_index :order_lines, [:product_id]
+    add_index :order_lines, [:order_id, :product_id], unique: true
   end
 end
