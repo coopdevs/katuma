@@ -16,16 +16,19 @@ module Suppliers
 
     delegate :to_ical, to: :frequency
 
-    attr_accessor :ical
+    attr_reader :ical
 
-    # TODO: better callback
-    #
-    # We can only store a `frequency` through `ical`
-    before_validation do
-      if ical.blank?
-        errors.add(:ical)
+    def ical=(value)
+      self.frequency = to_frequency(value)
+    end
+
+    private
+
+    def to_frequency(value)
+      if value.blank?
+        nil
       else
-        self.frequency = IceCube::Schedule.from_ical(ical)
+        IceCube::Schedule.from_ical(value)
       end
     end
   end

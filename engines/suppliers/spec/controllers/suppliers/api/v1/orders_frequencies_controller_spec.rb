@@ -244,7 +244,6 @@ module Suppliers
                 it do
                   is_expected.to match(
                     'errors' => {
-                      'ical' => ['is invalid'],
                       'frequency' => ["can't be blank"],
                       'frequency_type' => ["can't be blank", 'is not included in the list']
                     }
@@ -301,7 +300,7 @@ module Suppliers
                   end
                 end
 
-                context 'with not valid parameters' do
+                context 'with invalid parameters' do
                   let(:params) do
                     {
                       id: orders_frequency_id,
@@ -312,15 +311,19 @@ module Suppliers
                   it_behaves_like 'a bad request'
 
                   describe 'its body' do
+                    let(:params) do
+                      {
+                        id: orders_frequency_id,
+                        ical: ''
+                      }
+                    end
                     before { put :update, params }
 
                     subject { JSON.parse(response.body) }
 
                     it do
                       is_expected.to match(
-                        'errors' => {
-                          'ical' => ['is invalid']
-                        }
+                        'errors' => { 'frequency' => ['can\'t be blank'] }
                       )
                     end
                   end

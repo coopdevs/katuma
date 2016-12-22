@@ -69,5 +69,39 @@ module Suppliers
 
       it { is_expected.to eq(schedule.to_ical) }
     end
+
+    describe '#ical=' do
+      let(:orders_frequency) do
+        FactoryGirl.build(:orders_frequency, :confirmation, group_id: group.id)
+      end
+
+      context 'when providing a valid ical string' do
+        let(:ical_string) { "DTSTART;TZID=CET:20161221T224133\nRRULE:FREQ=WEEKLY" }
+
+        it 'changes the frequency' do
+          orders_frequency.ical = ical_string
+          expect(orders_frequency.frequency).to be_a(IceCube::Schedule)
+        end
+
+        it 'calls .from_ical on IceCube::Schedule' do
+          expect(IceCube::Schedule).to receive(:from_ical).with(ical_string)
+          orders_frequency.ical = ical_string
+        end
+      end
+
+      context 'when providing an empty string' do
+        subject { orders_frequency }
+        before { orders_frequency.ical = '' }
+
+        it { is_expected.not_to be_valid }
+      end
+
+      context 'when providing a nil value' do
+        subject { orders_frequency }
+        before { orders_frequency.ical = nil }
+
+        it { is_expected.not_to be_valid }
+      end
+    end
   end
 end
