@@ -86,7 +86,7 @@ poma = ::Products::Product.create!(
   unit: ::Products::Product::UNITS[:kg],
   price: 2.99
 )
-bledas = ::Products::Product.create!(
+::Products::Product.create!(
   producer_id: jaume.id,
   name: 'Bledas al manat',
   unit: ::Products::Product::UNITS[:pc],
