@@ -20,7 +20,9 @@ module Suppliers
     def actor_presence
       return if from_user_id.blank? ^ from_group_id.blank?
 
-      errors.add(:base, 'Specify a `from_group_id` or `from_user_id`, but not both.')
+      errors.add(
+        :base, 'Specify a `from_group_id` or `from_user_id`, but not both.'
+      )
     end
 
     # Validates `to_group_id` xor `to_producer_id` presence
