@@ -9,9 +9,9 @@ module Suppliers
     belongs_to :to_group, class_name: 'Suppliers::Group'.freeze
     belongs_to :to_producer, class_name: 'Suppliers::Producer'.freeze
 
+    validates :confirm_before, presence: true
     validate :actor_presence
     validate :target_presence
-    validates :confirm_before, presence: true
 
     private
 

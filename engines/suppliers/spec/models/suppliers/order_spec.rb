@@ -2,29 +2,18 @@ require 'rails_helper'
 
 module Suppliers
   describe Order do
-    let(:user) do
-      user = FactoryGirl.create(:user)
-      User.find(user.id)
-    end
-    let(:group) do
-      group = FactoryGirl.create(:group)
-      Group.find(group.id)
-    end
-
     describe 'Validations' do
-      it 'has a valid factory' do
-        expect(
-          FactoryGirl.build(
-            :order,
-            user: user,
-            group: group,
-            confirm_before: Time.now.utc
-          )
-        ).to be_valid
+      it { is_expected.to validate_presence_of(:user) }
+
+      context 'when there is no actor' do
+        subject { FactoryGirl.build(:order, from_user_id: nil) }
+        it { is_expected.not_to be_valid }
       end
 
-      it { is_expected.to validate_presence_of(:user) }
-      it { is_expected.to validate_presence_of(:group) }
+      context 'when there is an actor' do
+        subject { FactoryGirl.build(:order) }
+        it { is_expected.to be_valid }
+      end
     end
 
     describe 'Associations' do
