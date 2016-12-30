@@ -42,8 +42,13 @@ module Suppliers
     end
 
     describe 'Associations' do
-      it { is_expected.to belong_to(:user) }
-      it { is_expected.to belong_to(:group) }
+      it { is_expected.to have_many(:order_lines) }
+
+      it { is_expected.to belong_to(:from_user) }
+      it { is_expected.to belong_to(:from_group) }
+
+      it { is_expected.to belong_to(:to_group) }
+      it { is_expected.to belong_to(:to_producer) }
     end
   end
 end
