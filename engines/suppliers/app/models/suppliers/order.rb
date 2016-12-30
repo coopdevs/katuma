@@ -9,9 +9,9 @@ module Suppliers
     belongs_to :to_group, class_name: 'Suppliers::Group'.freeze
     belongs_to :to_producer, class_name: 'Suppliers::Producer'.freeze
 
+    validates :confirm_before, presence: true
     validate :actor_presence
     validate :target_presence
-    validates :confirm_before, presence: true
 
     private
 
@@ -20,7 +20,9 @@ module Suppliers
     def actor_presence
       return if from_user_id.blank? ^ from_group_id.blank?
 
-      errors.add(:base, 'Specify a `from_group_id` or `from_user_id`, but not both.')
+      errors.add(
+        :base, 'Specify a `from_group_id` or `from_user_id`, but not both.'
+      )
     end
 
     # Validates `to_group_id` xor `to_producer_id` presence
