@@ -13,8 +13,6 @@ module Suppliers
         Suppliers::Group.find(group.id)
       end
 
-      # it { is_expected.to validate_presence_of(:user) }
-
       context 'when there is no actor' do
         subject { FactoryGirl.build(:order, from_user_id: nil) }
         it { is_expected.not_to be_valid }
