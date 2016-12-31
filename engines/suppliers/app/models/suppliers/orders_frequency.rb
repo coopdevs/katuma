@@ -16,7 +16,10 @@ module Suppliers
 
     delegate :to_ical, to: :frequency
 
+    # TODO: Rename the delegation above to :ical and remove this reader; While
+    # to_ical returns a valid ICAL string, this reader returns nil.
     attr_reader :ical
+    deprecate :ical
 
     def ical=(value)
       self.frequency = to_frequency(value)
