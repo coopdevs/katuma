@@ -27,12 +27,11 @@ module Suppliers
 
     private
 
+    # Returns the passed ical frequency value as an IceCube Schedule instance
+    #
+    # @return [Maybe<IceCube::Schedule>]
     def to_frequency(value)
-      if value.blank?
-        nil
-      else
-        IceCube::Schedule.from_ical(value)
-      end
+      IceCube::Schedule.from_ical(value) if value.present?
     end
   end
 end
