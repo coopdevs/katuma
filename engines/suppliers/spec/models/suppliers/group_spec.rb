@@ -5,6 +5,7 @@ module Suppliers
     describe 'Associations' do
       it { is_expected.to have_many(:suppliers) }
       it { is_expected.to have_many(:producers).through(:suppliers) }
+      it { is_expected.to have_many(:orders_frequencies) }
     end
   end
 end

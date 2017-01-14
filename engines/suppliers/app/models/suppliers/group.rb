@@ -9,6 +9,6 @@ module Suppliers
     has_many :producers,
       class_name: 'Suppliers::Producer'.freeze,
       through: :suppliers
-    has_one :orders_frequencies, class_name: 'Suppliers::OrdersFrequency'.freeze
+    has_many :orders_frequencies, class_name: 'Suppliers::OrdersFrequency'.freeze
   end
 end
