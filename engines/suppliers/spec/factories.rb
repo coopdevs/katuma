@@ -4,7 +4,7 @@ FactoryGirl.define do
 
   factory :orders_frequency, class: Suppliers::OrdersFrequency do
     trait :confirmation do
-      frequency_type Suppliers::OrdersFrequency::FREQUENCY_TYPES[:confirmation]
+      frequency_type Suppliers::FrequencyType::TYPES[:confirmation]
     end
   end
 

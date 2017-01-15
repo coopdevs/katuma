@@ -13,7 +13,7 @@ module Suppliers
         :orders_frequency,
         group_id: group.id,
         ical: schedule.to_ical,
-        frequency_type: OrdersFrequency::FREQUENCY_TYPES[:confirmation]
+        frequency_type: Frequency::TYPES[:confirmation]
       )
     end
     let(:attributes) do

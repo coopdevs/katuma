@@ -58,7 +58,7 @@ module Suppliers
               :orders_frequency,
               group_id: group.id,
               ical: schedule.to_ical,
-              frequency_type: OrdersFrequency::FREQUENCY_TYPES[:confirmation]
+              frequency_type: Frequency::TYPES[:confirmation]
             )
           end
           let(:delivery_frequency) do
@@ -66,7 +66,7 @@ module Suppliers
               :orders_frequency,
               group_id: group.id,
               ical: schedule.to_ical,
-              frequency_type: OrdersFrequency::FREQUENCY_TYPES[:delivery]
+              frequency_type: Frequency::TYPES[:delivery]
             )
           end
 
@@ -175,11 +175,29 @@ module Suppliers
               {
                 group_id: group.id,
                 ical: schedule.to_ical,
-                frequency_type: OrdersFrequency::FREQUENCY_TYPES[:delivery]
+                frequency_type: 'delivery'
               }
             end
 
             subject { post :create, params }
+
+            context 'when passing delivery frequency type' do
+              before { post :create, params }
+
+              describe 'its body' do
+                subject { JSON.parse(response.body) }
+                it { is_expected.to include('frequency_type' => 1) }
+              end
+            end
+
+            context 'when passing confirmation frequency type' do
+              before { post :create, params.merge(frequency_type: 'confirmation') }
+
+              describe 'its body' do
+                subject { JSON.parse(response.body) }
+                it { is_expected.to include('frequency_type' => 0) }
+              end
+            end
 
             context 'when the user is associated to the group' do
               context 'as an `admin`' do
@@ -194,7 +212,7 @@ module Suppliers
                     is_expected.to include(
                       'group_id' => params[:group_id],
                       'to_ical' => params[:ical],
-                      'frequency_type' => params[:frequency_type]
+                      'frequency_type' => 1
                     )
                   end
                 end

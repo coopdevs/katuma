@@ -13,7 +13,7 @@ module Suppliers
         id: 13,
         group_id: 666,
         to_ical: schedule.to_ical,
-        frequency_type: OrdersFrequency::FREQUENCY_TYPES[:confirmation],
+        frequency_type: Frequency::TYPES[:confirmation],
         created_at: Time.now.utc,
         updated_at: Time.now.utc
       )
