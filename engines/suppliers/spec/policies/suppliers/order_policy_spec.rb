@@ -3,7 +3,7 @@ require 'pundit/rspec'
 
 module Suppliers
   describe OrderPolicy do
-    subject { described_class }
+    subject(:order_policy) { described_class }
 
     permissions :show?, :update?, :destroy? do
       let(:user) { FactoryGirl.create(:user) }
@@ -11,15 +11,15 @@ module Suppliers
       let(:order) do
         FactoryGirl.create(
           :order,
-          user_id: user.id,
-          group_id: group.id,
+          from_user_id: user.id,
+          to_group_id: group.id,
           confirm_before: 3.days.from_now.utc
         )
       end
 
       context "when the current user is the order's user" do
         it 'grants access' do
-          expect(subject).to permit(user, order)
+          expect(order_policy).to permit(user, order)
         end
       end
 

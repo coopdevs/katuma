@@ -6,8 +6,8 @@ module Suppliers
       instance_double(
         Order,
         id: 13,
-        user_id: 333,
-        group_id: 666,
+        from_user_id: 333,
+        to_group_id: 666,
         confirm_before: Time.now.utc,
         created_at: Time.now.utc,
         updated_at: Time.now.utc
@@ -17,8 +17,8 @@ module Suppliers
       instance_double(
         Order,
         id: 17,
-        user_id: 335,
-        group_id: 667,
+        from_user_id: 335,
+        to_group_id: 667,
         confirm_before: Time.now.utc,
         created_at: Time.now.utc,
         updated_at: Time.now.utc
