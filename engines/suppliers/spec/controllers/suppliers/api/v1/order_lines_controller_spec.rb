@@ -75,7 +75,6 @@ module Suppliers
               :order_line,
               order_id: order.id,
               quantity: 1,
-              price: 1.99,
               product_id: manzana.id
             )
           end
@@ -84,7 +83,6 @@ module Suppliers
               :order_line,
               order_id: order.id,
               quantity: 1,
-              price: 2.05,
               product_id: pera.id
             )
           end
@@ -101,7 +99,6 @@ module Suppliers
               :order_line,
               order_id: other_user_order.id,
               quantity: 1,
-              price: 2.05,
               product_id: pera.id
             )
           end
@@ -128,7 +125,6 @@ module Suppliers
                     'order_id' => order.id,
                     'product_id' => manzana.id,
                     'quantity' => order_line_manzana.quantity,
-                    'price' => order_line_manzana.price.to_s,
                     'created_at' => order_line_manzana.created_at.to_i,
                     'updated_at' => order_line_manzana.updated_at.to_i
                   ),
@@ -137,7 +133,6 @@ module Suppliers
                     'order_id' => order.id,
                     'product_id' => pera.id,
                     'quantity' => order_line_pera.quantity,
-                    'price' => order_line_pera.price.to_s,
                     'created_at' => order_line_pera.created_at.to_i,
                     'updated_at' => order_line_pera.updated_at.to_i
                   )
@@ -181,7 +176,6 @@ module Suppliers
                       'order_id' => order.id,
                       'product_id' => manzana.id,
                       'quantity' => params[:quantity],
-                      'price' => order_line_manzana.price.to_s,
                       'updated_at' => order_line_manzana.updated_at.to_i,
                       'created_at' => order_line_manzana.created_at.to_i
                     )

@@ -38,11 +38,10 @@ ActiveRecord::Schema.define(version: 20161017174520) do
   add_index "memberships", ["basic_resource_producer_id", "user_id"], name: "memberships_basic_resource_producer_id_user_id_idx", unique: true, where: "(user_id IS NOT NULL)", using: :btree
 
   create_table "order_lines", force: :cascade do |t|
-    t.integer  "unit",                               default: 1, null: false
-    t.decimal  "price",      precision: 5, scale: 2,             null: false
-    t.integer  "quantity",                                       null: false
-    t.integer  "order_id",                                       null: false
-    t.integer  "product_id",                                     null: false
+    t.integer  "unit",       default: 1, null: false
+    t.integer  "quantity",               null: false
+    t.integer  "order_id",               null: false
+    t.integer  "product_id",             null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
