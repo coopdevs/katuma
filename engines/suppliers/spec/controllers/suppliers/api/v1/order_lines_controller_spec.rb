@@ -15,6 +15,12 @@ module Suppliers
             it_behaves_like 'an unauthorized request'
           end
 
+          describe 'POST #create' do
+            subject { post :create }
+
+            it_behaves_like 'an unauthorized request'
+          end
+
           describe 'PUT #update' do
             subject { put :update, id: 666 }
 
@@ -138,6 +144,71 @@ module Suppliers
                   )
                 )
               end
+            end
+          end
+
+          describe 'POST #create' do
+            subject { post :create, params }
+
+            context 'when the user is associated to the order' do
+              context 'and the user can order the given product' do
+                let(:params) do
+                  {
+                    order_id: order.id,
+                    product_id: manzana.id,
+                    quantity: 3
+                  }
+                end
+
+                it_behaves_like 'a successful request'
+              end
+
+              context 'but the user cannot order the given product' do
+                let(:other_producer) do
+                  producer = FactoryGirl.build(:producer, name: 'Not related to group')
+                  ::BasicResources::ProducerCreator.new(
+                    producer: producer,
+                    creator: other_user
+                  ).create!
+                end
+                let(:other_product) do
+                  FactoryGirl.create(
+                    :product,
+                    producer_id: other_producer.id,
+                    price: 3.99
+                  )
+                end
+                let(:params) do
+                  {
+                    order_id: order.id,
+                    product_id: other_product.id,
+                    quantity: 3
+                  }
+                end
+
+                it_behaves_like 'a forbidden request'
+              end
+            end
+
+            context 'when the user is not associated to the order' do
+              let(:other_order) do
+                FactoryGirl.create(
+                  :order,
+                  from_user_id: other_user.id,
+                  to_group_id: group.id,
+                  confirm_before: 3.days.from_now.utc
+                )
+              end
+
+              let(:params) do
+                {
+                  order_id: other_order.id,
+                  product_id: pera.id,
+                  quantity: 3
+                }
+              end
+
+              it_behaves_like 'a forbidden request'
             end
           end
 

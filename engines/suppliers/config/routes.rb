@@ -6,7 +6,7 @@ Suppliers::Engine.routes.draw do
       resources :products, only: [:index]
       resources :orders_frequencies, except: [:new, :edit, :destroy]
       resources :orders, except: [:new, :edit]
-      resources :order_lines, only: [:index, :update, :destroy]
+      resources :order_lines, only: [:index, :create, :update, :destroy]
     end
   end
 end
