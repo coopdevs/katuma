@@ -26,6 +26,12 @@ module Suppliers
 
             it_behaves_like 'an unauthorized request'
           end
+
+          describe 'DELETE #destroy' do
+            subject { delete :destroy, id: 666 }
+
+            it_behaves_like 'an unauthorized request'
+          end
         end
 
         context 'Authenticated user' do
