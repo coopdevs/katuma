@@ -6,35 +6,32 @@ module Suppliers
     subject { described_class }
 
     permissions :show?, :update?, :destroy? do
-      let(:user) { FactoryGirl.create(:user) }
-      let(:group) { FactoryGirl.create(:group) }
+      let(:user) { FactoryGirl.build(:user) }
+      let(:group) { FactoryGirl.build(:group) }
       let(:order) do
-        FactoryGirl.create(
+        FactoryGirl.build(
           :order,
-          user_id: user.id,
-          group_id: group.id,
+          from_user_id: user.id,
+          to_group_id: group.id,
           confirm_before: 3.days.from_now.utc
         )
       end
 
       context "when the current user is the order's user" do
-        it 'grants access' do
-          expect(subject).to permit(user, order)
-        end
+        it { is_expected.to permit(user, order) }
       end
 
       context "when the current user is not the order's user" do
         let(:other_user) { FactoryGirl.create(:user) }
 
-        it 'denies access' do
-          expect(subject).to_not permit(other_user, order)
-        end
+        it { is_expected.not_to permit(other_user, order) }
       end
     end
 
     permissions :create? do
-      it 'is set to `false` by default' do
-        expect(subject).to_not permit(instance_double(User), instance_double(Producer))
+      it do
+        is_expected
+          .not_to permit(instance_double(User), instance_double(Producer))
       end
     end
   end
