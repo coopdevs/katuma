@@ -80,7 +80,16 @@ module Suppliers
               subject { JSON.parse(response.body) }
 
               its(:size) { is_expected.to eq(1) }
-              it { is_expected.to include(JSON.parse(supplier.to_json)) }
+
+              it do
+                is_expected.to include(
+                  'id' => supplier.id,
+                  'group_id' => supplier.group_id,
+                  'producer_id' => supplier.producer_id,
+                  'created_at' => supplier.created_at.as_json,
+                  'updated_at' => supplier.updated_at.as_json
+                )
+              end
             end
           end
 
@@ -111,7 +120,15 @@ module Suppliers
 
                   subject { JSON.parse(response.body) }
 
-                  it { is_expected.to include(JSON.parse(supplier.to_json)) }
+                  it do
+                    is_expected.to include(
+                      'id' => supplier.id,
+                      'group_id' => supplier.group_id,
+                      'producer_id' => supplier.producer_id,
+                      'created_at' => supplier.created_at.as_json,
+                      'updated_at' => supplier.updated_at.as_json
+                    )
+                  end
                 end
               end
 
