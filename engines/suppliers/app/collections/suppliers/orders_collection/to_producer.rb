@@ -1,3 +1,5 @@
+require 'suppliers/orders_collection'
+
 module Suppliers
   module OrdersCollection
     class ToProducer

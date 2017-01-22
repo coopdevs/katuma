@@ -16,7 +16,9 @@ module Suppliers
         #  - all
         #
         def index
-          orders = OrdersCollection.build(user: current_user, params: orders_params).relation
+          orders = OrdersCollection
+            .build(user: current_user, params: orders_params)
+            .relation
 
           render json: OrdersSerializer.new(orders)
         end
