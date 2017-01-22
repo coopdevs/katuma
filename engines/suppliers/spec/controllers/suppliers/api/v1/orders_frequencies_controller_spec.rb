@@ -58,7 +58,7 @@ module Suppliers
               :orders_frequency,
               group_id: group.id,
               ical: schedule.to_ical,
-              frequency_type: Frequency::TYPES[:confirmation]
+              frequency_type: FrequencyType::TYPES[:confirmation]
             )
           end
           let(:delivery_frequency) do
@@ -66,7 +66,7 @@ module Suppliers
               :orders_frequency,
               group_id: group.id,
               ical: schedule.to_ical,
-              frequency_type: Frequency::TYPES[:delivery]
+              frequency_type: FrequencyType::TYPES[:delivery]
             )
           end
 
