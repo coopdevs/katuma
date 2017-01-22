@@ -101,7 +101,7 @@ confirmation_schedule = IceCube::Schedule.new do |f|
 end
 ::Suppliers::OrdersFrequency.create!(
   group_id: tomatika.id,
-  ical: confirmation_schedule.to_ical,
+  ical: confirmation_schedule.ical,
   frequency_type: ::Suppliers::OrdersFrequency::FREQUENCY_TYPES[:confirmation]
 )
 
@@ -110,7 +110,7 @@ delivery_schedule = IceCube::Schedule.new do |f|
 end
 ::Suppliers::OrdersFrequency.create!(
   group_id: tomatika.id,
-  ical: delivery_schedule.to_ical,
+  ical: delivery_schedule.ical,
   frequency_type: ::Suppliers::OrdersFrequency::FREQUENCY_TYPES[:delivery]
 )
 

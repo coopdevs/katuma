@@ -8,7 +8,7 @@ module Suppliers
         OrdersFrequency,
         id: 13,
         group_id: 666,
-        to_ical: schedule.to_ical,
+        ical: schedule.to_ical,
         frequency_type: FrequencyType.new(:confirmation).to_s,
         created_at: Time.now.utc,
         updated_at: Time.now.utc

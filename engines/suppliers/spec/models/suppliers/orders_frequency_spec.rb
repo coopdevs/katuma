@@ -51,8 +51,8 @@ module Suppliers
       end
     end
 
-    describe '#to_ical' do
-      subject { orders_frequency.to_ical }
+    describe '#ical' do
+      subject { orders_frequency.ical }
 
       let(:orders_frequency) do
         FactoryGirl.create(

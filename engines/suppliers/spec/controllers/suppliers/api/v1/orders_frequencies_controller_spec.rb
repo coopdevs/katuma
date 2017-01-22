@@ -102,7 +102,7 @@ module Suppliers
                     match(
                       'id' => confirmation_frequency.id,
                       'group_id' => confirmation_frequency.group_id,
-                      'to_ical' => confirmation_frequency.to_ical,
+                      'to_ical' => confirmation_frequency.ical,
                       'frequency_type' => confirmation_frequency.frequency_type,
                       'created_at' => confirmation_frequency.created_at.as_json,
                       'updated_at' => confirmation_frequency.updated_at.as_json
@@ -110,7 +110,7 @@ module Suppliers
                     match(
                       'id' => delivery_frequency.id,
                       'group_id' => delivery_frequency.group_id,
-                      'to_ical' => delivery_frequency.to_ical,
+                      'to_ical' => delivery_frequency.ical,
                       'frequency_type' => delivery_frequency.frequency_type,
                       'created_at' => delivery_frequency.created_at.as_json,
                       'updated_at' => delivery_frequency.updated_at.as_json
@@ -147,7 +147,7 @@ module Suppliers
                     is_expected.to match(
                       'id' => confirmation_frequency.id,
                       'group_id' => confirmation_frequency.group_id,
-                      'to_ical' => confirmation_frequency.to_ical,
+                      'to_ical' => confirmation_frequency.ical,
                       'frequency_type' => confirmation_frequency.frequency_type,
                       'created_at' => confirmation_frequency.created_at.as_json,
                       'updated_at' => confirmation_frequency.updated_at.as_json
