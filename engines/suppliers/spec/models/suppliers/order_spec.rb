@@ -16,12 +16,14 @@ module Suppliers
       it { is_expected.to validate_presence_of(:confirm_before) }
 
       context 'when there is no actor' do
-        subject { FactoryGirl.build(:order, from_user_id: nil) }
+        subject { FactoryGirl.build(:order) }
         it { is_expected.not_to be_valid }
       end
 
       context 'when there are both user and group as actors' do
-        subject { FactoryGirl.build(:order, from_group_id: group.id) }
+        subject do
+          FactoryGirl.build(:order, from_user_id: user.id, from_group_id: group.id)
+        end
         it { is_expected.not_to be_valid }
       end
 
@@ -31,12 +33,14 @@ module Suppliers
       end
 
       context 'when there are both group and producer as targets' do
-        subject { FactoryGirl.build(:order, to_producer_id: user.id) }
+        subject do
+          FactoryGirl.build(:order, to_group_id: group.id, to_producer_id: user.id)
+        end
         it { is_expected.not_to be_valid }
       end
 
       context 'when there is an actor and a target' do
-        subject { FactoryGirl.build(:order) }
+        subject { FactoryGirl.build(:order, :from_user_to_group) }
         it { is_expected.to be_valid }
       end
     end

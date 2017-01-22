@@ -7,12 +7,8 @@ module Suppliers
         user = FactoryGirl.create(:user)
         ::BasicResources::User.find(user.id)
       end
-      let(:group_admin) do
-        FactoryGirl.create(:user)
-      end
-      let(:group_member) do
-        FactoryGirl.create(:user)
-      end
+      let(:group_admin) { FactoryGirl.create(:user) }
+      let(:group_member) { FactoryGirl.create(:user) }
       let(:group) { FactoryGirl.create(:group) }
       let(:other_group) { FactoryGirl.create(:group) }
       let!(:admin_group_membership) do
@@ -50,8 +46,7 @@ module Suppliers
           FactoryGirl.create(
             :order,
             from_group_id: group.id,
-            to_producer_id: producer_for_user.id,
-            confirm_before: Time.now.utc
+            to_producer_id: producer_for_user.id
           )
         end
         let!(:second_order) do
@@ -66,76 +61,38 @@ module Suppliers
           FactoryGirl.create(
             :order,
             from_group_id: other_group.id,
-            to_producer_id: producer_for_user.id,
-            confirm_before: Time.now.utc
+            to_producer_id: producer_for_user.id
           )
         end
 
-        subject { described_class.new(user: group_admin, params: params).relation }
+        subject do
+          described_class.new(user: group_admin, params: params).relation
+        end
 
         context 'passing no parameters' do
           let(:params) { {} }
-
-          it do
-            is_expected.to match(
-              [
-                first_order,
-                second_order,
-                other_order
-              ]
-            )
-          end
+          it { is_expected.to contain_exactly(first_order, second_order, other_order) }
         end
 
         context 'passing `from_group_id` parameter' do
-          let(:params) do
-            {
-              from_group_id: group.id
-            }
-          end
-
-          it do
-            is_expected.to match(
-              [
-                first_order,
-                second_order
-              ]
-            )
-          end
+          let(:params) { { from_group_id: group.id } }
+          it { is_expected.to contain_exactly(first_order, second_order) }
         end
 
         context 'passing `to_producer_id` parameter' do
-          let(:params) do
-            {
-              to_producer_id: producer_for_user.id
-            }
-          end
+          let(:params) { { to_producer_id: producer_for_user.id } }
 
           it do
-            is_expected.to match(
-              [
-                first_order,
-                second_order,
-                other_order
-              ]
-            )
+            is_expected.to contain_exactly(first_order, second_order, other_order)
           end
         end
 
         context 'passing `confirm_before` parameter' do
           let(:params) do
-            {
-              confirm_before: Time.at(1318996912).utc.to_datetime
-            }
+            { confirm_before: Time.at(1318996912).utc.to_datetime }
           end
 
-          it do
-            is_expected.to match(
-              [
-                second_order
-              ]
-            )
-          end
+          it { is_expected.to contain_exactly(second_order) }
         end
       end
     end
