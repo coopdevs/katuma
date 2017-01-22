@@ -11,7 +11,7 @@ module Suppliers
         :orders_frequency,
         group_id: group.id,
         ical: schedule.to_ical,
-        frequency_type: FrequencyType::TYPES[:confirmation]
+        frequency_type: FrequencyType.new(:confirmation).to_s
       )
     end
 
