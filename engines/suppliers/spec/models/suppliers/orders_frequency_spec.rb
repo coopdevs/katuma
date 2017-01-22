@@ -17,7 +17,7 @@ module Suppliers
 
       it do
         is_expected.to validate_inclusion_of(:frequency_type)
-          .in_array(Frequency::TYPES.values)
+          .in_array(FrequencyType::TYPES.values)
       end
 
       describe 'validates uniqueness of `frequency_type` scoped to `group_id`' do
