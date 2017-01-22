@@ -55,24 +55,24 @@ module Suppliers
           let(:order) do
             FactoryGirl.create(
               :order,
-              user_id: user.id,
-              group_id: group.id,
+              from_user_id: user.id,
+              to_group_id: group.id,
               confirm_before: 3.days.from_now.utc
             )
           end
           let(:other_order) do
             FactoryGirl.create(
               :order,
-              user_id: user.id,
-              group_id: group.id,
+              from_user_id: user.id,
+              to_group_id: group.id,
               confirm_before: 4.days.from_now.utc
             )
           end
           let(:other_user_order) do
             FactoryGirl.create(
               :order,
-              user_id: other_user.id,
-              group_id: group.id,
+              from_user_id: other_user.id,
+              to_group_id: group.id,
               confirm_before: 5.days.from_now.utc
             )
           end
@@ -97,22 +97,26 @@ module Suppliers
 
               it do
                 is_expected.to contain_exactly(
-                  match(
+                  {
                     'id' => order.id,
-                    'user_id' => order.user_id,
-                    'group_id' => order.group_id,
-                    'confirm_before' => order.confirm_before.as_json,
-                    'created_at' => order.created_at.as_json,
-                    'updated_at' => order.updated_at.as_json
-                  ),
-                  match(
+                    'from_user_id' => order.from_user_id,
+                    'from_group_id' => order.from_group_id,
+                    'to_group_id' => order.to_group_id,
+                    'to_producer_id' => order.to_producer_id,
+                    'confirm_before' => order.confirm_before.to_i,
+                    'created_at' => order.created_at.to_i,
+                    'updated_at' => order.updated_at.to_i
+                  },
+                  {
                     'id' => other_order.id,
-                    'user_id' => other_order.user_id,
-                    'group_id' => other_order.group_id,
-                    'confirm_before' => other_order.confirm_before.as_json,
-                    'created_at' => other_order.created_at.as_json,
-                    'updated_at' => other_order.updated_at.as_json
-                  )
+                    'from_user_id' => other_order.from_user_id,
+                    'from_group_id' => other_order.from_group_id,
+                    'to_group_id' => other_order.to_group_id,
+                    'to_producer_id' => other_order.to_producer_id,
+                    'confirm_before' => other_order.confirm_before.to_i,
+                    'created_at' => other_order.created_at.to_i,
+                    'updated_at' => other_order.updated_at.to_i
+                  }
                 )
               end
             end
@@ -141,13 +145,15 @@ module Suppliers
                   subject { JSON.parse(response.body) }
 
                   it do
-                    is_expected.to match(
+                    is_expected.to eq(
                       'id' => order.id,
-                      'user_id' => order.user_id,
-                      'group_id' => order.group_id,
-                      'confirm_before' => order.confirm_before.as_json,
-                      'created_at' => order.created_at.as_json,
-                      'updated_at' => order.updated_at.as_json
+                      'from_user_id' => order.from_user_id,
+                      'from_group_id' => order.from_group_id,
+                      'to_group_id' => order.to_group_id,
+                      'to_producer_id' => order.to_producer_id,
+                      'confirm_before' => order.confirm_before.to_i,
+                      'created_at' => order.created_at.to_i,
+                      'updated_at' => order.updated_at.to_i
                     )
                   end
                 end
@@ -164,15 +170,15 @@ module Suppliers
           describe 'POST #create' do
             let(:params) do
               {
-                group_id: group.id,
+                to_group_id: group.id,
                 confirm_before: 3.days.from_now.utc.as_json
               }
             end
 
-            subject { post :create, params }
-
             context 'when the user is associated to the group' do
-              it_behaves_like 'a successful request'
+              it_behaves_like 'a successful request' do
+                subject { post :create, params }
+              end
 
               describe 'its body' do
                 before { post :create, params }
@@ -181,9 +187,9 @@ module Suppliers
 
                 it do
                   is_expected.to include(
-                    'user_id' => user.id,
-                    'group_id' => params[:group_id],
-                    'confirm_before' => params[:confirm_before]
+                    'from_user_id' => user.id,
+                    'to_group_id' => params[:to_group_id],
+                    'confirm_before' => DateTime.parse(params[:confirm_before]).to_i
                   )
                 end
               end
@@ -192,40 +198,36 @@ module Suppliers
             context 'when the user is not associated to the group' do
               before { group_membership.destroy! }
 
-              it_behaves_like 'a forbidden request'
+              it_behaves_like 'a forbidden request' do
+                subject { post :create, params }
+              end
             end
 
             context 'with wrong parameters' do
-              let(:params) do
-                {
-                  group_id: group.id
-                }
+              let(:params) { { to_group_id: group.id, confirm_before: nil } }
+
+              it_behaves_like 'a bad request' do
+                subject { post :create, params }
               end
 
-              it_behaves_like 'a bad request'
-
               describe 'its body' do
-                before { post :create, params }
-
                 subject { JSON.parse(response.body) }
 
+                before { post :create, params }
+
                 it do
-                  is_expected.to match(
-                    'errors' => {
-                      'confirm_before' => ["can't be blank"]
-                    }
+                  is_expected.to eq(
+                    'errors' => { 'confirm_before' => ["can't be blank"] }
                   )
                 end
               end
 
               context 'passing a non existent group_id' do
-                let(:params) do
-                  {
-                    group_id: 666
-                  }
-                end
+                let(:params) { { to_group_id: 666 } }
 
-                it_behaves_like 'a not found request'
+                it_behaves_like 'a not found request' do
+                  subject { post :create, params }
+                end
               end
             end
           end
@@ -262,20 +264,15 @@ module Suppliers
                   it do
                     is_expected.to include(
                       'id' => order.id,
-                      'group_id' => order.group_id,
-                      'created_at' => order.created_at.as_json
+                      'to_group_id' => order.to_group_id,
+                      'created_at' => order.created_at.to_i
                     )
                   end
                 end
               end
 
               context 'with not valid parameters' do
-                let(:params) do
-                  {
-                    id: order_id,
-                    group_id: nil
-                  }
-                end
+                let(:params) { { id: order_id, to_group_id: nil } }
 
                 it_behaves_like 'a bad request'
 
@@ -284,13 +281,7 @@ module Suppliers
 
                   subject { JSON.parse(response.body) }
 
-                  it do
-                    is_expected.to match(
-                      'errors' => {
-                        'group' => ["can't be blank"]
-                      }
-                    )
-                  end
+                  it { is_expected.to have_key('errors') }
                 end
               end
             end
