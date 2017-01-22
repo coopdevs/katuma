@@ -4,11 +4,7 @@ require 'ice_cube'
 module Suppliers
   describe OrdersFrequency do
     let(:group) { FactoryGirl.create(:group) }
-    let(:schedule) do
-      IceCube::Schedule.new do |schedule|
-        schedule.add_recurrence_rule(IceCube::Rule.weekly)
-      end
-    end
+    let(:schedule) { FactoryGirl.build(:schedule) }
 
     describe 'Validations' do
       it { is_expected.to validate_presence_of(:group) }

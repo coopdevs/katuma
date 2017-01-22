@@ -48,11 +48,7 @@ module Suppliers
               role: ::BasicResources::Membership::ROLES[:admin]
             )
           end
-          let(:schedule) do
-            IceCube::Schedule.new do |f|
-              f.add_recurrence_rule IceCube::Rule.weekly
-            end
-          end
+          let(:schedule) { FactoryGirl.build(:schedule) }
           let(:confirmation_frequency) do
             FactoryGirl.create(
               :orders_frequency,
@@ -272,11 +268,7 @@ module Suppliers
           end
 
           describe 'PUT #update' do
-            let(:new_schedule) do
-              IceCube::Schedule.new do |f|
-                f.add_recurrence_rule IceCube::Rule.weekly.day(:tuesday)
-              end
-            end
+            let(:new_schedule) { FactoryGirl.build(:schedule) }
             let(:params) do
               {
                 id: orders_frequency_id,

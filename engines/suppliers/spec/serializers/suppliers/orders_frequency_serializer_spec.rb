@@ -3,9 +3,7 @@ require 'rails_helper'
 module Suppliers
   describe OrdersFrequencySerializer do
     let(:group) { FactoryGirl.create(:group) }
-    let(:schedule) do
-      IceCube::Schedule.new { |f| f.add_recurrence_rule IceCube::Rule.weekly }
-    end
+    let(:schedule) { FactoryGirl.build(:schedule) }
     let(:orders_frequency) do
       FactoryGirl.create(
         :orders_frequency,

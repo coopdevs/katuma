@@ -1,5 +1,14 @@
+require 'ice_cube'
+
 FactoryGirl.define do
   factory :supplier, class: Suppliers::Supplier do
+  end
+
+  factory :schedule, class: IceCube::Schedule do
+    skip_create
+    after(:build) do |schedule|
+      schedule.add_recurrence_rule(IceCube::Rule.weekly)
+    end
   end
 
   factory :orders_frequency, class: Suppliers::OrdersFrequency do
