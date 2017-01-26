@@ -28,7 +28,7 @@ module Suppliers
           orders_frequency = OrdersFrequency.new(
             group: @group,
             ical: orders_frequency_params[:ical],
-            frequency_type: orders_frequency_params[:frequency_type]
+            frequency_type: frequency_type
           )
 
           if orders_frequency.save
@@ -55,6 +55,11 @@ module Suppliers
         end
 
         private
+
+        def frequency_type
+          input_type = orders_frequency_params[:frequency_type]
+          FrequencyType.new(input_type.to_sym).to_s if input_type
+        end
 
         def orders_frequency_params
           params.permit(:group_id, :ical, :frequency_type)

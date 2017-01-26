@@ -4,11 +4,7 @@ require 'ice_cube'
 module Suppliers
   describe OrdersFrequency do
     let(:group) { FactoryGirl.create(:group) }
-    let(:schedule) do
-      IceCube::Schedule.new do |schedule|
-        schedule.add_recurrence_rule(IceCube::Rule.weekly)
-      end
-    end
+    let(:schedule) { FactoryGirl.build(:schedule) }
 
     describe 'Validations' do
       it { is_expected.to validate_presence_of(:group) }
@@ -17,7 +13,7 @@ module Suppliers
 
       it do
         is_expected.to validate_inclusion_of(:frequency_type)
-          .in_array(OrdersFrequency::FREQUENCY_TYPES.values)
+          .in_array(FrequencyType::TYPES.values)
       end
 
       describe 'validates uniqueness of `frequency_type` scoped to `group_id`' do
@@ -55,8 +51,8 @@ module Suppliers
       end
     end
 
-    describe '#to_ical' do
-      subject { orders_frequency.to_ical }
+    describe '#ical' do
+      subject { orders_frequency.ical }
 
       let(:orders_frequency) do
         FactoryGirl.create(

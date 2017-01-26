@@ -48,17 +48,13 @@ module Suppliers
               role: ::BasicResources::Membership::ROLES[:admin]
             )
           end
-          let(:schedule) do
-            IceCube::Schedule.new do |f|
-              f.add_recurrence_rule IceCube::Rule.weekly
-            end
-          end
+          let(:schedule) { FactoryGirl.build(:schedule) }
           let(:confirmation_frequency) do
             FactoryGirl.create(
               :orders_frequency,
               group_id: group.id,
               ical: schedule.to_ical,
-              frequency_type: OrdersFrequency::FREQUENCY_TYPES[:confirmation]
+              frequency_type: FrequencyType.new(:confirmation).to_s
             )
           end
           let(:delivery_frequency) do
@@ -66,7 +62,7 @@ module Suppliers
               :orders_frequency,
               group_id: group.id,
               ical: schedule.to_ical,
-              frequency_type: OrdersFrequency::FREQUENCY_TYPES[:delivery]
+              frequency_type: FrequencyType.new(:delivery).to_s
             )
           end
 
@@ -106,7 +102,7 @@ module Suppliers
                     match(
                       'id' => confirmation_frequency.id,
                       'group_id' => confirmation_frequency.group_id,
-                      'to_ical' => confirmation_frequency.to_ical,
+                      'to_ical' => confirmation_frequency.ical,
                       'frequency_type' => confirmation_frequency.frequency_type,
                       'created_at' => confirmation_frequency.created_at.as_json,
                       'updated_at' => confirmation_frequency.updated_at.as_json
@@ -114,7 +110,7 @@ module Suppliers
                     match(
                       'id' => delivery_frequency.id,
                       'group_id' => delivery_frequency.group_id,
-                      'to_ical' => delivery_frequency.to_ical,
+                      'to_ical' => delivery_frequency.ical,
                       'frequency_type' => delivery_frequency.frequency_type,
                       'created_at' => delivery_frequency.created_at.as_json,
                       'updated_at' => delivery_frequency.updated_at.as_json
@@ -151,7 +147,7 @@ module Suppliers
                     is_expected.to match(
                       'id' => confirmation_frequency.id,
                       'group_id' => confirmation_frequency.group_id,
-                      'to_ical' => confirmation_frequency.to_ical,
+                      'to_ical' => confirmation_frequency.ical,
                       'frequency_type' => confirmation_frequency.frequency_type,
                       'created_at' => confirmation_frequency.created_at.as_json,
                       'updated_at' => confirmation_frequency.updated_at.as_json
@@ -175,11 +171,29 @@ module Suppliers
               {
                 group_id: group.id,
                 ical: schedule.to_ical,
-                frequency_type: OrdersFrequency::FREQUENCY_TYPES[:delivery]
+                frequency_type: 'delivery'
               }
             end
 
             subject { post :create, params }
+
+            context 'when passing delivery frequency type' do
+              before { post :create, params }
+
+              describe 'its body' do
+                subject { JSON.parse(response.body) }
+                it { is_expected.to include('frequency_type' => 1) }
+              end
+            end
+
+            context 'when passing confirmation frequency type' do
+              before { post :create, params.merge(frequency_type: 'confirmation') }
+
+              describe 'its body' do
+                subject { JSON.parse(response.body) }
+                it { is_expected.to include('frequency_type' => 0) }
+              end
+            end
 
             context 'when the user is associated to the group' do
               context 'as an `admin`' do
@@ -194,7 +208,7 @@ module Suppliers
                     is_expected.to include(
                       'group_id' => params[:group_id],
                       'to_ical' => params[:ical],
-                      'frequency_type' => params[:frequency_type]
+                      'frequency_type' => 1
                     )
                   end
                 end
@@ -254,11 +268,7 @@ module Suppliers
           end
 
           describe 'PUT #update' do
-            let(:new_schedule) do
-              IceCube::Schedule.new do |f|
-                f.add_recurrence_rule IceCube::Rule.weekly.day(:tuesday)
-              end
-            end
+            let(:new_schedule) { FactoryGirl.build(:schedule) }
             let(:params) do
               {
                 id: orders_frequency_id,

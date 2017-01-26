@@ -48,6 +48,7 @@ Metrics/BlockLength:
   Exclude:
     - 'spec/**/*_spec.rb'
     - 'engines/*/spec/**/*_spec.rb'
+    - 'engines/*/spec/factories.rb'
 
 # This means we want:
 #

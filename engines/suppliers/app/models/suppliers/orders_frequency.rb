@@ -4,32 +4,29 @@ module Suppliers
   class OrdersFrequency < ActiveRecord::Base
     self.table_name = :orders_frequencies
 
-    FREQUENCY_TYPES = { confirmation: 0, delivery: 1 }.freeze
-
     serialize :frequency, IceCube::Schedule
 
     belongs_to :group
 
     validates :group, :frequency, :frequency_type, presence: true
-    validates :frequency_type, inclusion: { in: FREQUENCY_TYPES.values }
+    validates :frequency_type, inclusion: { in: FrequencyType::TYPES.values }
     validates :frequency_type, uniqueness: { scope: :group_id }
-
-    delegate :to_ical, to: :frequency
-
-    attr_reader :ical
 
     def ical=(value)
       self.frequency = to_frequency(value)
     end
 
+    def ical
+      frequency.to_ical
+    end
+
     private
 
+    # Returns the passed ical frequency value as an IceCube Schedule instance
+    #
+    # @return [Maybe<IceCube::Schedule>]
     def to_frequency(value)
-      if value.blank?
-        nil
-      else
-        IceCube::Schedule.from_ical(value)
-      end
+      IceCube::Schedule.from_ical(value) if value.present?
     end
   end
 end
