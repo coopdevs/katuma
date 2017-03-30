@@ -12,6 +12,7 @@ module Suppliers
         #
         def index
           suppliers = Supplier.where(group_id: @group.id)
+          suppliers = suppliers.unscoped if params[:unscoped]
 
           render json: SuppliersSerializer.new(suppliers)
         end

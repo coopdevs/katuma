@@ -23,7 +23,7 @@ module Suppliers
         def create
           order_line = OrderLine.new(
             order_id: @order.id,
-            product_id: order_line_params[:product_id],
+            product_id: @product.id,
             quantity: order_line_params[:quantity]
           )
 
