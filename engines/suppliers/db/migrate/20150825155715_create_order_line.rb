@@ -2,7 +2,6 @@ class CreateOrderLine < ActiveRecord::Migration
   def change
     create_table :order_lines do |t|
       t.integer :unit, default: 1, null: false
-      t.decimal :price, precision: 5, scale: 2, null: false
       t.integer :quantity, null: false
 
       t.integer :order_id, null: false

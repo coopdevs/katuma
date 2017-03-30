@@ -139,6 +139,5 @@ puts 'Creating order lines...'
 ::Suppliers::OrderLine.create!(
   order: first_order,
   product_id: poma.id,
-  price: 2.57,
   quantity: 1
 )

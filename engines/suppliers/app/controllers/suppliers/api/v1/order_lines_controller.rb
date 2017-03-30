@@ -4,7 +4,8 @@ module Suppliers
       class OrderLinesController < ApplicationController
         before_action :authenticate
         before_action :load_order_line, only: [:update, :destroy]
-        before_action :load_order, only: [:index]
+        before_action :load_order, only: [:index, :create]
+        before_action :load_product, only: [:create]
 
         # GET /api/v1/order_lines
         #
@@ -15,6 +16,25 @@ module Suppliers
           order_lines = OrderLine.where(order: @order)
 
           render json: OrderLinesSerializer.new(order_lines)
+        end
+
+        # POST /api/v1/order_lines
+        #
+        def create
+          order_line = OrderLine.new(
+            order_id: @order.id,
+            product_id: @product.id,
+            quantity: order_line_params[:quantity]
+          )
+
+          if order_line.save
+            render json: OrderLineSerializer.new(order_line)
+          else
+            render(
+              status: :bad_request,
+              json: { errors: order_line.errors.messages }
+            )
+          end
         end
 
         # PUT /api/v1/order_lines/:id
@@ -59,7 +79,15 @@ module Suppliers
 
           return head :not_found unless @order
 
-          # authorize @order
+          authorize @order, :show?
+        end
+
+        def load_product
+          @product = Product.find_by_id(params[:product_id])
+
+          return head :not_found unless @product
+
+          authorize @product.producer, :show?
         end
       end
     end

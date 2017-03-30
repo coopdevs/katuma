@@ -15,8 +15,20 @@ module Suppliers
             it_behaves_like 'an unauthorized request'
           end
 
+          describe 'POST #create' do
+            subject { post :create }
+
+            it_behaves_like 'an unauthorized request'
+          end
+
           describe 'PUT #update' do
             subject { put :update, id: 666 }
+
+            it_behaves_like 'an unauthorized request'
+          end
+
+          describe 'DELETE #destroy' do
+            subject { delete :destroy, id: 666 }
 
             it_behaves_like 'an unauthorized request'
           end
@@ -75,7 +87,6 @@ module Suppliers
               :order_line,
               order_id: order.id,
               quantity: 1,
-              price: 1.99,
               product_id: manzana.id
             )
           end
@@ -84,7 +95,6 @@ module Suppliers
               :order_line,
               order_id: order.id,
               quantity: 1,
-              price: 2.05,
               product_id: pera.id
             )
           end
@@ -101,7 +111,6 @@ module Suppliers
               :order_line,
               order_id: other_user_order.id,
               quantity: 1,
-              price: 2.05,
               product_id: pera.id
             )
           end
@@ -128,7 +137,6 @@ module Suppliers
                     'order_id' => order.id,
                     'product_id' => manzana.id,
                     'quantity' => order_line_manzana.quantity,
-                    'price' => order_line_manzana.price.to_s,
                     'created_at' => order_line_manzana.created_at.to_i,
                     'updated_at' => order_line_manzana.updated_at.to_i
                   ),
@@ -137,12 +145,76 @@ module Suppliers
                     'order_id' => order.id,
                     'product_id' => pera.id,
                     'quantity' => order_line_pera.quantity,
-                    'price' => order_line_pera.price.to_s,
                     'created_at' => order_line_pera.created_at.to_i,
                     'updated_at' => order_line_pera.updated_at.to_i
                   )
                 )
               end
+            end
+          end
+
+          describe 'POST #create' do
+            subject { post :create, params }
+
+            context 'when the user is associated to the order' do
+              context 'and the user can order the given product' do
+                let(:params) do
+                  {
+                    order_id: order.id,
+                    product_id: manzana.id,
+                    quantity: 3
+                  }
+                end
+
+                it_behaves_like 'a successful request'
+              end
+
+              context 'but the user cannot order the given product' do
+                let(:other_producer) do
+                  producer = FactoryGirl.build(:producer, name: 'Not related to group')
+                  ::BasicResources::ProducerCreator.new(
+                    producer: producer,
+                    creator: other_user
+                  ).create!
+                end
+                let(:other_product) do
+                  FactoryGirl.create(
+                    :product,
+                    producer_id: other_producer.id,
+                    price: 3.99
+                  )
+                end
+                let(:params) do
+                  {
+                    order_id: order.id,
+                    product_id: other_product.id,
+                    quantity: 3
+                  }
+                end
+
+                it_behaves_like 'a forbidden request'
+              end
+            end
+
+            context 'when the user is not associated to the order' do
+              let(:other_order) do
+                FactoryGirl.create(
+                  :order,
+                  from_user_id: other_user.id,
+                  to_group_id: group.id,
+                  confirm_before: 3.days.from_now.utc
+                )
+              end
+
+              let(:params) do
+                {
+                  order_id: other_order.id,
+                  product_id: pera.id,
+                  quantity: 3
+                }
+              end
+
+              it_behaves_like 'a forbidden request'
             end
           end
 
@@ -181,7 +253,6 @@ module Suppliers
                       'order_id' => order.id,
                       'product_id' => manzana.id,
                       'quantity' => params[:quantity],
-                      'price' => order_line_manzana.price.to_s,
                       'updated_at' => order_line_manzana.updated_at.to_i,
                       'created_at' => order_line_manzana.created_at.to_i
                     )

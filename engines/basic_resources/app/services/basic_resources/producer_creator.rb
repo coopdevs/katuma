@@ -40,7 +40,7 @@ module BasicResources
       if group
         membership.group = group
       else
-        membership.user = creator
+        membership.user_id = creator.id
       end
       membership.save!
 
