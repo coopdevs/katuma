@@ -1,4 +1,4 @@
-*ABANDONED* in favour of https://github.com/openfoodfoundation/openfoodnetwork
+**ABANDONED** in favour of https://github.com/openfoodfoundation/openfoodnetwork
 
 # katuma [![Build Status](https://travis-ci.org/coopdevs/katuma.svg?branch=develop)](https://travis-ci.org/coopdevs/katuma) [![Code Climate](https://codeclimate.com/github/coopdevs/katuma/badges/gpa.svg)](https://codeclimate.com/github/coopdevs/katuma) [![Test Coverage](https://codeclimate.com/github/coopdevs/katuma/badges/coverage.svg)](https://codeclimate.com/github/coopdevs/katuma/coverage)
 
